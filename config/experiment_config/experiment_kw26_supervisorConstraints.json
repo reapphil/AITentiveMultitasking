@@ -1,0 +1,44 @@
+{
+	"ExperimentSettings": {
+		"mode": "GameModeSupervisor"
+	},
+	"performanceMeasurementSettings": {
+		"maxNumberEpisodes": 5,
+		"minimumScoreForMeasurement": 5,
+		"fileNameForScores": "scores_experiment_kw26_final.csv",
+		"playerName": "player1"
+	},
+	"hyperparameters": {
+		"autonomous": false,
+		"decisionPeriod": 1,
+		"focusActivePlatform": false,
+		"resetPlatformToIdentity": true,
+		"agentChoice": "Ball3DAgentOptimal",
+		"trainSupervisor": false,
+		"trainBallAgent": false,
+		"supervisorModelName": "unifiedD1_ev1_session19_AOD1_DRI0.2NTTT_LOG/AUI1S5MunifiedD1_ev1_session19_AOD1_DRI0.2NTTT/AUIAUI1S5MunifiedD1_ev1_session19_AOD1_DRI0.2NTTT.onnx",
+		"ballAgentModelName": "",
+		"saveBehavioralData": false,
+		"timeScale": 1,
+		"numberOfPlatforms": 2
+	},
+	"behavioralDataCollectionSettings": {
+		"measurePerformance": true
+	},
+	"supervisorSettings": {
+		"randomSupervisor": false,
+		"vectorObservationSize": 18,
+		"setConstantDecisionRequestInterval": true,
+		"decisionRequestIntervalInSeconds": 0.2,
+		"decisionRequestIntervalRangeInSeconds": 0,
+		"globalDrag": 0.8,
+		"useNegativeDragDifficulty": true,
+		"difficultyIncrementInterval": 5,
+		"decisionPeriod": 5,
+		"advanceNoticeInSeconds": 0.3,
+		"ballAgentDifficulty": 170,
+		"ballAgentDifficultyDivisionFactor": 1.05,
+		"ballStartingRadius": 1.5,
+		"resetSpeed": 10
+	}
+}

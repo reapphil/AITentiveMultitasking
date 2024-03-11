@@ -1,0 +1,123 @@
+{
+    "3DBall": {
+        "checkpoints": [
+            {
+                "steps": 13999239,
+                "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall\\3DBall-13999239.onnx",
+                "reward": 474.57859395166474,
+                "creation_time": 1687746661.0933821,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall\\3DBall-13999239.pt"
+                ]
+            },
+            {
+                "steps": 14499903,
+                "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall\\3DBall-14499903.onnx",
+                "reward": 474.8382365539311,
+                "creation_time": 1687747315.6085498,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall\\3DBall-14499903.pt"
+                ]
+            },
+            {
+                "steps": 14999796,
+                "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall\\3DBall-14999796.onnx",
+                "reward": 474.8581189175582,
+                "creation_time": 1687747961.1226096,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall\\3DBall-14999796.pt"
+                ]
+            },
+            {
+                "steps": 15499942,
+                "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall\\3DBall-15499942.onnx",
+                "reward": 473.59469855118607,
+                "creation_time": 1687748622.2954073,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall\\3DBall-15499942.pt"
+                ]
+            },
+            {
+                "steps": 15862222,
+                "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall\\3DBall-15862222.onnx",
+                "reward": 474.0901735618316,
+                "creation_time": 1687749096.9363613,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall\\3DBall-15862222.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 15862222,
+            "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall.onnx",
+            "reward": 474.0901735618316,
+            "creation_time": 1687749096.9363613,
+            "auxillary_file_paths": [
+                "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\3DBall\\3DBall-15862222.pt"
+            ]
+        }
+    },
+    "AUI": {
+        "checkpoints": [
+            {
+                "steps": 3499357,
+                "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI\\AUI-3499357.onnx",
+                "reward": null,
+                "creation_time": 1687743079.363722,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI\\AUI-3499357.pt"
+                ]
+            },
+            {
+                "steps": 3999409,
+                "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI\\AUI-3999409.onnx",
+                "reward": 101.354327583313,
+                "creation_time": 1687745076.4166596,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI\\AUI-3999409.pt"
+                ]
+            },
+            {
+                "steps": 4499967,
+                "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI\\AUI-4499967.onnx",
+                "reward": 59.025052070617676,
+                "creation_time": 1687747088.4203215,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI\\AUI-4499967.pt"
+                ]
+            },
+            {
+                "steps": 4999582,
+                "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI\\AUI-4999582.onnx",
+                "reward": 106.30707119192395,
+                "creation_time": 1687749096.9003613,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI\\AUI-4999582.pt"
+                ]
+            },
+            {
+                "steps": 5000148,
+                "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI\\AUI-5000148.onnx",
+                "reward": 105.10726837813854,
+                "creation_time": 1687749096.9593608,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI\\AUI-5000148.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 5000148,
+            "file_path": "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI.onnx",
+            "reward": 105.10726837813854,
+            "creation_time": 1687749096.9593608,
+            "auxillary_file_paths": [
+                "results\\..\\..\\Assets\\Models\\unifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT_LOG\\AUI1S2.5MunifiedCognitionD1_ev1_session19_AOD1_DRI0.2NTTT\\AUI\\AUI-5000148.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.0.0+cpu"
+    }
+}

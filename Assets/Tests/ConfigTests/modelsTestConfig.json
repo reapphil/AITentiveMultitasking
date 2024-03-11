@@ -1,0 +1,15 @@
+{
+	"hyperparameters": {
+		"version": 2,
+		"autonomous": false,
+		"decisionPeriod": 5,
+		"focusActivePlatform": false,
+		"trainSupervisor": false,
+		"supervisorModelName": "AUI.onnx",
+		"focusAgentModelName": "Focus.onnx",
+		"taskModels": {
+			"BallAgent": "path\\to\\BallAgentModel",
+			"ChessAgent": "path\\to\\ChessAgentModel"
+		}
+	}
+}

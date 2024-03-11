@@ -1,0 +1,300 @@
+fileFormatVersion: 2
+guid: 8b657c64a6d1ab64e8c5a206f6e1d40d
+ModelImporter:
+  serializedVersion: 21202
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Body
+    second: {fileID: 2100000, guid: 4527dbda5d58f484f8b4f4360105e91e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Buttom
+    second: {fileID: 2100000, guid: 12730a899bb9a834a9ea144122ee34fc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Carpet
+    second: {fileID: 2100000, guid: 6c2462f72d20d08448718cd6d69bd816, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Ceiling
+    second: {fileID: 2100000, guid: 432d5d821db97f34dac8a6c16fc06219, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Chrome
+    second: {fileID: 2100000, guid: 985423591f6a8d943a75e8bbaa273496, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Dashboard
+    second: {fileID: 2100000, guid: 0b4b477f86bd9d442b261480bd76cdbf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Dashboard_Background
+    second: {fileID: 2100000, guid: 652628ffcd64f484abe492c62d4aeba2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Disc
+    second: {fileID: 2100000, guid: dc1cb061f560e3e4cba884c6a02fb81d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Engine_Black
+    second: {fileID: 2100000, guid: 1dc8074d6b1a3b348b3b844b253a4a18, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Engine_Gray
+    second: {fileID: 2100000, guid: d824d6a53796ead4abd827db6200bc8c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Exhausts
+    second: {fileID: 2100000, guid: fa5ba0ddcc59b50469e80729f29c350a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Glass
+    second: {fileID: 2100000, guid: 086d96e0448c7d64f83ad526c65e81f4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Interior
+    second: {fileID: 2100000, guid: ec2b9046ecceb47418f033bab4819633, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_InteriorButtons
+    second: {fileID: 2100000, guid: 064757c4140b2d949af78266c1d3da0c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_InteriorLCD
+    second: {fileID: 2100000, guid: 357630f330cb07d4c9e151c0d5c33ff8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_InteriorLights
+    second: {fileID: 2100000, guid: 4718524aa423cd54fad0a57d2f4650c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Interior_Leather
+    second: {fileID: 2100000, guid: a7061117edb32f94093ab651d3a1d15a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Interior_Maun
+    second: {fileID: 2100000, guid: fd60d0c0044a04c40950c8f28283d547, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Lights_Brake
+    second: {fileID: 2100000, guid: 2d633fe67b07bb642b7da6358027417d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Lights_Brake3rd
+    second: {fileID: 2100000, guid: f108f7aaf13b5fa46b5f261f386feeaa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Lights_Headlight_HighBeam
+    second: {fileID: 2100000, guid: a15e2cc9004df6d4e99602a024f04221, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Lights_Headlight_LowBeam
+    second: {fileID: 2100000, guid: 0f9fb55106ec1de42b20ca2ddf462cd5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Lights_Indicator
+    second: {fileID: 2100000, guid: 6ec4041eae960344faa771f17c1b9a07, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Mirror
+    second: {fileID: 2100000, guid: 75e7d2d991adaf94d976446f8205109b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Needle
+    second: {fileID: 2100000, guid: 92b5044e031e8794c954a8ad4b377f7d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Pedals
+    second: {fileID: 2100000, guid: 2224244e8aa73fe479459c45fa2a06e2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Plastic
+    second: {fileID: 2100000, guid: 1a6137bd8fe2ab34ba1428f65d2e5bc2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Rim
+    second: {fileID: 2100000, guid: d8f7e3b6c5b32ef47a8b4b996eb27ff5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Rubber
+    second: {fileID: 2100000, guid: 22a9e629a89fdb749947731ca99b4ad2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Speakers
+    second: {fileID: 2100000, guid: d82d43f8caa8982438bda98db191c7af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Tire
+    second: {fileID: 2100000, guid: 43e10567c4e8c264ea4c67a447955852, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: E46_Windows
+    second: {fileID: 2100000, guid: a3200fb746b01ee4081471357ea60b83, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Carpet
+    second: {fileID: 2800000, guid: a542952e3020090428b9b14d28017a92, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: E46_Carpet
+    second: {fileID: 2800000, guid: 9884aa583ea459345a1dc20716cbef90, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: E46_Dashboard
+    second: {fileID: 2800000, guid: 24b595f72d1ef89439bf2e9267414199, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: E46_Leather
+    second: {fileID: 2800000, guid: cb8099e4d9d69ea4fba3bac5c10541c6, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: E46_Needle
+    second: {fileID: 2800000, guid: 69c982895fed95c4d8bdc048f3b8fead, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: E46_Rear
+    second: {fileID: 2800000, guid: b389fbd0dbf048a41a7606d6b563dc8b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Leather
+    second: {fileID: 2800000, guid: cb3a33b7a53b9f045928a74397ff5ee6, type: 3}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 1
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

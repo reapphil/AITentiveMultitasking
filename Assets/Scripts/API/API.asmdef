@@ -1,0 +1,22 @@
+{
+    "name": "API",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8514c61f888cae64a9844f65b24026fc",
+        "GUID:eaa87a3702002684bbaef34f3ce3488c",
+        "GUID:6594c0581bcf3f44391d224dcbb56e7e",
+        "GUID:85e0054f8e64b47309646d35f8851f81"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "RGiesecke.DllExport.dll",
+        "RGiesecke.DllExport.Metadata.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

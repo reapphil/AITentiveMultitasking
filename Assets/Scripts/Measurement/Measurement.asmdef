@@ -1,0 +1,28 @@
+{
+    "name": "Measurement",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6594c0581bcf3f44391d224dcbb56e7e",
+        "GUID:85e0054f8e64b47309646d35f8851f81",
+        "GUID:eaa87a3702002684bbaef34f3ce3488c",
+        "GUID:5c2b5ba89f9e74e418232e154bc5cc7a",
+        "GUID:c55d28459d9c4444ebb4788be912e1f1",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:50b9df6e86a0242419cd3a65491adaa6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "RGiesecke.DllExport.dll",
+        "CsvHelper.dll",
+        "NSubstitute.dll",
+        "RGiesecke.DllExport.Metadata.dll",
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

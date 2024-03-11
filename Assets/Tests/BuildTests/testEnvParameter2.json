@@ -1,0 +1,43 @@
+{
+	"hyperparameters": {
+		"autonomous": false,
+		"decisionPeriod": 7,
+		"focusActivePlatform": false,
+		"resetPlatformToIdentity": true,
+		"agentChoice": "Ball3DAgentHumanCognition",
+		"trainSupervisor": true,
+		"trainBallAgent": false,
+		"ballAgentModelName": "BuildTest\\3DBall2.asset",
+		"focusAgentModelName": "BuildTest\\Focus2.asset",
+		"numberOfPlatforms": 4
+	},
+	"supervisorSettings": {
+		"randomSupervisor": false,
+		"vectorObservationSize": 16,
+		"setConstantDecisionRequestInterval": true,
+		"decisionRequestIntervalInSeconds": 5,
+		"decisionRequestIntervalRangeInSeconds": 0,
+		"globalDrag": -0.1,
+		"useNegativeDragDifficulty": false,
+		"difficultyIncrementInterval": 45,
+		"decisionPeriod": 15,
+		"advanceNoticeInSeconds": 0,
+		"ballAgentDifficulty": 70,
+		"ballAgentDifficultyDivisionFactor": 3,
+		"ballStartingRadius": 1,
+		"resetSpeed": 10
+	},
+	"ball3DAgentHumanCognitionSettings": {
+		"useFocusAgent": true,
+		"numberOfBins": 5041,
+		"showBeliefState": false,
+		"numberOfSamples": 1000,
+		"sigma": 0.1,
+		"sigmaMean": 0.01,
+		"updatePeriode": 0.2,
+		"observationProbability": 0.1,
+		"constantReactionTime": 0.3,
+		"oldDistributionPersistenceTime": 0.9,
+		"fullVision": false
+	}
+}

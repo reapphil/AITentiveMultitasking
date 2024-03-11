@@ -1,0 +1,16 @@
+{
+	"behavioralDataCollectionSettings": {
+		"measurePerformance": false,
+		"collectDataForComparison": true,
+		"comparisonTimeLimit": 0,
+		"maxNumberOfActions": 10000,
+		"isRawDataCollected": true,
+		"numberOfAreaBins_BehavioralData": 196,
+		"numberOfBallVelocityBinsPerAxis_BehavioralData": 6,
+		"numberOfAngleBinsPerAxis": 4,
+		"numberOfDistanceBins": 45,
+		"numberOfDistanceBins_velocity": 46,
+		"numberOfActionBinsPerAxis": 9,
+		"numberOfTimeBins": 1
+	}
+}

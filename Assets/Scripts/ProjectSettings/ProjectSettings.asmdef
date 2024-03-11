@@ -1,0 +1,23 @@
+{
+    "name": "ProjectSettings",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6594c0581bcf3f44391d224dcbb56e7e",
+        "GUID:5c2b5ba89f9e74e418232e154bc5cc7a",
+        "GUID:85e0054f8e64b47309646d35f8851f81",
+        "GUID:8514c61f888cae64a9844f65b24026fc",
+        "GUID:eaa87a3702002684bbaef34f3ce3488c",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:50b9df6e86a0242419cd3a65491adaa6",
+        "GUID:ffbb120a9a4e71e4798eb7b8de54da41"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

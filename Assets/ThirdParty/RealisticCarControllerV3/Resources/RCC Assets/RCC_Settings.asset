@@ -1,0 +1,487 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7756f06ac1b082e4bb1697f768a5a41f, type: 3}
+  m_Name: RCC_Settings
+  m_EditorClassIdentifier: 
+  behaviorSelectedIndex: 0
+  overrideBehavior: 0
+  overrideFPS: 0
+  overrideFixedTimeStep: 0
+  fixedTimeStep: 0.02
+  maxAngularVelocity: 8
+  maxFPS: 60
+  useShortcuts: 0
+  useFixedWheelColliders: 1
+  lockAndUnlockCursor: 0
+  behaviorTypes:
+  - behaviorName: Simulator
+    steeringHelper: 1
+    tractionHelper: 1
+    angularDragHelper: 1
+    counterSteering: 0
+    limitSteering: 1
+    steeringSensitivity: 1
+    ABS: 1
+    ESP: 1
+    TCS: 1
+    applyExternalWheelFrictions: 0
+    applyRelativeTorque: 0
+    steeringType: 0
+    steeringCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 40
+        inSlope: -0.39083523
+        outSlope: -0.39083523
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.08870968
+      - serializedVersion: 3
+        time: 100
+        value: 10
+        inSlope: -0.1285534
+        outSlope: -0.1285534
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.112903215
+      - serializedVersion: 3
+        time: 200
+        value: 5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    comAssister: 0
+    highSpeedSteerAngleMinimum: 0
+    highSpeedSteerAngleMaximum: 60
+    highSpeedSteerAngleAtspeedMinimum: 0
+    highSpeedSteerAngleAtspeedMaximum: 350
+    counterSteeringMinimum: 0.1
+    counterSteeringMaximum: 1
+    steeringSensitivityMinimum: 0.1
+    steeringSensitivityMaximum: 1
+    steerHelperAngularVelStrengthMinimum: 0.1
+    steerHelperAngularVelStrengthMaximum: 0.1
+    steerHelperLinearVelStrengthMinimum: 0.1
+    steerHelperLinearVelStrengthMaximum: 0.1
+    tractionHelperStrengthMinimum: 0.1
+    tractionHelperStrengthMaximum: 0.1
+    antiRollFrontHorizontalMinimum: 1000
+    antiRollRearHorizontalMinimum: 1000
+    gearShiftingDelayMaximum: 0.15
+    angularDrag: 0.1
+    angularDragHelperMinimum: 0.1
+    angularDragHelperMaximum: 0.5
+    forwardExtremumSlip: 0.4
+    forwardExtremumValue: 1
+    forwardAsymptoteSlip: 0.8
+    forwardAsymptoteValue: 0.75
+    sidewaysExtremumSlip: 0.2
+    sidewaysExtremumValue: 1
+    sidewaysAsymptoteSlip: 0.5
+    sidewaysAsymptoteValue: 0.75
+  - behaviorName: Racing
+    steeringHelper: 1
+    tractionHelper: 1
+    angularDragHelper: 1
+    counterSteering: 0
+    limitSteering: 1
+    steeringSensitivity: 1
+    ABS: 1
+    ESP: 1
+    TCS: 1
+    applyExternalWheelFrictions: 0
+    applyRelativeTorque: 0
+    steeringType: 0
+    steeringCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 40
+        inSlope: -0.39083523
+        outSlope: -0.39083523
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.08870968
+      - serializedVersion: 3
+        time: 100
+        value: 10
+        inSlope: -0.1285534
+        outSlope: -0.1285534
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.112903215
+      - serializedVersion: 3
+        time: 200
+        value: 5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    comAssister: 0
+    highSpeedSteerAngleMinimum: 0
+    highSpeedSteerAngleMaximum: 60
+    highSpeedSteerAngleAtspeedMinimum: 0
+    highSpeedSteerAngleAtspeedMaximum: 350
+    counterSteeringMinimum: 0.1
+    counterSteeringMaximum: 0.5
+    steeringSensitivityMinimum: 0.5
+    steeringSensitivityMaximum: 1
+    steerHelperAngularVelStrengthMinimum: 0.25
+    steerHelperAngularVelStrengthMaximum: 1
+    steerHelperLinearVelStrengthMinimum: 0.25
+    steerHelperLinearVelStrengthMaximum: 1
+    tractionHelperStrengthMinimum: 0.25
+    tractionHelperStrengthMaximum: 1
+    antiRollFrontHorizontalMinimum: 2000
+    antiRollRearHorizontalMinimum: 2000
+    gearShiftingDelayMaximum: 0.15
+    angularDrag: 0.1
+    angularDragHelperMinimum: 0.1
+    angularDragHelperMaximum: 0.5
+    forwardExtremumSlip: 0.3
+    forwardExtremumValue: 1
+    forwardAsymptoteSlip: 0.8
+    forwardAsymptoteValue: 0.75
+    sidewaysExtremumSlip: 0.2
+    sidewaysExtremumValue: 1
+    sidewaysAsymptoteSlip: 0.25
+    sidewaysAsymptoteValue: 0.75
+  - behaviorName: Drift
+    steeringHelper: 1
+    tractionHelper: 1
+    angularDragHelper: 0
+    counterSteering: 1
+    limitSteering: 0
+    steeringSensitivity: 1
+    ABS: 0
+    ESP: 0
+    TCS: 0
+    applyExternalWheelFrictions: 1
+    applyRelativeTorque: 1
+    steeringType: 0
+    steeringCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 40
+        inSlope: -0.39083523
+        outSlope: -0.39083523
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.08870968
+      - serializedVersion: 3
+        time: 100
+        value: 15
+        inSlope: -0.1285534
+        outSlope: -0.1285534
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.112903215
+      - serializedVersion: 3
+        time: 200
+        value: 5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    comAssister: 2
+    highSpeedSteerAngleMinimum: 5
+    highSpeedSteerAngleMaximum: 5
+    highSpeedSteerAngleAtspeedMinimum: 120
+    highSpeedSteerAngleAtspeedMaximum: 120
+    counterSteeringMinimum: 1
+    counterSteeringMaximum: 1
+    steeringSensitivityMinimum: 1
+    steeringSensitivityMaximum: 1
+    steerHelperAngularVelStrengthMinimum: 0.1
+    steerHelperAngularVelStrengthMaximum: 0.1
+    steerHelperLinearVelStrengthMinimum: 0
+    steerHelperLinearVelStrengthMaximum: 0
+    tractionHelperStrengthMinimum: 0.2
+    tractionHelperStrengthMaximum: 0.2
+    antiRollFrontHorizontalMinimum: 0
+    antiRollRearHorizontalMinimum: 0
+    gearShiftingDelayMaximum: 0.15
+    angularDrag: 0.5
+    angularDragHelperMinimum: 0.1
+    angularDragHelperMaximum: 0.1
+    forwardExtremumSlip: 0.325
+    forwardExtremumValue: 1
+    forwardAsymptoteSlip: 1
+    forwardAsymptoteValue: 1
+    sidewaysExtremumSlip: 0.45
+    sidewaysExtremumValue: 1
+    sidewaysAsymptoteSlip: 1
+    sidewaysAsymptoteValue: 1
+  - behaviorName: Semi Arcade
+    steeringHelper: 1
+    tractionHelper: 1
+    angularDragHelper: 1
+    counterSteering: 0
+    limitSteering: 0
+    steeringSensitivity: 1
+    ABS: 0
+    ESP: 0
+    TCS: 0
+    applyExternalWheelFrictions: 0
+    applyRelativeTorque: 0
+    steeringType: 0
+    steeringCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 40
+        inSlope: -0.39083523
+        outSlope: -0.39083523
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.08870968
+      - serializedVersion: 3
+        time: 100
+        value: 10
+        inSlope: -0.1285534
+        outSlope: -0.1285534
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.112903215
+      - serializedVersion: 3
+        time: 200
+        value: 5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    comAssister: 1
+    highSpeedSteerAngleMinimum: 0
+    highSpeedSteerAngleMaximum: 60
+    highSpeedSteerAngleAtspeedMinimum: 100
+    highSpeedSteerAngleAtspeedMaximum: 350
+    counterSteeringMinimum: 0
+    counterSteeringMaximum: 0
+    steeringSensitivityMinimum: 1
+    steeringSensitivityMaximum: 1
+    steerHelperAngularVelStrengthMinimum: 0.5
+    steerHelperAngularVelStrengthMaximum: 1
+    steerHelperLinearVelStrengthMinimum: 0.5
+    steerHelperLinearVelStrengthMaximum: 1
+    tractionHelperStrengthMinimum: 0.25
+    tractionHelperStrengthMaximum: 1
+    antiRollFrontHorizontalMinimum: 7500
+    antiRollRearHorizontalMinimum: 7500
+    gearShiftingDelayMaximum: 0.1
+    angularDrag: 0.5
+    angularDragHelperMinimum: 0.1
+    angularDragHelperMaximum: 0.25
+    forwardExtremumSlip: 0.2
+    forwardExtremumValue: 2
+    forwardAsymptoteSlip: 0.2
+    forwardAsymptoteValue: 2
+    sidewaysExtremumSlip: 0.25
+    sidewaysExtremumValue: 2
+    sidewaysAsymptoteSlip: 0.25
+    sidewaysAsymptoteValue: 2
+  - behaviorName: Fun
+    steeringHelper: 1
+    tractionHelper: 1
+    angularDragHelper: 1
+    counterSteering: 0
+    limitSteering: 0
+    steeringSensitivity: 1
+    ABS: 0
+    ESP: 0
+    TCS: 0
+    applyExternalWheelFrictions: 0
+    applyRelativeTorque: 0
+    steeringType: 0
+    steeringCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 40
+        inSlope: -0.39083523
+        outSlope: -0.39083523
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.08870968
+      - serializedVersion: 3
+        time: 100
+        value: 10
+        inSlope: -0.1285534
+        outSlope: -0.1285534
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.112903215
+      - serializedVersion: 3
+        time: 200
+        value: 5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    comAssister: 1
+    highSpeedSteerAngleMinimum: 0
+    highSpeedSteerAngleMaximum: 60
+    highSpeedSteerAngleAtspeedMinimum: 100
+    highSpeedSteerAngleAtspeedMaximum: 350
+    counterSteeringMinimum: 0
+    counterSteeringMaximum: 0
+    steeringSensitivityMinimum: 1
+    steeringSensitivityMaximum: 1
+    steerHelperAngularVelStrengthMinimum: 1
+    steerHelperAngularVelStrengthMaximum: 1
+    steerHelperLinearVelStrengthMinimum: 1
+    steerHelperLinearVelStrengthMaximum: 1
+    tractionHelperStrengthMinimum: 0.25
+    tractionHelperStrengthMaximum: 0.5
+    antiRollFrontHorizontalMinimum: 10000
+    antiRollRearHorizontalMinimum: 10000
+    gearShiftingDelayMaximum: 0.5
+    angularDrag: 0.1
+    angularDragHelperMinimum: 0.25
+    angularDragHelperMaximum: 0.5
+    forwardExtremumSlip: 0.2
+    forwardExtremumValue: 2
+    forwardAsymptoteSlip: 0.2
+    forwardAsymptoteValue: 2
+    sidewaysExtremumSlip: 0.2
+    sidewaysExtremumValue: 2
+    sidewaysAsymptoteSlip: 0.2
+    sidewaysAsymptoteValue: 2
+  useAutomaticGear: 1
+  useAutomaticClutch: 1
+  runEngineAtAwake: 1
+  autoReverse: 1
+  autoReset: 1
+  contactParticles: {fileID: 193332, guid: 863b5201aede3aa438ac7d962625d663, type: 3}
+  scratchParticles: {fileID: 193332, guid: 2ff0e422d9bf66249b14d124d7a2b3b0, type: 3}
+  wheelDeflateParticles: {fileID: 5240681609208784007, guid: de4704e3426ad794c9166d4f75ab33c4,
+    type: 3}
+  units: 0
+  uiType: 0
+  useTelemetry: 0
+  mobileController: 0
+  mobileControllerEnabled: 0
+  UIButtonSensitivity: 10
+  UIButtonGravity: 10
+  gyroSensitivity: 2.5
+  useHeadLightsAsVertexLights: 0
+  useBrakeLightsAsVertexLights: 1
+  useReverseLightsAsVertexLights: 1
+  useIndicatorLightsAsVertexLights: 1
+  useOtherLightsAsVertexLights: 1
+  setLayers: 1
+  RCCLayer: RCC
+  WheelColliderLayer: RCC_WheelCollider
+  DetachablePartLayer: RCC_DetachablePart
+  exhaustGas: {fileID: 104134, guid: 46992adcb9d56714eb84164c8a965492, type: 3}
+  skidmarksManager: {fileID: 114786316056322602, guid: a107dc7aa77e84f4d8cf9888def4fe64,
+    type: 3}
+  headLights: {fileID: 146832, guid: 660ec4b1fd79fa74096f0ab9e6cbd2ca, type: 3}
+  brakeLights: {fileID: 136378, guid: 40648ef4ebef26d4c9cc0663c2f08e5e, type: 3}
+  reverseLights: {fileID: 197258, guid: 188c477ab444228409c4a246c02a86bd, type: 3}
+  indicatorLights: {fileID: 166118, guid: 580925c070bc6064c90563e08cb421f0, type: 3}
+  lightTrailers: {fileID: 166118, guid: 707887b20c5d959439a876fea0fb72af, type: 3}
+  mirrors: {fileID: 132014, guid: 42ab1ab32651fc74dad3e9cedf0b5270, type: 3}
+  RCCMainCamera: {fileID: 11400656, guid: 9f32ea4a11500b344ae05427bdc21e05, type: 3}
+  hoodCamera: {fileID: 171864, guid: a28e2d33ee4eec642be5568debd291ab, type: 3}
+  cinematicCamera: {fileID: 1000014008404042, guid: 330409232e97fd84c9b2e696d6de0bd5,
+    type: 3}
+  RCCCanvas: {fileID: 102148, guid: 3c49455ff7757444fa4b466c3250f423, type: 3}
+  RCCTelemetry: {fileID: 6059275310813240883, guid: 65802e5058ade584d99e0fba314f4a68,
+    type: 3}
+  RCCModificationCanvas: {fileID: 4516598459073422803, guid: b9a88d195fbc33b459ea1fe379719c1c,
+    type: 3}
+  dontUseAnyParticleEffects: 0
+  dontUseSkidmarks: 0
+  audioMixer: {fileID: 24300002, guid: a97addf01f8029040bb6ea53d3c8e62d, type: 2}
+  gearShiftingClips:
+  - {fileID: 8300000, guid: fd92e514f75331e4085d0846a166fef8, type: 3}
+  - {fileID: 8300000, guid: 51d3f215e07c15a41aab4038522df8d6, type: 3}
+  - {fileID: 8300000, guid: d16b0aad793dafa4fb78adaae796fbfe, type: 3}
+  - {fileID: 8300000, guid: af63e188bf4d51d458ed8680ad764a3b, type: 3}
+  - {fileID: 8300000, guid: f5993d9cca0a2804f93ce20e421cbf04, type: 3}
+  crashClips:
+  - {fileID: 8300000, guid: 4c05a8cdfbec615458d075d1e07a7d4c, type: 3}
+  - {fileID: 8300000, guid: 17550b365ac51f2418915bf82b519630, type: 3}
+  - {fileID: 8300000, guid: 82f3ac1f97a9a384db5bcb1fd1966b16, type: 3}
+  - {fileID: 8300000, guid: 370cb2e9c8bccfe48bdec70db08e4644, type: 3}
+  reversingClip: {fileID: 8300000, guid: 504366e8a8a713b43b676259cd5a7b58, type: 3}
+  windClip: {fileID: 8300000, guid: 6c7312d1af74e3f4599722894161fafc, type: 3}
+  brakeClip: {fileID: 8300000, guid: 4b6a38decd073724fb0aebb87b9ae8ee, type: 3}
+  wheelDeflateClip: {fileID: 8300000, guid: faa704d83029a9647a2363b2237e4e19, type: 3}
+  wheelInflateClip: {fileID: 8300000, guid: 4ce6102d00c8375478c1f9b3b1ac6688, type: 3}
+  wheelFlatClip: {fileID: 8300000, guid: 26b58ff4d9777244a9095f50b4179eb7, type: 3}
+  indicatorClip: {fileID: 8300000, guid: 64545518873b33e49b90fdf05c6ea7a6, type: 3}
+  bumpClip: {fileID: 8300000, guid: 948b55abd80345b4aab96053dbe0c2ba, type: 3}
+  NOSClip: {fileID: 8300000, guid: 671ef8e2c38263640974ec49dc696f10, type: 3}
+  turboClip: {fileID: 8300000, guid: 7f48c51367eb26f4bb55673f28ae5404, type: 3}
+  blowoutClip:
+  - {fileID: 8300000, guid: fe7d483597e1b604a8f6f21f68b9df07, type: 3}
+  exhaustFlameClips:
+  - {fileID: 8300000, guid: a8cfbfa0153a85c4da8402ee5479a3de, type: 3}
+  - {fileID: 8300000, guid: abe24e1d59cd24e48ab2b17acb6b57ff, type: 3}
+  - {fileID: 8300000, guid: 4ebe01570cad61a40be61693713688b4, type: 3}
+  - {fileID: 8300000, guid: f772a702dcfbfe9478afe01aa9429fbc, type: 3}
+  maxGearShiftingSoundVolume: 0.5
+  maxCrashSoundVolume: 0.5
+  maxWindSoundVolume: 1
+  maxBrakeSoundVolume: 0.5
+  foldGeneralSettings: 1
+  foldBehaviorSettings: 1
+  foldControllerSettings: 1
+  foldUISettings: 1
+  foldWheelPhysics: 1
+  foldSFX: 1
+  foldOptimization: 1
+  foldTagsAndLayers: 1

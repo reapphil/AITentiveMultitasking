@@ -1,0 +1,5 @@
+  <EventSource Id="Balancing" Version="1" Name="Balancing">
+      <Sample Id="Difficulty" Name="Difficulty">
+          <Field Id="SecondsUntilGameOver" Range="Variable"></Field>
+      </Sample>
+  </EventSource>

@@ -1,0 +1,19 @@
+{
+    "name": "RealisticCarControllerV3",
+    "rootNamespace": "",
+    "references": [
+        "Unity.InputSystem",
+        ""
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "Castle.Core.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

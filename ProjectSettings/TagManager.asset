@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - PlayerCar
+  - SelfDriving
+  - symbol_O
+  - symbol_X
+  - AgentCar
+  - agent
+  - ground
+  - target
+  - Task
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - PostProcessing
+  - Water
+  - UI
+  - 
+  - 
+  - RCC
+  - RCC_WheelCollider
+  - RCC_DetachablePart
+  - RCC_Trailer
+  - RCC_Crasher
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eb1a463d58d67241ac93ce41125f622, type: 3}
+  m_Name: RCC_GroundMaterials
+  m_EditorClassIdentifier: 
+  frictions:
+  - groundMaterial: {fileID: 13400000, guid: 509c1bbe5810ac84ab6aa68f6523684d, type: 2}
+    forwardStiffness: 1.2
+    sidewaysStiffness: 1.2
+    slip: 0.275
+    damp: 0.4
+    volume: 0.5
+    groundParticles: {fileID: 1088255853978532, guid: 3c696ed2c46f7e4428d31d0bf5d0fd84,
+      type: 3}
+    groundSound: {fileID: 8300000, guid: 9cffa87722b739342ab15969766b1005, type: 3}
+    skidmark: {fileID: 114759648095143906, guid: f9bbf9e575fb2714aa217acfd7d02f15,
+      type: 3}
+    deflate: 0
+  - groundMaterial: {fileID: 13400000, guid: 64ad35dfd5f45dd4c94b03236a5dd4b7, type: 2}
+    forwardStiffness: 0.8
+    sidewaysStiffness: 0.7
+    slip: 0.1
+    damp: 1
+    volume: 0.5
+    groundParticles: {fileID: 177572, guid: 94c8d897a3c0cb34ba3314929c8ddd00, type: 3}
+    groundSound: {fileID: 8300000, guid: 7b144cd82aa04ff4caaa799c8e189162, type: 3}
+    skidmark: {fileID: 114148883271010190, guid: 5c9a2e5b00887f64289ea27975f85fdc,
+      type: 3}
+    deflate: 0
+  - groundMaterial: {fileID: 13400000, guid: 1d81794eea45227458aa2965af4b201d, type: 2}
+    forwardStiffness: 0.5
+    sidewaysStiffness: 1
+    slip: 0.05
+    damp: 2
+    volume: 0.5
+    groundParticles: {fileID: 100000, guid: 19d4c8eda967b7547af76ca0165fc47e, type: 3}
+    groundSound: {fileID: 8300000, guid: 59e038dfc28ad83419aff1c81f974134, type: 3}
+    skidmark: {fileID: 114685594780989890, guid: d9297d0c600831349ab30b1c051467f3,
+      type: 3}
+    deflate: 0
+  - groundMaterial: {fileID: 13400000, guid: 6aaa2ccdca4fea04dae77f8275037d91, type: 2}
+    forwardStiffness: 1.2
+    sidewaysStiffness: 1.2
+    slip: 0.275
+    damp: 1
+    volume: 0.5
+    groundParticles: {fileID: 1088255853978532, guid: 3c696ed2c46f7e4428d31d0bf5d0fd84,
+      type: 3}
+    groundSound: {fileID: 8300000, guid: 9cffa87722b739342ab15969766b1005, type: 3}
+    skidmark: {fileID: 114759648095143906, guid: f9bbf9e575fb2714aa217acfd7d02f15,
+      type: 3}
+    deflate: 0
+  - groundMaterial: {fileID: 13400000, guid: 54b8299f334ef3c4c86ded4aae822589, type: 2}
+    forwardStiffness: 1
+    sidewaysStiffness: 1
+    slip: 0.25
+    damp: 10
+    volume: 0
+    groundParticles: {fileID: 5240681609208784007, guid: de4704e3426ad794c9166d4f75ab33c4,
+      type: 3}
+    groundSound: {fileID: 0}
+    skidmark: {fileID: 114759648095143906, guid: f9bbf9e575fb2714aa217acfd7d02f15,
+      type: 3}
+    deflate: 1
+  terrainFrictions:
+  - groundMaterial: {fileID: 13400000, guid: 34d94011ab46ffe4c9347f4cbab45a9c, type: 2}
+    splatmapIndexes:
+    - index: 0
+    - index: 1
+    - index: 2
+  - groundMaterial: {fileID: 13400000, guid: f80d464b8c8649d428d31108ea3a2dee, type: 2}
+    splatmapIndexes:
+    - index: 1
+    - index: 0
+    - index: 2
+  - groundMaterial: {fileID: 13400000, guid: b87561d43d3bd794696695748df84174, type: 2}
+    splatmapIndexes:
+    - index: 2
+    - index: 0
+    - index: 1
+  - groundMaterial: {fileID: 13400000, guid: 890f038be3e5f474b8362b23be7dd1dd, type: 2}
+    splatmapIndexes:
+    - index: 2
+  - groundMaterial: {fileID: 13400000, guid: ed1ad05cd18787943901e6411fdf1e1e, type: 2}
+    splatmapIndexes:
+    - index: 2
+    - index: 1
+    - index: 1

@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5033469510500965824
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5218332506550151893, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_Name
+      value: Task Variant Variant Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2962796394390472431, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+--- !u!1 &3473371435764490709 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8496495014255295509, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+  m_PrefabInstance: {fileID: 5033469510500965824}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4497928735712476226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3473371435764490709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbc46c01f2615ff4e82fc4749e8f8652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  <Autonomous>k__BackingField: 0
+  <ResetPlatformToIdentity>k__BackingField: 0
+  <ResetSpeed>k__BackingField: 10
+  <ForceDifficulty>k__BackingField: 150
+  <BallStartingRadius>k__BackingField: 1
+  <DecisionPeriod>k__BackingField: 5
+  <Ball>k__BackingField: {fileID: 9007730199467199288}
+  <UseNegativeDragDifficulty>k__BackingField: 0
+  <BallAgentDifficulty>k__BackingField: 170
+  <BallAgentDifficultyDivisionFactor>k__BackingField: 1.05
+  <GlobalDrag>k__BackingField: 0
+  <ActiveMaterial>k__BackingField: {fileID: 2100000, guid: 185106933578dbb44ab7ecbbe2f25663, type: 2}
+  <DefaultMaterial>k__BackingField: {fileID: 2100000, guid: c9fa44c2c3f8ce74ca39a3355ea42631, type: 2}
+  <LoseMaterial>k__BackingField: {fileID: 2100000, guid: fb0931f6ca0b5c94aa449656e5b32453, type: 2}
+  <DeactiveMaterial>k__BackingField: {fileID: 2100000, guid: eaad04b0e0dec42229c9cb00a981d7ac, type: 2}
+  <UpdatePeriod>k__BackingField: 0.1
+  <NumberOfSamples>k__BackingField: 100
+  <Sigma>k__BackingField: 0.1
+  <SigmaMean>k__BackingField: 0.01
+  <ObservationProbability>k__BackingField: 0.9
+  <ConstantReactionTime>k__BackingField: 0
+  <OldDistributionPersistenceTime>k__BackingField: 0
+  <FullVision>k__BackingField: 0
+  <NumberOfBins>k__BackingField: 1000
+  <ShowBeliefState>k__BackingField: 0
+  <UseFocusAgent>k__BackingField: 0
+--- !u!1 &9007730199467199288 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4097038975588783864, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+  m_PrefabInstance: {fileID: 5033469510500965824}
+  m_PrefabAsset: {fileID: 0}

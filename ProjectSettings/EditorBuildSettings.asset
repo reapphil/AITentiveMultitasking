@@ -4,8 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/SupervisorML.unity
-    guid: 5daa2deca805c2544aba3a3e42ae96a9
+  m_Scenes: []
   m_configObjects: {}

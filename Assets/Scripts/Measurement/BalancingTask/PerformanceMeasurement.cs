@@ -316,7 +316,7 @@ public class PerformanceMeasurement : MonoBehaviour
     }
 
     /// <summary>
-    /// Writes (Counter, Distance to Center) to CountBallCenterDistance. This information is used to calculate the avverage distance of the Ball to the center of the platform.
+    /// Writes (Counter, Distance to Center) to CountBallCenterDistance. This information is used to calculate the average distance of the Ball to the center of the platform.
     /// </summary>
     /// <param name="sensor"></param>
     /// <param name="ballAgent"></param>

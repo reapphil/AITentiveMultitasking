@@ -1,0 +1,25 @@
+{
+	"autonomous": false,
+	"decisionPeriod": 1,
+	"focusActivePlatform": false,
+	"resetPlatformToIdentity": true,
+	"agentChoice": "Ball3DAgentOptimal",
+	"trainSupervisor": true,
+	"trainBallAgent": true,
+	"supervisorModelName": "",
+	"ballAgentModelName": "",
+	"supervisorSettings": {
+		"randomSupervisor": false,
+		"vectorObservationSize": 18,
+		"setConstantDecisionRequestInterval" : true,
+		"decisionRequestIntervalInSeconds" : 0.2,
+		"decisionRequestIntervalRangeInSeconds" : 0,
+		"globalDrag": 0.8,
+		"useNegativeDragDifficulty": true,
+		"difficultyIncrementInterval": 5,
+		"decisionPeriod": 5,
+		"advanceNoticeInSeconds" : 0.3,
+		"ballAgentDifficulty" : 170,
+		"ballAgentDifficultyDivisionFactor" : 1.05
+    }
+}

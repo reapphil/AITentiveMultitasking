@@ -11,7 +11,7 @@ using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 using System.Threading;
 
-//Core functions are separated for testing purpose. MonoBehaviours cannot be created without a Gameobject. Therfore, testing those classes is hard.
+//Core functions are separated for testing purpose. MonoBehaviours cannot be created without a gameObject. Therefore, testing those classes is hard.
 //The Humble Object pattern separates the core functionality into an own class which can be created with the help of the new keyword and therefore
 //this class can be tested without a Game Object.
 public class BalancingTaskBehaviourMeasurementBehaviour : MonoBehaviour
@@ -29,7 +29,7 @@ public class BalancingTaskBehaviourMeasurementBehaviour : MonoBehaviour
     "NumberOfBallVelocityBinsPerAxis to CSV."), ProjectAssign]
     public bool SaveBehavioralData { get; set; }
 
-    [field: SerializeField, Tooltip("Updates the saved model behavioural data of the given file."), ProjectAssign]
+    [field: SerializeField, Tooltip("Updates the saved model behavioral data of the given file."), ProjectAssign]
     public bool UpdateExistingModelBehavior { get; set; }
 
     [field: SerializeField, Header("Relation Difference to Reaction Time"), Tooltip("Number of bins in which the active time of a platform should " +
@@ -68,7 +68,7 @@ public class BalancingTaskBehaviourMeasurementBehaviour : MonoBehaviour
     public int MaxNumberOfActions { get; set; }
 
     [field: SerializeField, Header("Comparison Data Collection"), Tooltip("Collects behavioral data until there is an entry for every bin of the " +
-        "comparisonFileName or a certain time limit has been exceeded without any procress."), ProjectAssign(Header = "Comparison Data Collection")]
+        "comparisonFileName or a certain time limit has been exceeded without any progress."), ProjectAssign(Header = "Comparison Data Collection")]
     public bool CollectDataForComparison { get; set; }
 
     [field: SerializeField, Tooltip("Filename for the behavioral data and the reaction time (use the name for the behavioral data). The reaction time" +
@@ -217,10 +217,10 @@ public class BalancingTaskBehaviourMeasurement
 
     public int MaxNumberOfActions { private set; get; }
 
-    //result of experiment: (3.32, 1.47, 3.52) (only valid for the standard parameters of the platfrom size, etc.)
+    //result of experiment: (3.32, 1.47, 3.52) (only valid for the standard parameters of the platform size, etc.)
     public Vector3 VelocityRangeMax { private set; get; } = new Vector3(4f, 2f, 4f);
 
-    //result of experiment: (-3.45, -10.00, -3.51) (only valid for the standard parameters of the platfrom size, etc.)
+    //result of experiment: (-3.45, -10.00, -3.51) (only valid for the standard parameters of the platform size, etc.)
     public Vector3 VelocityRangeMin { private set; get; } = new Vector3(-4f, -11f, -4f);
 
     public Vector3 AngleRangeMax { private set; get; } = new Vector3(360.1f, 360.1f, 360.1f);
@@ -262,16 +262,16 @@ public class BalancingTaskBehaviourMeasurement
 
     private Text _proportionCollectedReactionTimesText;
 
-    //arrray[ballBin][angleBin]<velocityBin, (count, (Sum(ActionVector), Sum(ActionVector^2)))>
+    //array[ballBin][angleBin]<velocityBin, (count, (Sum(ActionVector), Sum(ActionVector^2)))>
     private Dictionary<int, (int, (Vector3, Vector3))>[][] _actionSetPerBinBehavioralData;
 
-    //arrray[distanceBin][angleBin]<velocityBin, (count, (SuspendedCount, Sum(ReactionTime), Sum(ReactionTime^2)))>
+    //array[distanceBin][angleBin]<velocityBin, (count, (SuspendedCount, Sum(ReactionTime), Sum(ReactionTime^2)))>
     private Dictionary<int, (int, (int, double, double))>[][][] _reactionTimeInMsDistanceVelocityRelation;
 
-    //arrray[ballBin][angleBin][velocityBin]
+    //array[ballBin][angleBin][velocityBin]
     private bool[][][] _actionSetPerBinBehavioralDataComparison;
 
-    //arrray[distanceBin][angleBin][velocityBin]
+    //array[distanceBin][angleBin][velocityBin]
     private bool[][][][] _reactionTimeInMsDistanceVelocityRelationComparison;
 
     private int _areaBinCount;
@@ -417,7 +417,7 @@ public class BalancingTaskBehaviourMeasurement
     }
 
     /// <summary>
-    /// See CollectResponseTimeAtSwitch and CollectBehavioralData for a description how data is collected. Is called everytime an action is requested
+    /// See CollectResponseTimeAtSwitch and CollectBehavioralData for a description how data is collected. Is called every time an action is requested
     /// (fixed update circle e.g. 0.02s).
     /// </summary>
     /// <param name="actionBuffers"></param>
@@ -668,7 +668,7 @@ public class BalancingTaskBehaviourMeasurement
         }
         catch (DirectoryNotFoundException)
         {
-            Debug.Log(String.Format("Could neither load file nor directory {0}. Continue with new behavioural data in newly created directory.", pathsWithConfig.Item1));
+            Debug.Log(String.Format("Could neither load file nor directory {0}. Continue with new behavioral data in newly created directory.", pathsWithConfig.Item1));
             Directory.CreateDirectory(Path.GetDirectoryName(pathsWithConfig.Item1));
         }
 
@@ -689,7 +689,7 @@ public class BalancingTaskBehaviourMeasurement
             }
             catch (FileNotFoundException)
             {
-                Debug.Log(String.Format("Could not load file {0}. Continue with new behavioural data.", pathsWithoutConfigString.Item1));
+                Debug.Log(String.Format("Could not load file {0}. Continue with new behavioral data.", pathsWithoutConfigString.Item1));
             }
         }
     }
@@ -777,7 +777,7 @@ public class BalancingTaskBehaviourMeasurement
     {
         string json = File.ReadAllText(path);
 
-        //arrray[ballBin][angleBin]<velocityBin, entry>
+        //array[ballBin][angleBin]<velocityBin, entry>
         Dictionary<int, (int, T)>[][] entry = JsonConvert.DeserializeObject<Dictionary<int, (int, T)>[][]>(json);
 
         return GetBehaviouralMetaData3D(entry);
@@ -787,7 +787,7 @@ public class BalancingTaskBehaviourMeasurement
     {
         string json = File.ReadAllText(path);
 
-        //arrray[timeBin][ballBin][angleBin]<velocityBin, entry>
+        //array[timeBin][ballBin][angleBin]<velocityBin, entry>
         Dictionary<int, (int, T)>[][][] entry = JsonConvert.DeserializeObject<Dictionary<int, (int, T)>[][][]>(json);
 
         return GetBehaviouralMetaDatad4D(entry);
@@ -987,7 +987,7 @@ public class BalancingTaskBehaviourMeasurement
                 //no behavioral data available --> discard measurement
                 if (!_actionSetPerBinBehavioralData[ballBin][targetAngleBin].ContainsKey(velocityBin_BehavioralData))
                 {
-                    Debug.Log("Discard reaction time measurement (no behavioural data available)!");
+                    Debug.Log("Discard reaction time measurement (no behavioral data available)!");
                     _isReactionTimeMeasurementActive = false;
                     _suspendedReactionTimeCount = 0;
                 }

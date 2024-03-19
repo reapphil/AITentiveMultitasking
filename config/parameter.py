@@ -8,7 +8,7 @@ import scipy.stats as ss
 import subprocess
 import scipy
 from observationUtils import getDurations, getSuspendedReactionTimeCounts, getNumberOfPerformedActionsPerEpisode, getActions
-from workload import get_number_of_environments_for_cpu_workload, is_cpu_overloaded
+from workload import get_number_of_environments_for_workload, is_cpu_overloaded
 import argparse
 import warnings
 from unity_helper import call_function
@@ -196,7 +196,7 @@ def bolfi(d, model_path, isVerbose):
 
 def rejection(d, model_path):
     pool = get_pool(d, model_path)
-    n = get_number_of_environments_for_cpu_workload()-1
+    n = get_number_of_environments_for_workload()-1
     print("Starting rejection sampling with batch size of {}.".format(n))
 
     rej = elfi.Rejection(d, 

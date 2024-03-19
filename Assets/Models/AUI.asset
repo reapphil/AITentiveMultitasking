@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d36d1b2f803e574c82da5f2f1fbcffc, type: 3}
+  m_Name: AUI
+  m_EditorClassIdentifier: 
+  Model: {fileID: 5022602860645237092, guid: ed49b1212f1c1e741afd4ed07f35a130, type: 3}
+  SupervisorSettings:
+    randomSupervisor: 0
+    supervisorChoice: 
+    vectorObservationSize: 0
+    setConstantDecisionRequestInterval: 0
+    decisionRequestIntervalInSeconds: 0
+    decisionRequestIntervalRangeInSeconds: 0
+    difficultyIncrementInterval: 0
+    decisionPeriod: 0
+    advanceNoticeInSeconds: 0
+  Type: Supervisor.SupervisorAgent
+  DecisionPeriod: 0

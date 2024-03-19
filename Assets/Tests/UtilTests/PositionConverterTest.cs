@@ -485,7 +485,7 @@ public class PositionConverterTest
     }
 
     [Test]
-    public void BinToContinousValueToBinTest()
+    public void BinToContinuousValueToBinTest()
     {
         int bin = 6;
         float range = 9;
@@ -498,7 +498,7 @@ public class PositionConverterTest
     }
 
     [Test]
-    public void BinToContinousValueToBinTest2()
+    public void BinToContinuousValueToBinTest2()
     {
         int bin = 6;
         float min = 0;
@@ -513,7 +513,7 @@ public class PositionConverterTest
     }
 
     [Test]
-    public void BinToContinousValueNumBin1Test2()
+    public void BinToContinuousValueNumBin1Test2()
     {
         int bin = 0;
         float min = 0;
@@ -533,7 +533,7 @@ public class PositionConverterTest
     }
 
     [Test]
-    public void ContinousValueToBinNumBin1Test2()
+    public void ContinuousValueToBinNumBin1Test2()
     {
         
         float min = 0;

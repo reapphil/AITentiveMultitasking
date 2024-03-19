@@ -44,7 +44,7 @@ public static class SettingsLoader
         Type type = setting1.GetType();
 
         const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
-        MemberInfo[] members = type.GetAttributes(bindingFlags);
+        MemberInfo[] members = type.GetMemberInfos(bindingFlags);
 
         foreach (MemberInfo memberInfo in members)
         {

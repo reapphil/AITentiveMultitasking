@@ -9,7 +9,7 @@ using System.Collections;
 
 public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITask
 {
-    [field: SerializeField, Tooltip("If autonomus is True than there is no supervised control. The agent continuously control the platform and does not give control to the " +
+    [field: SerializeField, Tooltip("If autonomous is True than there is no supervised control. The agent continuously control the platform and does not give control to the " +
     "supervisor."), ProjectAssign(Header = "Balancing Task")]
     virtual public bool IsAutonomous { get; set; } = false;
 
@@ -19,7 +19,7 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
     [field: SerializeField, Tooltip("The speed how fast the platform reset to the horizontal position for the inactive platform."), ProjectAssign]
     public float ResetSpeed { get; set; } = 10;
 
-    [field: SerializeField, Tooltip("ForceDifficulty is represented as the force releated to the velocity of the Ball.")]
+    [field: SerializeField, Tooltip("ForceDifficulty is represented as the force related to the velocity of the Ball.")]
     public int ForceDifficulty { get; set; } = 150;
 
     [field: SerializeField, Tooltip("Radius of the random starting ball position."), ProjectAssign]
@@ -48,24 +48,6 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
     public static Vector3 BallStartingPosition { get; protected set; }
 
     virtual public bool IsVisible { get; protected set; }
-
-    public bool IsFocused 
-    {
-        get => _isFocused;
-        set
-        {
-            _isFocused = value;
-
-            if (IsFocused)
-            {
-                GetGameObject().transform.parent.transform.GetChildByName("Eye_Canvas").gameObject.SetActive(true);
-            }
-            else
-            {
-                GetGameObject().transform.parent.transform.GetChildByName("Eye_Canvas").gameObject.SetActive(false);
-            }
-        }
-    }
 
     virtual public bool IsActive { get; set; }
 
@@ -124,14 +106,14 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
         }
     }
 
-    //must be called in inheritaded classes. Actual functionality must be implemented in inheritaded classes.
+    //must be called in inherited classes. Actual functionality must be implemented in inherited classes.
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         OnAction?.Invoke(actionBuffers, this, _timeSinceLastSwitch);
         //Debug.Log(string.Format("actionBuffers.ContinuousActions[0]: {0}\t actionBuffers.ContinuousActions[1]: {1}", actionBuffers.ContinuousActions[0], actionBuffers.ContinuousActions[1]));
     }
 
-    //must be called in inheritaded classes. Actual functionality must be implemented in inheritaded classes.
+    //must be called in inherited classes. Actual functionality must be implemented in inherited classes.
     public override void CollectObservations(VectorSensor sensor)
     {
         OnCollectObservationsAction?.Invoke(sensor, this);
@@ -436,7 +418,7 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
         Ball.transform.localScale = new Vector3(scale, scale, scale);
     }
 
-    //Will be only called once during the initalization.
+    //Will be only called once during the initialization.
     private void SetResetParameters()
     {
         SetBall();

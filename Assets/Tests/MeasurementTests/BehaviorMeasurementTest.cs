@@ -147,7 +147,7 @@ public class BehaviorMeasurementTest
         _behaviourMeasurement.CollectData(actionBuffers, _ballAgentsMock[1]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         newEntry = newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
-        LogAssert.Expect(LogType.Log, "Discard reaction time measurement (no behavioural data available)!");
+        LogAssert.Expect(LogType.Log, "Discard reaction time measurement (no behavioral data available)!");
         Assert.AreEqual(oldEntry, newEntry);
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1)
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (0.5, 0.5)
@@ -163,7 +163,7 @@ public class BehaviorMeasurementTest
         LogAssert.Expect(LogType.Log, "Suspend reaction time measurement (action in unusual range)!");
         Assert.IsNotEmpty(newEntry);
         Assert.AreEqual(oldEntry, newEntry);
-        //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1) (no update since updates of behavioural data only happens when reaction time measurement was not suspended)
+        //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1) (no update since updates of behavioral data only happens when reaction time measurement was not suspended)
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (0.5, 0.5)
 
         //different agent, behavioral data available and action in usual range --> change in reaction time data
@@ -251,7 +251,7 @@ public class BehaviorMeasurementTest
         _behaviourMeasurement.CollectData(actionBuffers, _ballAgentsMock[1]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         Dictionary<int, (int, (int, double, double))>[][][] newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
-        LogAssert.Expect(LogType.Log, "Discard reaction time measurement (no behavioural data available)!");
+        LogAssert.Expect(LogType.Log, "Discard reaction time measurement (no behavioral data available)!");
         Assert.AreEqual(oldEntry, newEntry);
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1)
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (0.5, 0.5)
@@ -331,7 +331,7 @@ public class BehaviorMeasurementTest
         _behaviourMeasurement.CollectData(actionBuffers, _ballAgentsMock[1]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         newEntry = newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
-        LogAssert.Expect(LogType.Log, "Discard reaction time measurement (no behavioural data available)!");
+        LogAssert.Expect(LogType.Log, "Discard reaction time measurement (no behavioral data available)!");
         Assert.AreEqual(oldEntry, newEntry);
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1)
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (0.5, 0.5)
@@ -347,7 +347,7 @@ public class BehaviorMeasurementTest
         LogAssert.Expect(LogType.Log, "Suspend reaction time measurement (action in unusual range)!");
         Assert.IsNotEmpty(newEntry);
         Assert.AreEqual(oldEntry, newEntry);
-        //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1) (no update since updates of behavioural data only happens when reaction time measurement was not suspended)
+        //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1) (no update since updates of behavioral data only happens when reaction time measurement was not suspended)
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (0.5, 0.5)
 
         //different agent, behavioral data available and action in usual range --> change in reaction time data
@@ -369,14 +369,14 @@ public class BehaviorMeasurementTest
         actionBuffers = new ActionBuffers(new float[] { 0f, 0f }, new int[0]);
         _behaviourMeasurement.CollectData(actionBuffers, _ballAgentsMock[0]);
         LogAssert.Expect(LogType.Log, "Suspend reaction time measurement (action in unusual range)!");
-        //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1) (no update since updates of behavioural data only happens when reaction time measurement was not suspended)
+        //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1) (no update since updates of behavioral data only happens when reaction time measurement was not suspended)
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (0.5, 0.5)
 
         //different agent and behavioral data available but action in unusual range --> no change in reaction time data
         actionBuffers = new ActionBuffers(new float[] { 0f, 0f }, new int[0]);
         _behaviourMeasurement.CollectData(actionBuffers, _ballAgentsMock[0]);
         LogAssert.Expect(LogType.Log, "Suspend reaction time measurement (action in unusual range)!");
-        //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1) (no update since updates of behavioural data only happens when reaction time measurement was not suspended)
+        //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1) (no update since updates of behavioral data only happens when reaction time measurement was not suspended)
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (0.5, 0.5)
 
         //different agent, behavioral data available and action in usual range --> change in reaction time data
@@ -1046,10 +1046,10 @@ public class BehaviorMeasurementTest
 
     private Dictionary<int, (int, T)>[][] LoadDataFromJSON3D<T>(string path)
     {
-        //arrray[ballBin]<velocityBin, entry>
+        //array[ballBin]<velocityBin, entry>
         string json = File.ReadAllText(path);
 
-        //arrray[ballBin][angleBin]<velocityBin, entry>
+        //array[ballBin][angleBin]<velocityBin, entry>
         Dictionary<int, (int, T)>[][] entry = JsonConvert.DeserializeObject<Dictionary<int, (int, T)>[][]>(json);
 
         return entry;
@@ -1058,10 +1058,10 @@ public class BehaviorMeasurementTest
 
     private Dictionary<int, (int, T)>[][][] LoadDataFromJSON4D<T>(string path)
     {
-        //arrray[ballBin]<velocityBin, entry>
+        //array[ballBin]<velocityBin, entry>
         string json = File.ReadAllText(path);
 
-        //arrray[ballBin][angleBin]<velocityBin, entry>
+        //array[ballBin][angleBin]<velocityBin, entry>
         Dictionary<int, (int, T)>[][][] entry = JsonConvert.DeserializeObject<Dictionary<int, (int, T)>[][][]>(json);
 
         return entry;

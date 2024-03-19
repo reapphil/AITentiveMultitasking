@@ -39,7 +39,7 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
     [field: SerializeField, Tooltip("Specify the number of bins in which the platform should be divided."), ProjectAssign]
     public int NumberOfBins { get; set; } = 1000;
 
-    [field: SerializeField, Tooltip("Visualizes the current belief position of the Ball (grey Ball), the Ball's average velocity based on the defined normal distribution (black line) and the direction of the bin with the highest prbability (red line)."), ProjectAssign]
+    [field: SerializeField, Tooltip("Visualizes the current belief position of the Ball (gray Ball), the Ball's average velocity based on the defined normal distribution (black line) and the direction of the bin with the highest probability (red line)."), ProjectAssign]
     public bool ShowBeliefState { get; set; }
 
     [field: SerializeField, Tooltip("If active the observations of the ballagents are provided by the focus- instead of the supervisor agent."), ProjectAssign]
@@ -60,6 +60,7 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
         }
     }
 
+    public bool IsFocused { get; set; }
 
     protected double[] _ballLocationProbabilities;
 
@@ -428,7 +429,7 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
             _maxProbBinLine.SetPosition(1, maxProbBinDirection + gameObject.transform.position);
         }
 
-        //Normalise the updated belief b`(s_)
+        //Normalize the updated belief b`(s_)
         s_normalizationPerfMarker.Begin();
         double sum = _ballLocationProbabilities.Sum();
         for (int p = 0; p < _numberOfBins; p++)

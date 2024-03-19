@@ -35,7 +35,7 @@ public class LogToFile : MonoBehaviour
     {
         BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 ;
-        MemberInfo[] members = comp.GetType().GetAttributes(bindingFlags);
+        MemberInfo[] members = comp.GetType().GetMemberInfos(bindingFlags);
 
         string str = String.Format("Component {0} has the following parameters:\n", comp.GetType());
         foreach (var thisVar in members)

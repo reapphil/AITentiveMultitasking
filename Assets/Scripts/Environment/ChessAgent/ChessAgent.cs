@@ -27,8 +27,6 @@ public class ChessAgent : Agent, ITask
     private bool _isNewSelection;
 
 
-    public bool IsVisible => throw new System.NotImplementedException();
-
     public void AddObservationsToSensor(VectorSensor sensor)
     {
         for (int x = 0; x < 8; x++)

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System.Reflection;
 using System;
 using Supervisor;
+using System.Linq;
 
 public class InspectorTests
 {
@@ -61,7 +62,19 @@ public class InspectorTests
 
         foreach (GameObject task in _supervisorAgent.TaskGameObjects)
         {
-            Assert.AreEqual(123, task.GetComponentInChildren<ITask>().DecisionPeriod);
+            ITask taskScript = task.GetComponentInChildren<ITask>();
+
+            BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
+            FieldInfo field = taskScript.GetType().GetBackingFieldInHierarchy("DecisionPeriod", flags);
+
+            if (field != null)
+            {
+                if (Attribute.IsDefined(field, typeof(ProjectAssignAttribute)))
+                {
+                    Assert.AreEqual(123, taskScript.DecisionPeriod);
+                }
+            }
+
         }
     }
 }

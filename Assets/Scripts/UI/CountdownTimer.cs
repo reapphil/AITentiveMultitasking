@@ -23,11 +23,11 @@ public class CountdownTimer : MonoBehaviour
     {
         if( CurrentTime != 0)
         {
-            updateTimer();
+            UpdateTimer();
         }
     }
 
-    private void updateTimer()
+    private void UpdateTimer()
     {
         CurrentTime -= Time.unscaledDeltaTime;
 

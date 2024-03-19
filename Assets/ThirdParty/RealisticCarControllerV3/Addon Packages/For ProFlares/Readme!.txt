@@ -1,1 +1,0 @@
-Be sure your project has latest ProFlare before importing the integration package. Just attach "RCC_ProFlareAdjuster" component to each light. ProFlare must be a child gameobject of the light.

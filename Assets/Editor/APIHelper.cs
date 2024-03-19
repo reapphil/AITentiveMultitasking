@@ -30,7 +30,7 @@ public static class APIHelper
 }
 
 
-//Needed for mocking in testcases
+//Needed for mocking in test cases
 public interface ICommandLineInterface
 {
     string[] GetCommandLineArgs();

@@ -12,7 +12,6 @@ public static class Validator
         Hyperparameters hyperparameters = settings[typeof(Hyperparameters)] as Hyperparameters;
         SupervisorSettings supervisorSettings = settings[typeof(SupervisorSettings)] as SupervisorSettings;
 
-        Assert.IsTrue((supervisorSettings.randomSupervisor) || hyperparameters.supervisorModelName != "");
         Assert.IsFalse(hyperparameters.saveBehavioralData);
         Assert.AreNotEqual(0, hyperparameters.tasks.Length);
 
@@ -107,16 +106,16 @@ public static class Validator
 
     public static void ValidateProjectSettings(ProjectSettings projectSettings)
     {
-        Assert.AreNotEqual(0, projectSettings.TasksGameObjects.Length, "Projectsettings invalid: Number of tasks should not be 0.");
+        Assert.AreNotEqual(0, projectSettings.TasksGameObjects.Length, "ProjectSettings invalid: Number of tasks should not be 0.");
 
         if (projectSettings.AtLeastOneTaskUsesFocusAgent() && !projectSettings.ModeIsGameMode())
         {
-            Assert.IsFalse(projectSettings.GetFocusModels().IsNullOrEmpty(), "Projectsettings invalid: Focus agent is not defined.");
+            Assert.IsFalse(projectSettings.GetFocusModels().IsNullOrEmpty(), "ProjectSettings invalid: Focus agent is not defined.");
         }
 
         if (!projectSettings.SupervisorIsRandomSupervisor() && projectSettings.Mode != Mode.GameModeNoSupervisor)
         {
-            Assert.IsFalse(projectSettings.GetSupervisorModels().IsNullOrEmpty(), "Projectsettings invalid: Supervisor agent is not defined.");
+            Assert.IsFalse(projectSettings.GetSupervisorModels().IsNullOrEmpty(), "ProjectSettings invalid: Supervisor agent is not defined.");
         }
     }
 
@@ -130,16 +129,16 @@ public static class Validator
         SupervisorSettings supervisorSettings = settings[typeof(SupervisorSettings)] as SupervisorSettings;
         ExperimentSettings experimentSettings = settings[typeof(ExperimentSettings)] as ExperimentSettings;
 
-        Assert.AreNotEqual(0, hyperparameters.tasks.Length, "Projectsettings invalid: Number of tasks should not be 0.");
+        Assert.AreNotEqual(0, hyperparameters.tasks.Length, "ProjectSettings invalid: Number of tasks should not be 0.");
 
         if (hyperparameters.useFocusAgent && !IsGameMode(experimentSettings.mode))
         {
-            Assert.AreNotEqual("", hyperparameters.focusAgentModelName, "Projectsettings invalid: Focus agent is not defined.");
+            Assert.AreNotEqual("", hyperparameters.focusAgentModelName, "ProjectSettings invalid: Focus agent is not defined.");
         }
 
         if (!supervisorSettings.randomSupervisor && experimentSettings.mode != "GameModeNoSupervisor")
         {
-            Assert.AreNotEqual("", hyperparameters.supervisorModelName, "Projectsettings invalid: Supervisor agent is not defined.");
+            Assert.AreNotEqual("", hyperparameters.supervisorModelName, "ProjectSettings invalid: Supervisor agent is not defined.");
         }
     }
 

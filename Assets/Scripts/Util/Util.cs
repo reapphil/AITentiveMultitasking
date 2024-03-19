@@ -206,7 +206,7 @@ public static class Util
         }
     }
 
-    public static List<T> ReadDatafromCSV<T>(string path)
+    public static List<T> ReadDataFromCSV<T>(string path)
     {
         List<T> records = new List<T>();
 
@@ -279,7 +279,7 @@ public static class Util
 
         Type type = typeof(T);
 
-        MemberInfo[] members = type.GetAttributes(BindingFlags.Public | BindingFlags.Instance);
+        MemberInfo[] members = type.GetMemberInfos(BindingFlags.Public | BindingFlags.Instance);
 
         foreach (MemberInfo member in members)
         {

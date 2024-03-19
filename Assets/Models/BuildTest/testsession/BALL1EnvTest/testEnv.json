@@ -1,0 +1,20 @@
+{
+	"autonomous": false,
+	"focusActivePlatform": false,
+	"resetPlatformToIdentity": true,
+	"agentChoice": "Ball3DAgentHumanCognition",
+	"trainSupervisor": false,
+	"trainBallAgent": true,
+	"supervisorModelName": "AUI.onnx",
+	"ballAgentModelName": "3DBall.onnx",
+	"measurePerformance": false,
+	"ball3DAgentHumanCognitionSettings": {
+		"numberOfBins": 5000,
+		"showBeliefState": false,
+		"numberOfSamples": 1000,
+		"sigma": 0.1,
+		"sigmaMean": 0.01,
+		"updatePeriode": 0.2,
+		"observationProbability": 0.1
+	}
+}

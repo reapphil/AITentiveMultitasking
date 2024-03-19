@@ -1,0 +1,123 @@
+{
+    "3DBall": {
+        "checkpoints": [
+            {
+                "steps": 30499643,
+                "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall\\3DBall-30499643.onnx",
+                "reward": 3735.6875255760638,
+                "creation_time": 1687720111.6077569,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall\\3DBall-30499643.pt"
+                ]
+            },
+            {
+                "steps": 30999774,
+                "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall\\3DBall-30999774.onnx",
+                "reward": 3730.1454243479684,
+                "creation_time": 1687720403.909594,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall\\3DBall-30999774.pt"
+                ]
+            },
+            {
+                "steps": 31499740,
+                "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall\\3DBall-31499740.onnx",
+                "reward": 3728.924712610821,
+                "creation_time": 1687720695.9382105,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall\\3DBall-31499740.pt"
+                ]
+            },
+            {
+                "steps": 31999108,
+                "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall\\3DBall-31999108.onnx",
+                "reward": 3725.9467219366343,
+                "creation_time": 1687720986.4576669,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall\\3DBall-31999108.pt"
+                ]
+            },
+            {
+                "steps": 32081638,
+                "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall\\3DBall-32081638.onnx",
+                "reward": 3726.26058284425,
+                "creation_time": 1687721034.4283674,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall\\3DBall-32081638.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 32081638,
+            "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall.onnx",
+            "reward": 3726.26058284425,
+            "creation_time": 1687721034.4283674,
+            "auxillary_file_paths": [
+                "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\3DBall\\3DBall-32081638.pt"
+            ]
+        }
+    },
+    "AUI": {
+        "checkpoints": [
+            {
+                "steps": 999958,
+                "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI\\AUI-999958.onnx",
+                "reward": 178.05235695838928,
+                "creation_time": 1687710255.687295,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI\\AUI-999958.pt"
+                ]
+            },
+            {
+                "steps": 1499859,
+                "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI\\AUI-1499859.onnx",
+                "reward": 183.730633354187,
+                "creation_time": 1687713847.5310912,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI\\AUI-1499859.pt"
+                ]
+            },
+            {
+                "steps": 1999705,
+                "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI\\AUI-1999705.onnx",
+                "reward": 178.0380506515503,
+                "creation_time": 1687717451.1092608,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI\\AUI-1999705.pt"
+                ]
+            },
+            {
+                "steps": 2499207,
+                "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI\\AUI-2499207.onnx",
+                "reward": 178.35059853962488,
+                "creation_time": 1687721034.3843675,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI\\AUI-2499207.pt"
+                ]
+            },
+            {
+                "steps": 2500207,
+                "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI\\AUI-2500207.onnx",
+                "reward": 178.35059853962488,
+                "creation_time": 1687721034.4503675,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI\\AUI-2500207.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2500207,
+            "file_path": "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI.onnx",
+            "reward": 178.35059853962488,
+            "creation_time": 1687721034.4503675,
+            "auxillary_file_paths": [
+                "results\\..\\..\\Assets\\Models\\sessionOptS20_DRI0.2NTTT_LOG\\AUI1S2.5MsessionOptS20_DRI0.2NTTT\\AUI\\AUI-2500207.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.0.0+cpu"
+    }
+}

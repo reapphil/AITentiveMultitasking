@@ -24,7 +24,7 @@ public static class BalancingTaskBehaviourMeasurementConverter
     public static void ConvertRawToBinData(SupervisorSettings supervisorSettings, BalancingTaskSettings balancingTaskSettings, BehavioralDataCollectionSettings behavioralDataCollectionSettings, string rawDataPath)
     {
         s_convertRawToBinDataPerfMarker.Begin();
-        List<BehaviouralData> behaviouralDataList = Util.ReadDatafromCSV<BehaviouralData>(rawDataPath);
+        List<BehaviouralData> behaviouralDataList = Util.ReadDataFromCSV<BehaviouralData>(rawDataPath);
         IBallAgent[] ballAgentsMock = new IBallAgent[2];
         ballAgentsMock[0] = Substitute.For<IBallAgent>();
         ballAgentsMock[1] = Substitute.For<IBallAgent>();
@@ -62,7 +62,7 @@ public static class BalancingTaskBehaviourMeasurementConverter
             activeBallAgent.GetPlatformAngle().Returns(new Vector3(behaviouralData.TargetPlatformAngleX, behaviouralData.TargetPlatformAngleY, behaviouralData.TargetPlatformAngleZ));
             s_initActiveBallAgentPerfMarker.End();
 
-            if (behaviouralData.TimeSinceLastSwitch != 0) //TimeSinceLastSwitch is only 0 before the first task switch occours, therefore sourceBallAgent should not be null in any other scenario s.t. a NullReferenceException would indicate a bug
+            if (behaviouralData.TimeSinceLastSwitch != 0) //TimeSinceLastSwitch is only 0 before the first task switch occurs, therefore sourceBallAgent should not be null in any other scenario s.t. a NullReferenceException would indicate a bug
             {
                 s_initSourceBallAgentPerfMarker.Begin();
                 sourceBallAgent.ClearReceivedCalls();
@@ -96,7 +96,7 @@ public static class BalancingTaskBehaviourMeasurementConverter
         }
         stopWatch.Stop();
 
-        Debug.Log(string.Format("Time elapsed during convertion: {0} seconds", (float)stopWatch.ElapsedMilliseconds / 1000));
+        Debug.Log(string.Format("Time elapsed during conversion: {0} seconds", (float)stopWatch.ElapsedMilliseconds / 1000));
 
         behaviourMeasurement.SaveReactionTimeToJSON(Util.ConvertRawPathToReactionTimeDataPath(rawDataPath, behavioralDataCollectionSettings, supervisorSettings));
         behaviourMeasurement.SaveBehavioralDataToJSON(Util.ConvertRawPathToBehavioralDataPath(rawDataPath, behavioralDataCollectionSettings, supervisorSettings));
@@ -152,7 +152,7 @@ public static class BalancingTaskBehaviourMeasurementConverter
                 hashCodeDict.Add(behaviouralData.TargetBallAgentHashCode, ballAgentsMock[ballAgentId]);
                 ballAgentId += 1;
 
-                //There could be more than 2 hashcodes in case the game is stopped and then resumed
+                //There could be more than 2 hash codes in case the game is stopped and then resumed
                 if (ballAgentId == ballAgentsMock.Length)
                 {
                     ballAgentId = 0;

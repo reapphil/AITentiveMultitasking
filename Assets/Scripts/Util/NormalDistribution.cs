@@ -2,7 +2,7 @@
 using System;
 
 /// <summary>
-/// A gaussian or normal distribution.
+/// A Gaussian or normal distribution.
 /// </summary>
 public class NormalDistribution
 {
@@ -27,9 +27,9 @@ public class NormalDistribution
 
 
     /// <summary>
-    /// Sample a value from distribution for a given random varible.
+    /// Sample a value from distribution for a given random variable.
     /// </summary>
-    /// <param name="rnd">Generator for a random varible between 0-1 (inculsive)</param>
+    /// <param name="rnd">Generator for a random variable between 0-1 (inclusive)</param>
     /// <returns>A value from the distribution</returns>
     public double Sample(System.Random rnd)
     {

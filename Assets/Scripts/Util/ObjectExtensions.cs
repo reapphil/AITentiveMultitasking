@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.ArrayExtensions;
+using System.Linq;
+using System.Diagnostics;
+using UnityEngine;
 
 //see https://stackoverflow.com/a/11308879/11986067
 namespace System
@@ -8,35 +11,6 @@ namespace System
     public static class ObjectExtensions
     {
         private static readonly MethodInfo s_cloneMethod = typeof(Object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
-
-        public static IEnumerable<Type> GetParentTypes(this Type type)
-        {
-            // is there any base type?
-            if (type == null)
-            {
-                yield break;
-            }
-
-            // return all implemented or inherited interfaces
-            foreach (var i in type.GetInterfaces())
-            {
-                yield return i;
-            }
-
-            // return all inherited types
-            var currentBaseType = type.BaseType;
-            while (currentBaseType != null)
-            {
-                yield return currentBaseType;
-                currentBaseType = currentBaseType.BaseType;
-            }
-        }
-
-        public static bool IsPrimitive(this Type type)
-        {
-            if (type == typeof(String)) return true;
-            return (type.IsValueType & type.IsPrimitive);
-        }
 
         public static Object Copy(this Object originalObject)
         {
@@ -53,14 +27,14 @@ namespace System
         {
             if (originalObject == null) return null;
             var typeToReflect = originalObject.GetType();
-            if (IsPrimitive(typeToReflect)) return originalObject;
+            if (typeToReflect.IsPrimitive()) return originalObject;
             if (visited.ContainsKey(originalObject)) return visited[originalObject];
             if (typeof(Delegate).IsAssignableFrom(typeToReflect)) return null;
             var cloneObject = s_cloneMethod.Invoke(originalObject, null);
             if (typeToReflect.IsArray)
             {
                 var arrayType = typeToReflect.GetElementType();
-                if (IsPrimitive(arrayType) == false)
+                if (arrayType.IsPrimitive() == false)
                 {
                     Array clonedArray = (Array)cloneObject;
                     clonedArray.ForEach((array, indices) => array.SetValue(InternalCopy(clonedArray.GetValue(indices), visited), indices));
@@ -87,7 +61,7 @@ namespace System
             foreach (FieldInfo fieldInfo in typeToReflect.GetFields(bindingFlags))
             {
                 if (filter != null && filter(fieldInfo) == false) continue;
-                if (IsPrimitive(fieldInfo.FieldType)) continue;
+                if (fieldInfo.FieldType.IsPrimitive()) continue;
                 var originalFieldValue = fieldInfo.GetValue(originalObject);
                 var clonedFieldValue = InternalCopy(originalFieldValue, visited);
                 fieldInfo.SetValue(cloneObject, clonedFieldValue);

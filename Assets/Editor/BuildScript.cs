@@ -93,12 +93,12 @@ public class BuildScript
 
         if (File.Exists(Path.Combine(workingDirectory, buildPath, "SupervisorML.exe")) && !overwriteOldEvaluation)
         {
-            Debug.Log("Environment allready built, skip building...");
+            Debug.Log("Environment already built, skip building...");
             return;
         }
         else
         {
-            Debug.Log("Building enviornment in progress...");
+            Debug.Log("Building environment in progress...");
         }
 
         Dictionary<Type, ISettings> settings = SettingsLoader.LoadSettings(confFile);
@@ -116,7 +116,7 @@ public class BuildScript
 
         //The following naming convention leads to too long paths: hyperparametersBase.behavioralDataCollectionSettings.fileNameForBehavioralData = Path.GetFileNameWithoutExtension(confFile) + ".json";
         ((BehavioralDataCollectionSettings)settings[typeof(BehavioralDataCollectionSettings)]).fileNameForBehavioralData = string.Format("eval{0}.json", DateTime.Now.ToString("yyyyMMddHHmm"));
-        //higher time scale result in an unprecise time measurements
+        //higher time scale result in an imprecise time measurements
         ((Hyperparameters)settings[typeof(Hyperparameters)]).timeScale = 20;
         BehavioralDataCollectionSettings behavioralDataCollectionSettings = evaluationSettings[typeof(BehavioralDataCollectionSettings)] as BehavioralDataCollectionSettings;
 

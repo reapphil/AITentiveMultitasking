@@ -18,7 +18,7 @@ def call_function(function_name, *args, logFile=""):
     if logFile != "":
         print("Writing log files to {}.".format(logFile))
 
-    command = ["Unity", "-quit", "-batchmode", "-nographics", "-executeMethod", function_name]
+    command = ["Unity", "-projectPath", "..", "-quit", "-batchmode", "-nographics", "-executeMethod", function_name]
     command.extend(strArgs)
     command.extend(["-logFile", str(logFile)])
 
@@ -49,7 +49,8 @@ def start_training(model_config_file, session_dir, model_name, resume=False):
                 str(model_config_file),
                 "--run-id=" + str(Path("..", "..", "Assets", "Models", session_dir, model_name)), 
                 "--env=" + str(Path("..", "Build", "TrainingEnvironment")), 
-                "--num-envs={} ".format(workload.get_number_of_environments_for_cpu_workload())]
+                "--num-envs={} ".format(workload.get_number_of_environments_for_workload()),
+                "--no-graphics"]
     
     if resume:
         command.append("--resume")

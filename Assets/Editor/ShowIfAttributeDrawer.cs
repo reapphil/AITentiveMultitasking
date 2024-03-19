@@ -10,7 +10,7 @@ public class ShowIfAttributeDrawer : PropertyDrawer
 {
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        // Calcluate the property height, if we don't meet the condition and the draw 
+        // Calculate the property height, if we don't meet the condition and the draw 
         // Mode is DontDraw, then height will be 0.
         bool meetsCondition = MeetsConditions(property);
         var showIfAttribute = this.attribute as ShowIfAttribute;

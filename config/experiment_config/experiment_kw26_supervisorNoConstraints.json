@@ -16,7 +16,7 @@
 		"agentChoice": "Ball3DAgentOptimal",
 		"trainSupervisor": false,
 		"trainBallAgent": false,
-		"supervisorModelName": "sessionOptS20_DRI0.2NTTT_LOG/AUI1S2.5MsessionOptS20_DRI0.2NTTT/AUIAUI1S2.5MsessionOptS20_DRI0.2NTTT.onnx",
+		"supervisorModelName": "sessionOptS20_DRI0.2NTTT_LOG/AUI1S2.5MsessionOptS20_DRI0.2NTTT/AUIAUI1S2.5MsessionOptS20_DRI0.2NTTT.asset",
 		"ballAgentModelName": "",
 		"saveBehavioralData": false,
 		"timeScale": 1,
@@ -27,6 +27,7 @@
 	},
 	"supervisorSettings": {
 		"randomSupervisor": false,
+		"supervisorChoice": "SupervisorAgentV1",
 		"vectorObservationSize": 18,
 		"setConstantDecisionRequestInterval": true,
 		"decisionRequestIntervalInSeconds": 0.2,

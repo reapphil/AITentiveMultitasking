@@ -49,7 +49,8 @@ def train_model(model_config_file, environment_config_file, session_dir):
                                       logFile=Path("..", "Logs", "LogFileBuild.txt"))
 
     if code != 0:
-        return
+        print("Error in Build: check LogFileBuild.txt for more details.")
+        exit()
 
     unity_helper.start_training(model_config_file, session_dir, model_name, resume)
 

@@ -24,10 +24,10 @@ namespace Supervisor
         [field: SerializeField, Tooltip("Score is shown in the top right corner if true."), ProjectAssign]
         public bool ShowScore { get; set; }
 
-        [field: SerializeField, Tooltip("Focus active platfrom in heuristic mode."), ProjectAssign]
+        [field: SerializeField, Tooltip("Focus active platform in heuristic mode."), ProjectAssign]
         public bool FocusActiveTask { get; set; }
 
-        [field: SerializeField, Tooltip("Hide inactive platfrom."), ProjectAssign]
+        [field: SerializeField, Tooltip("Hide inactive platform."), ProjectAssign]
         public bool HideInactiveTasks { get; set; }
 
         [field: SerializeField, Tooltip("In case a task switch happens, the next requested decision is after SetConstantDecisionRequestInterval + AdvanceNoticeInSeconds."), ProjectAssign]
@@ -226,7 +226,7 @@ namespace Supervisor
             var discreteActionsOut = actionsOut.DiscreteActions;
 
             //If discreteActionsOut[0] wont be set, then discreteActionsOut[0] = 0. Therefore the following line sets discreteActionsOut[0] to the
-            //PreviousAction to prevent this default behaviour.
+            //PreviousAction to prevent this default behavior.
             discreteActionsOut[0] = _previousActive;
 
             ControlGamepad(discreteActionsOut);

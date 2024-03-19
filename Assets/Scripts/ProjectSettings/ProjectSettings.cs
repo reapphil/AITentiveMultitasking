@@ -53,19 +53,19 @@ public enum SupervisorChoice
 
 public class ProjectSettings : MonoBehaviour, IProjectSettings
 {
-    //Managedby Script
+    //Managed by Script
     [field: SerializeField, ShowIf(ActionOnConditionFail.JustDisable, ConditionOperator.And, nameof(False))]
     public Supervisor.SupervisorAgent SupervisorAgent { get; set; }
 
-    //Managedby Script
+    //Managed by Script
     [field: SerializeField, ShowIf(ActionOnConditionFail.JustDisable, ConditionOperator.And, nameof(False))]
     public FocusAgent FocusAgent { get; set; }
 
-    //Managedby Script
+    //Managed by Script
     [field: SerializeField, ShowIf(ActionOnConditionFail.JustDisable, ConditionOperator.And, nameof(False))]
     public Text ProjectSettingsText { get; set; }
 
-    [field: SerializeField, Header("General Settings"), Tooltip("Defininition of the following modes: \n" +
+    [field: SerializeField, Header("General Settings"), Tooltip("Definition of the following modes: \n" +
     "GameModeSupervisor - human player controls only the platform, \n" +
     "GameModeNoSupervisor - human player controls the platform and the task switch")]
     public Mode Mode { get; set; }
@@ -571,7 +571,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
 
         }
 
-        //The order of the state information is relvant. Therefore, a supervisor trained on TaskA, TaskB would not work for the order TaskB, TaskA
+        //The order of the state information is relevant. Therefore, a supervisor trained on TaskA, TaskB would not work for the order TaskB, TaskA
         result.Sort((x, y) => string.Compare(x.name, y.name));
 
         return result;
@@ -801,10 +801,10 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
             {
                 FocusAgent.GetComponent<BehaviorParameters>().BehaviorType = BehaviorType.Default;
             }
-            else
-            {
-                FocusAgent.GetComponent<BehaviorParameters>().BehaviorType = BehaviorType.InferenceOnly;
-            }
+        }
+        else
+        {
+            FocusAgent.GetComponent<BehaviorParameters>().BehaviorType = BehaviorType.InferenceOnly;
         }
 
         return focusAgentModel;

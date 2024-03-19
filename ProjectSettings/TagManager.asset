@@ -3,30 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - PlayerCar
-  - SelfDriving
-  - symbol_O
-  - symbol_X
-  - AgentCar
-  - agent
-  - ground
-  - target
-  - Task
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - PostProcessing
+  - 
   - Water
   - UI
   - 
   - 
-  - RCC
-  - RCC_WheelCollider
-  - RCC_DetachablePart
-  - RCC_Trailer
-  - RCC_Crasher
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

@@ -38,7 +38,7 @@ public class FocusAgent : Agent
             {
                 task.AddObservationsToSensor(sensor);
             }
-            
+
         }
     }
 
@@ -87,10 +87,19 @@ public class FocusAgent : Agent
     {
         foreach (ITask task in Tasks)
         {
-            task.IsFocused = false;
+            if (task.GetType().GetInterfaces().Contains(typeof(ICrTask)))
+            {
+                ((ICrTask)task).IsFocused = false;
+            }
+
+            task.GetGameObject().transform.parent.transform.GetChildByName("Camera").GetChildByName("Eye_Canvas").gameObject.SetActive(false);
         }
 
-        toBeFocused.IsFocused = true;
+        if (toBeFocused.GetType().GetInterfaces().Contains(typeof(ICrTask)))
+        {
+            ((ICrTask)toBeFocused).IsFocused = true;
+        }
+        toBeFocused.GetGameObject().transform.parent.transform.GetChildByName("Camera").GetChildByName("Eye_Canvas").gameObject.SetActive(true);
     }
 
     private void CatchEndEpisode(object sender, bool aborted)

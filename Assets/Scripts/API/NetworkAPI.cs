@@ -7,13 +7,12 @@ using System.Text;
 public static class NetworkAPI
 {
     // <summary>
-    // Sends a sepcified number of UDP packets to a host or IP Address.
+    // Sends a specified number of UDP packets to a host or IP Address.
     // </summary>
     // <param name="hostNameOrAddress">The host name or an IP Address to which the UDP packets will be sent.</param>
     // <param name="destinationPort">The destination port to which the UDP packets will be sent.</param>
     // <param name="data">The data to send in the UDP packet.</param>
     // <param name="count">The number of UDP packets to send.</param>
-    // Thanks Ole Braunbaek Jensen for this function!
     public static void SendUDPPacket(string hostNameOrAddress, int destinationPort, string data, int count)
     {
         // Validate the destination port number

@@ -25,7 +25,7 @@ namespace Supervisor
 
 
         //The active instance will be selected according to the selected action of the agent. The Reward will be increased every x seconds like
-        //defined in DecisionRequestIntervalInSeconds. If the Ball fell off a platfrom, the episode ends and a negative reward is given.
+        //defined in DecisionRequestIntervalInSeconds. If the Ball fell off a platform, the episode ends and a negative reward is given.
         public override void OnActionReceived(ActionBuffers actionBuffers)
         {
             int action = UseHeuristic ? actionBuffers.DiscreteActions[0] : _rand.Next(0, Tasks.Length);

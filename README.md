@@ -24,7 +24,7 @@ Please cite our paper as:
   doi = {https://doi.org/10.1145/3613904.3642063}
 }
 ```
-You can access it [HERE](docs/CHI24_Supporting_Task_Switching_with_Reinforcement_Learning.pdf).
+You can access the paper [HERE](docs/CHI24_Supporting_Task_Switching_with_Reinforcement_Learning.pdf). The CHI'24 presentation is available [HERE](https://youtu.be/UiRJQ6dzI_g).
 
 ## Getting Started
 This section describes how you get the tool running on your local machine. Therefore, Unity and a Anaconda environment including the ML-Agents toolkit must be installed.

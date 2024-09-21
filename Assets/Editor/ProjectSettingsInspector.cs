@@ -1,19 +1,15 @@
-using Newtonsoft.Json;
-using NSubstitute;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Xml;
 using Unity.MLAgents;
 using UnityEditor;
-using UnityEditor.MemoryProfiler;
-using UnityEditor.UIElements;
+using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.UI;
-using static Codice.CM.WorkspaceServer.WorkspaceTreeDataStore;
+using UnityEngine.InputSystem;
+
 
 [CustomEditor(typeof(ProjectSettings))]
 public class ProjectSettingsInspector : Editor
@@ -22,37 +18,54 @@ public class ProjectSettingsInspector : Editor
 
     private ProjectSettings _projectSettings;
 
+    private List<(Component, FieldInfo)> _fields;
+
 
     public override void OnInspectorGUI()
     {
-        DrawDefaultInspector();
-
-        AddProjectAssignFieldsToIspector();
-
-        EditorGUILayout.Space();
-
-        if (GUILayout.Button("Generate File Name"))
+        if (!Application.isPlaying) 
         {
-            _projectSettings.GenerateFilename();
-        }
-
-        if (GUILayout.Button("Load Experiment Setting"))
-        {
-            string path = Application.dataPath;
-            path = EditorUtility.OpenFilePanel("Supervisor Model Selection", Path.Combine(Directory.GetParent(path).ToString(), "config", "experiment_config"), "json");
-
-            if (path == "")
+            EditorGUI.BeginChangeCheck();
+            DrawDefaultInspector();
+            if (EditorGUI.EndChangeCheck())
             {
-                return;
+                //only reload fields if e.g. the task game objects have changed
+                ReloadFields();
             }
 
-            LoadProjectSettings(path, _projectSettings);
+            AddProjectAssignFieldsToIspector();
 
-            Debug.Log("Experiment settings loaded!");
+            EditorGUILayout.Space();
+
+            if (GUILayout.Button("Generate File Name"))
+            {
+                _projectSettings.GenerateFilename();
+            }
+
+            if (GUILayout.Button("Load Experiment Setting"))
+            {
+                string path = Application.dataPath;
+                path = EditorUtility.OpenFilePanel("Experiment Setting Selection", Path.Combine(Directory.GetParent(path).ToString(), "config", "experiment_config"), "json");
+
+                if (path == "")
+                {
+                    return;
+                }
+
+                LoadProjectSettings(path, _projectSettings);
+                ReloadFields();
+
+                Debug.Log("Experiment settings loaded!");
+            }
+        }
+        else
+        {
+            EditorGUILayout.LabelField("Project Settings cannot be changed during play mode.", EditorStyles.boldLabel);
         }
 
-        if (Event.current.type == EventType.Repaint && !Application.isPlaying)
+        if(GUI.changed)
         {
+            SynchronizeInputsWithTasksGameObjects();
             Validator.ValidateProjectSettings(_projectSettings);
             _projectSettings.UpdateSettings();
 
@@ -64,18 +77,23 @@ public class ProjectSettingsInspector : Editor
     private void OnEnable()
     {
         _projectSettings = (ProjectSettings)target;
+
+        ReloadFields();
+    }
+
+    private void ReloadFields()
+    {
+        _fields = _projectSettings.GetProjectAssignFieldsForSupervisor();
+        _fields = _fields.Concat(_projectSettings.GetProjectAssignFieldsForFocusAgent()).Concat(_projectSettings.GetProjectAssignFieldsForTasks()).ToList();
+
+        InitFoldOut(_fields);
     }
 
     private void AddProjectAssignFieldsToIspector()
     {
-        List<(Component, FieldInfo)> fields = _projectSettings.GetProjectAssignFieldsForSupervisor();
-        fields = fields.Concat(_projectSettings.GetProjectAssignFieldsForFocusAgent()).Concat(_projectSettings.GetProjectAssignFieldsForTasks()).ToList();
-
-        InitFoldOut(fields);
-
         Component previousComponent = null;
 
-        foreach ((Component, FieldInfo) entry in fields)
+        foreach ((Component, FieldInfo) entry in _fields)
         {
             if(previousComponent != entry.Item1)
             {
@@ -126,6 +144,8 @@ public class ProjectSettingsInspector : Editor
         }
     }
 
+    private Dictionary<string, ReorderableList> reorderableLists = new Dictionary<string, ReorderableList>();
+
     private void AddFieldToInspector((Component, FieldInfo) entry)
     {
         TooltipAttribute tooltipAttribute = (TooltipAttribute)Attribute.GetCustomAttribute(entry.Item2, typeof(TooltipAttribute));
@@ -134,15 +154,100 @@ public class ProjectSettingsInspector : Editor
 
         object value = entry.Item2.FieldType switch
         {
-        var type when type == typeof(int) => EditorGUILayout.IntField(label: content, entry.Item2.GetValue(entry.Item1) is int @int ? @int : 0),
+            var type when type == typeof(int) => EditorGUILayout.IntField(label: content, entry.Item2.GetValue(entry.Item1) is int @int ? @int : 0),
             var type when type == typeof(string) => EditorGUILayout.TextField(label: content, entry.Item2.GetValue(entry.Item1) is string @str ? @str : ""),
             var type when type == typeof(float) => EditorGUILayout.FloatField(label: content, entry.Item2.GetValue(entry.Item1) is float @flt ? @flt : 0f),
             var type when type == typeof(double) => EditorGUILayout.DoubleField(label: content, entry.Item2.GetValue(entry.Item1) is double @double ? @double : 0f),
             var type when type == typeof(bool) => EditorGUILayout.Toggle(label: content, entry.Item2.GetValue(entry.Item1) is bool @bool ? @bool : false),
+            var type when type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) => DrawReorderableList(entry.Item1, entry.Item2, type),
             _ => EditorGUILayout.ObjectField(label: content, obj: (UnityEngine.Object)entry.Item2.GetValue(entry.Item1), entry.Item2.FieldType, allowSceneObjects: true),
         };
 
-        entry.Item2.SetValue(entry.Item1, value);
+        if (!(entry.Item2.FieldType.IsGenericType && entry.Item2.FieldType.GetGenericTypeDefinition() == typeof(List<>)))
+        {
+            entry.Item2.SetValue(entry.Item1, value);
+        }
+    }
+
+    private object DrawReorderableList(Component component, FieldInfo fieldInfo, Type fieldType)
+    {
+        string key = component.GetInstanceID() + "." + fieldInfo.Name;
+        if (!reorderableLists.ContainsKey(key))
+        {
+            IList list = (IList)fieldInfo.GetValue(component);
+            Type elementType = fieldType.GetGenericArguments()[0];
+
+            ReorderableList reorderableList = new ReorderableList(list, elementType, true, true, true, true)
+            {
+                drawHeaderCallback = (Rect rect) =>
+                {
+                    rect.xMin += 10; // Adjust for the foldout arrow space
+                    Rect labelRect = new Rect(rect.x, rect.y, rect.width - 40, rect.height);
+                    EditorGUI.LabelField(labelRect, Util.FormatFieldName(fieldInfo.Name));
+
+                    Rect countRect = new Rect(rect.x + rect.width - 40, rect.y, 40, rect.height);
+                    EditorGUI.LabelField(countRect, list.Count.ToString(), EditorStyles.label);
+                },
+                drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
+                {
+                    Rect labelRect = new Rect(rect.x, rect.y, 60, EditorGUIUtility.singleLineHeight);
+                    EditorGUI.LabelField(labelRect, $"Element {index}");
+
+                    Rect fieldRect = new Rect(rect.x + 60, rect.y, rect.width - 60, EditorGUIUtility.singleLineHeight);
+                    object element = list[index];
+                    element = DrawElementField(fieldRect, element, elementType);
+                    list[index] = element;
+                },
+                elementHeightCallback = (int index) =>
+                {
+                    return EditorGUIUtility.singleLineHeight + 2;
+                },
+                onAddCallback = (ReorderableList l) =>
+                {
+                    list.Add(Activator.CreateInstance(elementType));
+                },
+                onRemoveCallback = (ReorderableList l) =>
+                {
+                    list.RemoveAt(l.index);
+                }
+            };
+
+            reorderableLists[key] = reorderableList;
+        }
+
+        reorderableLists[key].DoLayoutList();
+        return fieldInfo.GetValue(component);
+    }
+
+    private object DrawElementField(Rect rect, object element, Type elementType)
+    {
+        if (elementType == typeof(int))
+        {
+            return EditorGUI.IntField(rect, element is int @int ? @int : 0);
+        }
+        if (elementType == typeof(string))
+        {
+            return EditorGUI.TextField(rect, element as string ?? "");
+        }
+        if (elementType == typeof(float))
+        {
+            return EditorGUI.FloatField(rect, element is float @flt ? @flt : 0f);
+        }
+        if (elementType == typeof(double))
+        {
+            return EditorGUI.DoubleField(rect, element is double @double ? @double : 0f);
+        }
+        if (elementType == typeof(bool))
+        {
+            return EditorGUI.Toggle(rect, element is bool @bool ? @bool : false);
+        }
+        if (typeof(UnityEngine.Object).IsAssignableFrom(elementType))
+        {
+            return EditorGUI.ObjectField(rect, element as UnityEngine.Object, elementType, allowSceneObjects: true);
+        }
+
+        EditorGUI.LabelField(rect, $"Unsupported type {elementType}");
+        return element;
     }
 
     private void LoadProjectSettings(string paths, ProjectSettings projectSettings)
@@ -153,6 +258,24 @@ public class ProjectSettingsInspector : Editor
 
         SceneManagement.ProjectSettings = projectSettings;
         SceneManagement.ConfigScene(settings);
+    }
+
+    private void SynchronizeInputsWithTasksGameObjects()
+    {
+        while (_projectSettings.Inputs.Count > _projectSettings.TasksGameObjects.Length)
+        {
+            _projectSettings.Inputs.RemoveAt(_projectSettings.Inputs.Count - 1);
+        }
+
+        for (int i = 0; i < _projectSettings.TasksGameObjects.Length; i++)
+        {
+            if(_projectSettings.Inputs.Count <= i)
+            {
+                InputActionAsset inputActions = _projectSettings.TasksGameObjects[i].transform.GetChildByName("Agent").GetComponent<PlayerInput>().actions;
+
+                _projectSettings.Inputs.Add(inputActions);
+            }
+        }
     }
 
     //Unity does not realize the object has been changed and does not properly re-serialize it. When an object is edited in the editor, the object

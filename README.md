@@ -3,7 +3,7 @@ Attention management systems aim to mitigate the negative effects of multitaskin
 
 
 ## Features
-This repository contains the implementation of the CHI 24 paper "Supporting Task Switching with Reinforcement Learning" along with all the utilized RL models and algorithms. We call for using, extending, and improving the tool for researching and designing future attention management systems. The project is structured in a way to easily extend the current version with new custom tasks and provide therefore a tool to research the usage of RL AMS in virtual Unity environments. 
+This repository contains the implementation of the CHI 24 paper ["Supporting Task Switching with Reinforcement Learning"](https://dl.acm.org/doi/10.1145/3613904.3642063) along with all the utilized RL models and algorithms. We call for using, extending, and improving the tool for researching and designing future attention management systems. The project is structured in a way to easily extend the current version with new custom tasks and provide therefore a tool to research the usage of RL AMS in virtual Unity environments. 
 
 
 ## Demo
@@ -25,18 +25,33 @@ Please cite our paper as:
 }
 ```
 
+And the toolkit as:
+```
+@article{lingler2024toolkit,
+  title={AITentive: A Toolkit to Develop Reinforcement Learning-based Attention Management},
+  author={Lingler, Talypova, Wintersberger},
+  booktitle={The 37th Annual ACM Symposium on User Interface Software and Technology (UIST Adjunct ’24)},
+  pages={1--3},
+  year={2024},
+  publisher = {ACM},
+  doi = {https://doi.org/10.1145/3672539.3686314}
+}
+```
+
+
 ## Paper
-You can access the paper [HERE](docs/CHI24_Supporting_Task_Switching_with_Reinforcement_Learning.pdf).\
+You can access the CHI paper [HERE](docs/CHI24_Supporting_Task_Switching_with_Reinforcement_Learning.pdf).\
 Furthermore, you can watch a video of our CHI'24 presentation:
 
 [![CHI'24 presentation](https://img.youtube.com/vi/UiRJQ6dzI_g/0.jpg)](https://www.youtube.com/watch?v=UiRJQ6dzI_g)
 
+
 ## Getting Started
-This section describes how you get the tool running on your local machine. Therefore, Unity and a Anaconda environment including the ML-Agents toolkit must be installed.
+This section describes how you get the tool running on your local machine. Therefore, Unity and an Anaconda environment including the ML-Agents toolkit must be installed.
 
 
 ### Prerequisites
-The Project uses Anaconda for open source python distribution. Goto https://www.anaconda.com/ for the installation. Unity can be downloaded at https://unity.com/download. Follow the instructions to install the Unity Hub and choose Unity editor version 2022.3.12f1.
+The Project uses Anaconda for open source python distribution. Goto https://www.anaconda.com/ for the installation. Unity can be downloaded at https://unity.com/download. Follow the instructions to install the Unity Hub and choose Unity editor version 2021.3.40f1.
 
 
 ### Installation
@@ -47,7 +62,7 @@ git clone https://github.com/reapphil/AITentiveMultitasking.git
 The project includes an Anaconda environment setup file describing the necessary libraries and their dependencies. Change the directory to the cloned repository and run the following command to create the virtual environment:
 
 ```
-conda env create -f configs/env_setup.yml
+conda env create -f config/aui.yaml
 ```
 
 The environment can be activated by the following command:

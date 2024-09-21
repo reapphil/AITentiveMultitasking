@@ -121,12 +121,12 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("Ball3DAgentHumanCognitionSingleProbabilityDistribution"));
         Assert.IsTrue(text.Contains("ShowBeliefState = True"));
         Assert.IsTrue(text.Contains("NumberOfSamples = 40"));
-        Assert.IsTrue(text.Contains("Sigma = 0,3"));
-        Assert.IsTrue(text.Contains("SigmaMean = 0,05"));
-        Assert.IsTrue(text.Contains("UpdatePeriod = 0,3"));
-        Assert.IsTrue(text.Contains("ObservationProbability = 0,9"));
-        Assert.IsTrue(text.Contains("ConstantReactionTime = 0,2"));
-        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,6"));
+        Assert.IsTrue(text.Contains("Sigma = 0,3") || text.Contains("Sigma = 0.3"));
+        Assert.IsTrue(text.Contains("SigmaMean = 0,05") || text.Contains("SigmaMean = 0.05"));
+        Assert.IsTrue(text.Contains("UpdatePeriod = 0,3") || text.Contains("UpdatePeriod = 0.3"));
+        Assert.IsTrue(text.Contains("ObservationProbability = 0,9") || text.Contains("ObservationProbability = 0.9"));
+        Assert.IsTrue(text.Contains("ConstantReactionTime = 0,2") || text.Contains("ConstantReactionTime = 0.2"));
+        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,6") || text.Contains("OldDistributionPersistenceTime = 0.6"));
         Assert.IsTrue(text.Contains("FullVision = True"));
         Assert.IsTrue(text.Contains("UseFocusAgent = False"));
 
@@ -149,12 +149,12 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("NumberOfBins = 5041"));
         Assert.IsTrue(text.Contains("ShowBeliefState = False"));
         Assert.IsTrue(text.Contains("NumberOfSamples = 1000"));
-        Assert.IsTrue(text.Contains("Sigma = 0,1"));
-        Assert.IsTrue(text.Contains("SigmaMean = 0,01"));
-        Assert.IsTrue(text.Contains("UpdatePeriod = 0,2"));
-        Assert.IsTrue(text.Contains("ObservationProbability = 0,1"));
-        Assert.IsTrue(text.Contains("ConstantReactionTime = 0,3"));
-        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,9"));
+        Assert.IsTrue(text.Contains("Sigma = 0,1") || text.Contains("Sigma = 0.1"));
+        Assert.IsTrue(text.Contains("SigmaMean = 0,01") || text.Contains("SigmaMean = 0.01"));
+        Assert.IsTrue(text.Contains("UpdatePeriod = 0,2") || text.Contains("UpdatePeriod = 0.2"));
+        Assert.IsTrue(text.Contains("ObservationProbability = 0,1") || text.Contains("ObservationProbability = 0.1"));
+        Assert.IsTrue(text.Contains("ConstantReactionTime = 0,3") || text.Contains("ConstantReactionTime = 0.3"));
+        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,9") || text.Contains("OldDistributionPersistenceTime = 0.9"));
         Assert.IsTrue(text.Contains("FullVision = False"));
         Assert.IsTrue(text.Contains("UseFocusAgent = True"));
 
@@ -180,7 +180,7 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("UseNegativeDragDifficulty = True"));    
         Assert.IsTrue(text.Contains("BallAgentDifficulty = 60"));
         Assert.IsTrue(text.Contains("BallAgentDifficultyDivisionFactor = 2"));
-        Assert.IsTrue(text.Contains("BallStartingRadius = 1,5"));
+        Assert.IsTrue(text.Contains("BallStartingRadius = 1,5") || text.Contains("BallStartingRadius = 1.5"));
         Assert.IsTrue(text.Contains("ResetSpeed = 15"));
         Assert.IsTrue(text.Contains("UseFocusAgent = False"));
 
@@ -188,7 +188,7 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("AdvanceNoticeInSeconds = 0"));
         Assert.IsTrue(text.Contains("DifficultyIncrementInterval = 30"));
         Assert.IsTrue(text.Contains("SetConstantDecisionRequestInterval = False"));
-        Assert.IsTrue(text.Contains("DecisionRequestIntervalInSeconds = 0,5"));
+        Assert.IsTrue(text.Contains("DecisionRequestIntervalInSeconds = 0,5") || text.Contains("DecisionRequestIntervalInSeconds = 0.5"));
         Assert.IsFalse(text.Contains("DecisionRequestIntervalRangeInSeconds = 3"));
         Assert.IsTrue(text.Contains("DecisionPeriod = 10"));
         Assert.IsFalse(text.Contains("BehaviorType = HeuristicOnly"));
@@ -203,7 +203,7 @@ public class BuildScriptTests
 
         AssertHasException(text);
 
-        Assert.IsTrue(text.Contains("GlobalDrag = -0,1"));
+        Assert.IsTrue(text.Contains("GlobalDrag = -0,1") || text.Contains("GlobalDrag = -0.1"));
         Assert.IsTrue(text.Contains("UseNegativeDragDifficulty = False"));
         Assert.IsTrue(text.Contains("BallAgentDifficulty = 70"));
         Assert.IsTrue(text.Contains("BallAgentDifficultyDivisionFactor = 3"));
@@ -224,9 +224,124 @@ public class BuildScriptTests
     }
 
     [Test]
+    public void TrainingEnvironmentExecutionParameterJsonSettingsTest()
+    {
+        BuildTrainingEnvironment(false, "testEnvJsonParameter1.json");
+
+        string text = RunProductionEnvironment("TrainingEnvironment");
+
+        Debug.Log(text);
+
+        AssertHasException(text);
+
+        Assert.IsTrue(text.Contains("QuizName = quiztest.csv"));
+        Assert.IsTrue(text.Contains("ScreenWidthPixel = 1920"));
+        Assert.IsTrue(text.Contains("ScreenHightPixel = 1080"));
+        Assert.IsTrue(text.Contains("ScreenDiagonalInch = 27"));
+        Assert.IsTrue(text.Contains("ShowBeliefState = True"));
+        Assert.IsTrue(text.Contains("FullVision = True"));
+        Assert.IsTrue(text.Contains("DecisionRequestIntervalInSeconds = 98"));
+        Assert.IsTrue(text.Contains("NumberOfSamples = 99"));
+        Assert.IsTrue(text.Contains("ObservationProbability = 0,5") || text.Contains("ObservationProbability = 0.5"));
+        
+        Assert.IsTrue(text.Contains("Mode = Force"));
+        Assert.IsTrue(text.Contains("IsAutonomous = False"));
+        Assert.IsTrue(text.Contains("MaxCarSpeed = 150"));
+        Assert.IsTrue(text.Contains("DecisionPeriod = 4"));
+        Assert.IsTrue(text.Contains("UpdatePeriod = 0,1") || text.Contains("UpdatePeriod = 0.1"));
+        Assert.IsTrue(text.Contains("NumberOfSamples = 100"));
+        Assert.IsTrue(text.Contains("Sigma = 0,111") || text.Contains("Sigma = 0.111"));
+        Assert.IsTrue(text.Contains("SigmaMean = 0,23") ||text.Contains("SigmaMean = 0.23"));
+        Assert.IsTrue(text.Contains("ObservationProbability = 0,005") || text.Contains("ObservationProbability = 0.005"));
+        Assert.IsTrue(text.Contains("NumberOfBins = 972"));
+        Assert.IsTrue(text.Contains("UseFocusAgent = True"));
+        Assert.IsTrue(text.Contains("FullVision = True"));
+        Assert.IsTrue(text.Contains("ShowBeliefState = False"));
+        Assert.IsTrue(text.Contains("IsTerminatingTask = True"));
+
+        BuildTrainingEnvironment(false, "testEnvJsonParameter2.json");
+
+        text = RunProductionEnvironment("TrainingEnvironment");
+
+        Debug.Log(text);
+
+        AssertHasException(text);
+
+        Assert.IsTrue(text.Contains("QuizName = quiztest.csv"));
+        Assert.IsTrue(text.Contains("ScreenWidthPixel = 1920"));
+        Assert.IsTrue(text.Contains("ScreenHightPixel = 1080"));
+        Assert.IsTrue(text.Contains("ScreenDiagonalInch = 43"));
+        Assert.IsTrue(text.Contains("ShowBeliefState = True"));
+        Assert.IsTrue(text.Contains("FullVision = True"));
+        Assert.IsTrue(text.Contains("DecisionRequestIntervalInSeconds = 33"));
+        Assert.IsTrue(text.Contains("NumberOfSamples = 33"));
+        Assert.IsTrue(text.Contains("ObservationProbability = 0,22") || text.Contains("ObservationProbability = 0.22"));
+
+        Assert.IsTrue(text.Contains("Mode = Suggestion"));
+        Assert.IsTrue(text.Contains("IsAutonomous = True")); //Suggestion Mode
+        Assert.IsTrue(text.Contains("MaxCarSpeed = 140"));
+        Assert.IsTrue(text.Contains("DecisionPeriod = 5"));
+        Assert.IsTrue(text.Contains("UpdatePeriod = 0,3") || text.Contains("UpdatePeriod = 0.3"));
+        Assert.IsTrue(text.Contains("NumberOfSamples = 100"));
+        Assert.IsTrue(text.Contains("Sigma = 0,111") || text.Contains("Sigma = 0.111"));
+        Assert.IsTrue(text.Contains("SigmaMean = 0,23") || text.Contains("SigmaMean = 0.23"));
+        Assert.IsTrue(text.Contains("ObservationProbability = 0,0033") || text.Contains("ObservationProbability = 0.0033"));
+        Assert.IsTrue(text.Contains("NumberOfBins = 999"));
+        Assert.IsTrue(text.Contains("UseFocusAgent = True"));
+        Assert.IsTrue(text.Contains("FullVision = False"));
+        Assert.IsTrue(text.Contains("ShowBeliefState = True"));
+        Assert.IsTrue(text.Contains("IsTerminatingTask = False"));
+    }
+
+    [Test]
+    public void TrainingEnvironmentMixedExecutionParameterJsonSettingsTest()
+    {
+        BuildTrainingEnvironment(false, "testEnvMixedJsonParameter.json");
+
+        string text = RunProductionEnvironment("TrainingEnvironment");
+
+        Debug.Log(text);
+
+        AssertHasException(text);
+
+        Assert.IsTrue(text.Contains("Ball3DAgentHumanCognition"));
+        Assert.IsTrue(text.Contains("NumberOfBins = 666"));
+        Assert.IsTrue(text.Contains("ShowBeliefState = False"));
+        Assert.IsTrue(text.Contains("NumberOfSamples = 1100"));
+        Assert.IsTrue(text.Contains("Sigma = 0,7") || text.Contains("Sigma = 0.7"));
+        Assert.IsTrue(text.Contains("SigmaMean = 0,11") || text.Contains("SigmaMean = 0.11"));
+        Assert.IsTrue(text.Contains("UpdatePeriod = 0,22") || text.Contains("UpdatePeriod = 0.22"));
+        Assert.IsTrue(text.Contains("ObservationProbability = 0,123") || text.Contains("ObservationProbability = 0.123"));
+        Assert.IsTrue(text.Contains("ConstantReactionTime = 0,5") || text.Contains("ConstantReactionTime = 0.5"));
+        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,45") || text.Contains("OldDistributionPersistenceTime = 0.45"));
+        Assert.IsTrue(text.Contains("UseFocusAgent = True"));
+    }
+
+    [Test]
+    public void TrainingEnvironmentSupervisorModeTest()
+    {
+        BuildTrainingEnvironment(false, "testEnvSupervisorSuggestionMode.json");
+
+        string text = RunProductionEnvironment("TrainingEnvironment");
+
+        Debug.Log(text);
+
+        AssertHasException(text);
+
+        Assert.IsTrue(text.Contains("Mode = Suggestion"));
+
+
+        BuildTrainingEnvironment(false, "testEnvSupervisorForceMode.json");
+
+        text = RunProductionEnvironment("TrainingEnvironment");
+
+        Assert.IsTrue(text.Contains("Mode = Force"));
+    }
+
+    [Test]
     public void PerformanceMeasurementTest()
     {
-        Initialize("CDFDRI0.5GD1NDTDII30DP10BD60BDF2S1.5RS15", Path.Combine(_workingDirectory, "..", "Build", _buildPath, "EvaltestPerformance", "SupervisorML_Data", "Scores"));
+        Initialize("CDFDRI0.5DII30DP10b3ahcspd3", Path.Combine(_workingDirectory, "..", "Build", _buildPath, "EvaltestPerformance", "SupervisorML_Data", "Scores"));
 
         string model = BuildEvaluationEnvironment(false, configFileName: "testPerformance.json", evalConfigFileName: "EvalConfPerformance.json", model: "BuildTest/3DBall2.asset");
 
@@ -237,6 +352,7 @@ public class BuildScriptTests
         AssertHasException(text);
 
         Assert.IsTrue(text.Contains("Performance will be collected..."));
+        Assert.IsTrue(text.Contains("IsTerminatingTask = True"));
         Assert.IsTrue(text.Contains("Performance Measurement active: 1/17 episodes completed!"));
         Assert.IsTrue(text.Contains("PlayerName = testPlayer"));
         Assert.IsTrue(text.Contains("MinimumScoreForMeasurement = 1"));
@@ -246,15 +362,16 @@ public class BuildScriptTests
     [Test]
     public void PerformanceMeasurementMaxNumberEpisodesReachedTest()
     {
-        Initialize("CDFDRI0.5GD1NDTDII30DP10BD60BDF2S1.5RS15", Path.Combine(_workingDirectory, "..", "Build", _buildPath, "EvaltestPerformance", "SupervisorML_Data", "Scores"));
+        Initialize("CDFDRI0.5DII30DP10b3ahcspd3", Path.Combine(_workingDirectory, "..", "Build", _buildPath, "EvaltestPerformance", "SupervisorML_Data", "Scores"));
 
         string model = BuildEvaluationEnvironment(false, configFileName: "testPerformance.json", evalConfigFileName: "EvalConfPerformance.json", model: "BuildTest/3DBall2.asset");
 
-        string text = RunEvaluationEnvironment("EvaltestPerformance");
+        string text = RunEvaluationEnvironment("EvaltestPerformance", 25000);
         text = RunEvaluationEnvironment("EvaltestPerformance");
 
         Debug.Log(text);
 
+        Assert.IsTrue(text.Contains("IsTerminatingTask = True"));
         Assert.IsTrue(text.Contains("Performance will be collected..."));
         Assert.IsTrue(text.Contains("MaxNumberEpisodes already reached, quit application."));
 
@@ -264,7 +381,7 @@ public class BuildScriptTests
     [Test]
     public void EvaluationEnvironmentExecutionTest()
     {
-        Initialize("CDTDRI1R1GD0.2NDFDII15DP5BD50BDF1S1RS10");
+        Initialize("CDTDRI1R1DII15DP5b3ahcspd2");
 
         string model = BuildEvaluationEnvironment(false, configFileName: "testEnvEval.json");
 
@@ -283,7 +400,7 @@ public class BuildScriptTests
     [Test]
     public void EvaluationEnvironmentExecutionBehaviorParameterTest()
     {
-        Initialize("CDFDRI0.5R3GD1NDTDII30DP10BD60BDF2S1.5RS15");
+        Initialize("CDFDRI0.5R3DII30DP10b3ahcspd3");
 
         BuildEvaluationEnvironment(false, "testEnvParameter1Eval.json", false, model:"BuildTest/3DBall1.asset");
 
@@ -296,10 +413,11 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("TimeScale = 20"));
 
         Assert.IsTrue(text.Contains("MaxNumberOfActions = 133625"));
-        Assert.IsTrue(text.Contains("NumberOfAreaBins_BehavioralData = 225"));
+        Assert.IsTrue(text.Contains("NumberOfAreaBinsPerDirection = 15"));
         Assert.IsTrue(text.Contains("NumberOfAngleBinsPerAxis = 5"));
-        Assert.IsTrue(text.Contains("NumberOfBallVelocityBinsPerAxis_BehavioralData = 6"));
-        Assert.IsTrue(text.Contains("NumberOfDistanceBins = 12"));
+        Assert.IsTrue(text.Contains("NumberOfBallVelocityBinsPerAxis = 6"));
+        Assert.IsTrue(text.Contains("NumberOfDistanceBins_ballPosition = 12"));
+        Assert.IsTrue(text.Contains("NumberOfDistanceBins_angle = 12"));
         Assert.IsTrue(text.Contains("NumberOfDistanceBins_velocity = 12"));
         Assert.IsTrue(text.Contains("NumberOfActionBinsPerAxis = 5"));
         Assert.IsTrue(text.Contains("NumberOfTimeBins = 5"));
@@ -314,7 +432,7 @@ public class BuildScriptTests
 
 
         TearDown();
-        Initialize("CDTDRI5GD-0.1NDFDII45DP15BD70BDF3S1RS10");
+        Initialize("CDTDRI5DII45DP15b3ahc4");
 
         BuildEvaluationEnvironment(false, "testEnvParameter2Eval.json", false, evalConfigFileName: "EvalConf2.json", model: "BuildTest/3DBall2.asset");
 
@@ -325,10 +443,11 @@ public class BuildScriptTests
         AssertHasException(text);
 
         Assert.IsTrue(text.Contains("MaxNumberOfActions = 10000"));
-        Assert.IsTrue(text.Contains("NumberOfAreaBins_BehavioralData = 196"));
+        Assert.IsTrue(text.Contains("NumberOfAreaBinsPerDirection = 14"));
         Assert.IsTrue(text.Contains("NumberOfAngleBinsPerAxis = 4"));
-        Assert.IsTrue(text.Contains("NumberOfBallVelocityBinsPerAxis_BehavioralData = 6"));
-        Assert.IsTrue(text.Contains("NumberOfDistanceBins = 45"));
+        Assert.IsTrue(text.Contains("NumberOfBallVelocityBinsPerAxis = 6"));
+        Assert.IsTrue(text.Contains("NumberOfDistanceBins_ballPosition = 45"));
+        Assert.IsTrue(text.Contains("NumberOfDistanceBins_angle = 47"));
         Assert.IsTrue(text.Contains("NumberOfDistanceBins_velocity = 46"));
         Assert.IsTrue(text.Contains("NumberOfActionBinsPerAxis = 9"));
         Assert.IsTrue(text.Contains("NumberOfTimeBins = 1"));
@@ -344,7 +463,7 @@ public class BuildScriptTests
     [Test]
     public void EvaluationEnvironmentExecutionParameterBallAgentTest()
     {
-        Initialize("CDFDRI0.5R3GD1NDTDII30DP10BD60BDF2S1.5RS15");
+        Initialize("CDFDRI0.5R3DII30DP10b3ahcspd3");
 
         BuildEvaluationEnvironment(false, "testEnvParameter1Eval.json", model: "BuildTest/3DBall1.asset");
 
@@ -358,12 +477,12 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("Ball3DAgentHumanCognitionSingleProbabilityDistribution"));
         Assert.IsTrue(text.Contains("ShowBeliefState = True"));
         Assert.IsTrue(text.Contains("NumberOfSamples = 40"));
-        Assert.IsTrue(text.Contains("Sigma = 0,3"));
-        Assert.IsTrue(text.Contains("SigmaMean = 0,05"));
-        Assert.IsTrue(text.Contains("UpdatePeriod = 0,3"));
-        Assert.IsTrue(text.Contains("ObservationProbability = 0,9"));
-        Assert.IsTrue(text.Contains("ConstantReactionTime = 0,2"));
-        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,6"));
+        Assert.IsTrue(text.Contains("Sigma = 0,3") || text.Contains("Sigma = 0.3"));
+        Assert.IsTrue(text.Contains("SigmaMean = 0,05") || text.Contains("SigmaMean = 0.05"));
+        Assert.IsTrue(text.Contains("UpdatePeriod = 0,3") || text.Contains("UpdatePeriod = 0.3"));
+        Assert.IsTrue(text.Contains("ObservationProbability = 0,9") || text.Contains("ObservationProbability = 0.9"));
+        Assert.IsTrue(text.Contains("ConstantReactionTime = 0,2") || text.Contains("ConstantReactionTime = 0.2"));
+        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,6") || text.Contains("OldDistributionPersistenceTime = 0.6"));
 
         Assert.IsTrue(text.Contains("Supervisor.SupervisorAgentRandom"));
         Assert.IsTrue(text.Contains("Model = 3DBall1"));
@@ -373,7 +492,7 @@ public class BuildScriptTests
 
 
         TearDown();
-        Initialize("CDTDRI5GD-0.1NDFDII45DP15BD70BDF3S1RS10");
+        Initialize("CDTDRI5DII45DP15b3ahc4");
 
         BuildEvaluationEnvironment(false, "testEnvParameter2Eval.json", model: "BuildTest/3DBall2.asset");
 
@@ -386,12 +505,12 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("NumberOfBins = 5041"));
         Assert.IsTrue(text.Contains("ShowBeliefState = False"));
         Assert.IsTrue(text.Contains("NumberOfSamples = 1000"));
-        Assert.IsTrue(text.Contains("Sigma = 0,1"));
-        Assert.IsTrue(text.Contains("SigmaMean = 0,01"));
-        Assert.IsTrue(text.Contains("UpdatePeriod = 0,2"));
-        Assert.IsTrue(text.Contains("ObservationProbability = 0,1"));
-        Assert.IsTrue(text.Contains("ConstantReactionTime = 0,3"));
-        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,9"));
+        Assert.IsTrue(text.Contains("Sigma = 0,1") || text.Contains("Sigma = 0.1"));
+        Assert.IsTrue(text.Contains("SigmaMean = 0,01") || text.Contains("SigmaMean = 0.01"));
+        Assert.IsTrue(text.Contains("UpdatePeriod = 0,2") || text.Contains("UpdatePeriod = 0.2"));
+        Assert.IsTrue(text.Contains("ObservationProbability = 0,1") || text.Contains("ObservationProbability = 0.1"));
+        Assert.IsTrue(text.Contains("ConstantReactionTime = 0,3") || text.Contains("ConstantReactionTime = 0.3"));
+        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,9") || text.Contains("OldDistributionPersistenceTime = 0.9"));
         Assert.IsTrue(text.Contains("UseFocusAgent = True"));
 
         Assert.IsTrue(text.Contains("Model = AUI2"));
@@ -405,7 +524,7 @@ public class BuildScriptTests
     [Test]
     public void EvaluationEnvironmentExecutionParameterSupervisorTest()
     {
-        Initialize("CDFDRI0.5R3GD1NDTDII30DP10BD60BDF2S1.5RS15");
+        Initialize("CDFDRI0.5R3DII30DP10b3ahcspd3");
 
         BuildEvaluationEnvironment(false, "testEnvParameter1Eval.json", model: "BuildTest/3DBall1.asset");
 
@@ -419,7 +538,7 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("UseNegativeDragDifficulty = True"));
         Assert.IsTrue(text.Contains("BallAgentDifficulty = 60"));
         Assert.IsTrue(text.Contains("BallAgentDifficultyDivisionFactor = 2"));
-        Assert.IsTrue(text.Contains("BallStartingRadius = 1,5"));
+        Assert.IsTrue(text.Contains("BallStartingRadius = 1,5") || text.Contains("BallStartingRadius = 1.5"));
         Assert.IsTrue(text.Contains("ResetSpeed = 15"));
         Assert.IsTrue(text.Contains("UseFocusAgent = False"));
         Assert.IsTrue(text.Contains("Model = 3DBall1"));
@@ -428,7 +547,7 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("AdvanceNoticeInSeconds = 0"));
         Assert.IsTrue(text.Contains("DifficultyIncrementInterval = 30"));
         Assert.IsTrue(text.Contains("SetConstantDecisionRequestInterval = False"));
-        Assert.IsTrue(text.Contains("DecisionRequestIntervalInSeconds = 0,5"));
+        Assert.IsTrue(text.Contains("DecisionRequestIntervalInSeconds = 0,5") || text.Contains("DecisionRequestIntervalInSeconds = 0.5"));
         Assert.IsTrue(text.Contains("DecisionRequestIntervalRangeInSeconds = 3"));
         Assert.IsTrue(text.Contains("DecisionPeriod = 10"));
         Assert.IsFalse(text.Contains("BehaviorType = HeuristicOnly"));
@@ -436,7 +555,7 @@ public class BuildScriptTests
 
 
         TearDown();
-        Initialize("CDTDRI5GD-0.1NDFDII45DP15BD70BDF3S1RS10");
+        Initialize("CDTDRI5DII45DP15b3ahc4");
 
         BuildEvaluationEnvironment(false, "testEnvParameter2Eval.json", model: "BuildTest/3DBall2.asset");
 
@@ -444,7 +563,7 @@ public class BuildScriptTests
 
         AssertHasException(text);
 
-        Assert.IsTrue(text.Contains("GlobalDrag = -0,1"));
+        Assert.IsTrue(text.Contains("GlobalDrag = -0,1") || text.Contains("GlobalDrag = -0.1"));
         Assert.IsTrue(text.Contains("UseNegativeDragDifficulty = False"));
         Assert.IsTrue(text.Contains("BallAgentDifficulty = 70"));
         Assert.IsTrue(text.Contains("BallAgentDifficultyDivisionFactor = 3"));
@@ -467,7 +586,7 @@ public class BuildScriptTests
     [Test]
     public void EvaluationEnvironmentExecutionParameterSupervisorOverwriteTest()
     {
-        Initialize("CDTDRI99GD99NDTDII99DP99BD99BDF99S99RS99");
+        Initialize("CDTDRI99DII99DP99b3ahcspd3");
 
         BuildEvaluationEnvironment(false, "testEnvParameter1Eval.json", true, "EvalConfIncSupervisorSettings.json", model: "BuildTest/3DBall1.asset");
 
@@ -529,7 +648,7 @@ public class BuildScriptTests
                             "-decisionPeriodBallAgent 6 " +
                             "-id 1";
 
-        string text = RunProductionEnvironment("abcSimulation", arguments);
+        string text = RunProductionEnvironment("abcSimulation", arguments, 50000);
 
         Debug.Log(text);
 
@@ -540,24 +659,26 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("_numberOfBins = 225"));
         Assert.IsTrue(text.Contains("ShowBeliefState = False"));
         Assert.IsTrue(text.Contains("NumberOfSamples = 300"));
-        Assert.IsTrue(text.Contains("Sigma = 0,2"));
-        Assert.IsTrue(text.Contains("SigmaMean = 0,6"));
-        Assert.IsTrue(text.Contains("UpdatePeriod = 0,7"));
-        Assert.IsTrue(text.Contains("ObservationProbability = 0,3"));
-        Assert.IsTrue(text.Contains("ConstantReactionTime = 0,7"));
-        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,4"));
+        Assert.IsTrue(text.Contains("Sigma = 0,2") || text.Contains("Sigma = 0.2"));
+        Assert.IsTrue(text.Contains("SigmaMean = 0,6") || text.Contains("SigmaMean = 0.6"));
+        Assert.IsTrue(text.Contains("UpdatePeriod = 0,7") || text.Contains("UpdatePeriod = 0.7"));
+        Assert.IsTrue(text.Contains("ObservationProbability = 0,3") || text.Contains("ObservationProbability = 0.3"));
+        Assert.IsTrue(text.Contains("ConstantReactionTime = 0,7") || text.Contains("ConstantReactionTime = 0.7"));
+        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,4") || text.Contains("OldDistributionPersistenceTime = 0.4"));
         Assert.IsTrue(text.Contains("UseFocusAgent = True"));
 
         Assert.IsTrue(text.Contains("SaveBehavioralData = True"));
 
-        Assert.IsTrue(text.Contains("NumberOfAreaBins_BehavioralData = 196"));
+        Assert.IsTrue(text.Contains("NumberOfAreaBinsPerDirection = 14"));
         Assert.IsTrue(text.Contains("NumberOfAngleBinsPerAxis = 4"));
-        Assert.IsTrue(text.Contains("NumberOfBallVelocityBinsPerAxis_BehavioralData = 5"));
-        Assert.IsTrue(text.Contains("NumberOfDistanceBins = 12"));
+        Assert.IsTrue(text.Contains("NumberOfBallVelocityBinsPerAxis = 5"));
+        Assert.IsTrue(text.Contains("NumberOfDistanceBins_ballPosition = 12"));
+        Assert.IsTrue(text.Contains("NumberOfDistanceBins_angle = 12"));
         Assert.IsTrue(text.Contains("NumberOfDistanceBins_velocity = 12"));
         Assert.IsTrue(text.Contains("NumberOfActionBinsPerAxis = 5"));
         Assert.IsTrue(text.Contains("NumberOfTimeBins = 1"));
 
+        Assert.IsTrue(text.Contains("IsTerminatingTask = True"));
         Assert.IsTrue(text.Contains("MaxNumberEpisodes = 5"));
         Assert.IsTrue(text.Contains("MinimumScoreForMeasurement = 0"));
         Assert.IsTrue(text.Contains("SampleSize = 5"));
@@ -588,12 +709,12 @@ public class BuildScriptTests
 
         AssertHasException(text);
 
-        Assert.IsTrue(text.Contains("Sigma = 0,4"));
-        Assert.IsTrue(text.Contains("SigmaMean = 1,2"));
-        Assert.IsTrue(text.Contains("UpdatePeriod = 1,4"));
-        Assert.IsTrue(text.Contains("ObservationProbability = 0,6"));
-        Assert.IsTrue(text.Contains("ConstantReactionTime = 1,4"));
-        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,8"));
+        Assert.IsTrue(text.Contains("Sigma = 0,4") || text.Contains("Sigma = 0.4"));
+        Assert.IsTrue(text.Contains("SigmaMean = 1,2") || text.Contains("SigmaMean = 1.2"));
+        Assert.IsTrue(text.Contains("UpdatePeriod = 1,4") || text.Contains("UpdatePeriod = 1.4"));
+        Assert.IsTrue(text.Contains("ObservationProbability = 0,6") || text.Contains("ObservationProbability = 0.6"));
+        Assert.IsTrue(text.Contains("ConstantReactionTime = 1,4") || text.Contains("ConstantReactionTime = 1.4"));
+        Assert.IsTrue(text.Contains("OldDistributionPersistenceTime = 0,8") || text.Contains("OldDistributionPersistenceTime = 0.8"));
 
         Assert.IsTrue(text.Contains("MaxNumberEpisodes = 7"));
         Assert.IsTrue(text.Contains("SampleSize = 7"));
@@ -659,7 +780,6 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("NumberOfTimeBins = 5"));
 
         Assert.IsTrue(text.Contains("UseFocusAgent = False"));
-        Assert.IsTrue(text.Contains("_focusAgent = \n"));
         Assert.IsTrue(text.Contains("Model = 3DBall2"));
         Assert.IsFalse(text.Contains("BehaviorType = HeuristicOnly"));
         Assert.IsFalse(text.Contains("BehaviorType = Default"));
@@ -691,7 +811,6 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("NumberOfTimeBins = 5"));
 
         Assert.IsTrue(text.Contains("UseFocusAgent = False"));
-        Assert.IsTrue(text.Contains("_focusAgent = \n"));
         Assert.IsTrue(text.Contains("Model = 3DBallBall4EnvAfDP3RtAhcTfTBt"));
         Assert.IsFalse(text.Contains("BehaviorType = HeuristicOnly"));
         Assert.IsFalse(text.Contains("BehaviorType = Default"));
@@ -716,7 +835,6 @@ public class BuildScriptTests
         Assert.IsTrue(text.Contains("NumberOfTimeBins = 5"));
 
         Assert.IsTrue(text.Contains("UseFocusAgent = False"));
-        Assert.IsTrue(text.Contains("_focusAgent = \n"));
         Assert.IsTrue(text.Contains("Model = 3DBallBall4EnvAfDP6RtAhcTfTBt"));
         Assert.IsFalse(text.Contains("BehaviorType = HeuristicOnly"));
         Assert.IsFalse(text.Contains("BehaviorType = Default"));
@@ -860,7 +978,7 @@ public class BuildScriptTests
         }
     }
 
-    private string RunEvaluationEnvironment(string buildName = "EvaltestEnv")
+    private string RunEvaluationEnvironment(string buildName = "EvaltestEnv", int period = 20000)
     {
         string path = Path.Combine(_workingDirectory, "..", "Build", _buildPath, buildName);
         string logPath = Path.Combine(path, "SupervisorML_Data", "Logs", "LogFile.txt");
@@ -874,7 +992,7 @@ public class BuildScriptTests
             Debug.Log(String.Format("Could not delete LogFile: {0}", e.Message));
         }
 
-        RunEnvironment(path);
+        RunEnvironment(path, "", period);
 
         string logPathBackUp = Path.Combine(path, "SupervisorML_Data", "Logs", string.Format("LogFile{0}.txt", DateTime.Now.ToString("yyyyMMddHHmmss")));
 
@@ -889,6 +1007,7 @@ public class BuildScriptTests
     {
         Process proc = new Process();
         proc.StartInfo.FileName = Path.Combine(path, "SupervisorML.exe");
+
         proc.StartInfo.Arguments = arguments;
         proc.Start();
         //wait for program start

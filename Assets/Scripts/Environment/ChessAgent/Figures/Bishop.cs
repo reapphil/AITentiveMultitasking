@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bishop : ChessFigure
 {
-    public override bool[,] PossibleMove(bool assingBeatingMovements = false)
+    public override bool[,] PossibleMove(bool assignBeatingMovements = false)
     {
         bool[,] possibleMoves = new bool[8, 8];
 
@@ -16,7 +16,7 @@ public class Bishop : ChessFigure
         {
             i--;
             j++;
-            if (AssignMove(i, j, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(i, j, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         // Top Right
@@ -26,7 +26,7 @@ public class Bishop : ChessFigure
         {
             i++;
             j++;
-            if (AssignMove(i, j, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(i, j, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         // Bottom Left
@@ -36,7 +36,7 @@ public class Bishop : ChessFigure
         {
             i--;
             j--;
-            if (AssignMove(i, j, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(i, j, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         // Bottom Right
@@ -46,7 +46,7 @@ public class Bishop : ChessFigure
         {
             i++;
             j--;
-            if (AssignMove(i, j, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(i, j, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         return possibleMoves;

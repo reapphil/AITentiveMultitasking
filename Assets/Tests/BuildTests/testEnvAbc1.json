@@ -11,6 +11,7 @@
 		"numberOfPlatforms": 2
 	},
 	"supervisorSettings": {
+		"mode": "Force",
 		"randomSupervisor": false,
 		"vectorObservationSize": 16,
 		"setConstantDecisionRequestInterval": true,
@@ -33,9 +34,13 @@
 		"numberOfBallVelocityBinsPerAxis_BehavioralData": 5,
 		"numberOfAngleBinsPerAxis": 4,
 		"numberOfDistanceBins": 12,
+		"numberOfDistanceBins_angle": 12,
 		"numberOfDistanceBins_velocity": 12,
 		"numberOfActionBinsPerAxis": 5,
 		"numberOfTimeBins": 5
+	},
+	"balancingTaskSettings" : {
+		"isTerminatingTask": true
 	},
 	"ball3DAgentHumanCognitionSettings": {
 		"useFocusAgent": true,

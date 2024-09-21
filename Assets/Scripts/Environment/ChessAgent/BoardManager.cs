@@ -34,9 +34,9 @@ public class BoardManager : MonoBehaviour
 
     private Dictionary<string, GameObject> _chessFiguresGameObjects;
 
-    private ImageAnimation _correctImageAnimation;
+    private FadeImageAnimation _correctImageAnimation;
 
-    private ImageAnimation _wrongImageAnimation;
+    private FadeImageAnimation _wrongImageAnimation;
 
 
     public bool? HandleInput(int targetX, int targetY)
@@ -108,8 +108,8 @@ public class BoardManager : MonoBehaviour
             ChessBoard = FENLoader.LoadChessBoardsFromFEN(Path.Combine(Application.dataPath, "Scripts", "Environment", "ChessAgent", "regular.fen"))[0];
         }
 
-        _correctImageAnimation = transform.GetChildByName("Canvas").GetChildByName("Correct").GetComponent<ImageAnimation>();
-        _wrongImageAnimation = transform.GetChildByName("Canvas").GetChildByName("Wrong").GetComponent<ImageAnimation>();
+        _correctImageAnimation = transform.GetChildByName("Canvas").GetChildByName("Correct").GetComponent<FadeImageAnimation>();
+        _wrongImageAnimation = transform.GetChildByName("Canvas").GetChildByName("Wrong").GetComponent<FadeImageAnimation>();
 
         InstantiateChessFiguresDict();
         SpawnChessBoard();

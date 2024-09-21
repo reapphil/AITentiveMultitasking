@@ -1,0 +1,47 @@
+{
+	"hyperparameters": {
+		"autonomous": false,
+		"decisionPeriod": 4,
+		"focusActivePlatform": false,
+		"resetPlatformToIdentity": true,
+		"agentChoice": "Ball3DAgentHumanCognition",
+		"trainSupervisor": true,
+		"trainBallAgent": false,
+		"supervisorModelName": "",
+		"ballAgentModelName": "UC_SA1_RE\\Ball4EnvAfDP4RtAhcTfTBt\\BallAgentBall4EnvAfDP4RtAhcTfTBt.asset",
+		"focusAgentModelName": "",
+		"saveBehavioralData": false,
+		"numberOfPlatforms": 2
+	},
+	"supervisorSettings": {
+		"randomSupervisor": false,
+		"vectorObservationSize": 18,
+		"setConstantDecisionRequestInterval": true,
+		"decisionRequestIntervalInSeconds": 0.8,
+		"decisionRequestIntervalRangeInSeconds": 1,
+		"globalDrag": 1,
+		"useNegativeDragDifficulty": false,
+		"difficultyIncrementInterval": 100,
+		"decisionPeriod": 1,
+		"advanceNoticeInSeconds": 0.3,
+		"ballAgentDifficulty": 60,
+		"ballAgentDifficultyDivisionFactor": 1,
+		"ballStartingRadius": 0.05,
+		"resetSpeed": 7.5
+	},
+	"balancingTaskSettings" : {
+		"isTerminatingTask": true
+	},
+	"ball3DAgentHumanCognitionSettings": {
+		"numberOfBins": 1000,
+		"showBeliefState": false,
+		"numberOfSamples": 1000,
+		"sigma": 0.01,
+		"sigmaMean": 0.2,
+		"updatePeriode": 0.4,
+		"observationProbability": 0.1,
+		"constantReactionTime": 0,
+		"oldDistributionPersistenceTime": 0,
+		"fullVision": false
+	}
+}

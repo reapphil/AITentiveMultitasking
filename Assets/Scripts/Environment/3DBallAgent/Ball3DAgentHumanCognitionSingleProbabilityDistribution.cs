@@ -36,7 +36,7 @@ public class Ball3DAgentHumanCognitionSingleProbabilityDistribution : Ball3DAgen
         
         for (int i = 0; i < _numberOfBins; i++)
         {
-            if (PositionConverter.CoordinatesToBin(BallStartingPosition, _platformRadius, numberOFBinsPerDirection) == i)
+            if (PositionConverter.SquareCoordinatesToBin(BallStartingPosition, _platformRadius, numberOFBinsPerDirection) == i)
             {
                 s_initBallLocationProbabilities[i] = 1;
             }

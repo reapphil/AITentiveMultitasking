@@ -1,0 +1,64 @@
+{
+	"hyperparameters": {
+		"version": 2,
+		"autonomous": false,
+		"supervisorModelName": "",
+		"focusAgentModelName": "",
+		"timeScale": 1,
+		"abcSimulation": false,
+		"saveBehavioralData": false,
+		"focusActiveTask": false,
+		"hideInactiveTasks": false,
+		"useFocusAgent": true,
+		"tasks": [
+			"TypingAgentHumanCognition",
+			"DrivingAgentHumanCognition",
+			"Ball3DAgentHumanCognition"
+		],
+		"taskModels": {}
+	},
+	"supervisorSettings": {
+		"version": 2,
+		"randomSupervisor": true,
+		"setConstantDecisionRequestInterval": true,
+		"decisionRequestIntervalInSeconds": 99,
+		"decisionRequestIntervalRangeInSeconds": 99,
+		"difficultyIncrementInterval": 99,
+		"decisionPeriod": 99,
+		"advanceNoticeInSeconds": 0
+	},
+	"typingAgentHumanCognition": {
+		"quizName": "quiztest.csv",
+		"screenWidthPixel": 1920,
+		"screenHightPixel": 1080,
+		"screenDiagonalInch": 27,
+		"showBeliefState": true,
+		"fullVision": true,
+		"numberOfSamples": 99,
+		"observationProbability": 0.5
+	},
+	"drivingAgentHumanCognition": {
+		"updatePeriod": 0.1,
+		"sigmaMean": 0.23,
+		"decisionPeriod": 4
+	},
+	"supervisorAgent": {
+		"rewardFunction": "r_0"
+	},
+	"ball3DAgentHumanCognitionSettings": {
+		"version": 2,
+		"sigmaMean": 0.11,
+		"updatePeriode": 0.22,
+		"observationProbability": 0.123,
+		"constantReactionTime": 0.5,
+		"oldDistributionPersistenceTime": 0.45,
+		"fullVision": false
+	},
+	"ball3DAgentHumanCognition": {
+		"useFocusAgent": true,
+		"numberOfBins": 666,
+		"showBeliefState": false,
+		"numberOfSamples": 1100,
+		"sigma": 0.7
+	}
+}

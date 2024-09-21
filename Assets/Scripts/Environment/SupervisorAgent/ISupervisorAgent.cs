@@ -26,9 +26,17 @@ namespace Supervisor
 
         bool UseHeuristic { get; }
 
+        string[] TaskNames { get; }
+
+        public ITask[] Tasks { get; }
+
         void CollectObservations(VectorSensor sensor);
 
         ITask GetActiveTask();
+
+        int GetActiveTaskNumber();
+
+        int GetPreviousActiveTaskNumber();
 
         void Heuristic(in ActionBuffers actionsOut);
 

@@ -5,12 +5,9 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
-using Random = UnityEngine.Random;
 using TMPro;
-using System.Diagnostics;
 using Unity.MLAgents.Policies;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
@@ -19,10 +16,18 @@ using System.Linq;
 
 namespace Supervisor
 {
+    public enum Mode
+    {
+        Force,
+        Notification,
+        Suggestion
+    }
+
+
     public class SupervisorAgent : Agent, ISupervisorAgent
     {
         [field: SerializeField, Tooltip("Score is shown in the top right corner if true."), ProjectAssign]
-        public bool ShowScore { get; set; }
+        public bool ShowReward { get; set; }
 
         [field: SerializeField, Tooltip("Focus active platform in heuristic mode."), ProjectAssign]
         public bool FocusActiveTask { get; set; }
@@ -30,13 +35,19 @@ namespace Supervisor
         [field: SerializeField, Tooltip("Hide inactive platform."), ProjectAssign]
         public bool HideInactiveTasks { get; set; }
 
-        [field: SerializeField, Tooltip("In case a task switch happens, the next requested decision is after SetConstantDecisionRequestInterval + AdvanceNoticeInSeconds."), ProjectAssign]
+        [field: SerializeField, Tooltip("In case a task switch happens, the next requested decision is after SetConstantDecisionRequestInterval + " +
+            "AdvanceNoticeInSeconds."), ProjectAssign]
         public float AdvanceNoticeInSeconds { get; set; }
 
-        [field: SerializeField, Tooltip("Notification to switch to a certain platform is given instead to a direct switch to the platform.")]
-        public bool NotificationMode { get; set; }
+        [field: SerializeField, Tooltip("Mode of the supervisor: " +
+            "Force -> automatic switch, the user cannot decide if the switch should be performed;   " +
+            "Notification -> the user will be notified about upcoming switch and can perform the switch during 1 second " +
+            "If the switch was not performed by the user, the switch is performed after expiry of this 1 second;   " +
+            "Suggestion: the supervisor only suggestion a switch, the decision remains by the user")]
+        public Mode Mode { get; set; }
 
-        [field: SerializeField, Tooltip("Defines if the interval in which the agent should perform an action is constant (true) or a minimum value (false)."), ProjectAssign]
+        [field: SerializeField, Tooltip("Defines if the interval in which the agent should perform an action is constant (true) or a minimum value " +
+            "(false)."), ProjectAssign]
         public bool SetConstantDecisionRequestInterval { get; set; }
 
         [field: SerializeField, Tooltip("Defines the interval in which the agent should perform an action."), ProjectAssign]
@@ -45,9 +56,15 @@ namespace Supervisor
         [field: SerializeField, Tooltip("The Interval in which the _dragDifficulty level should be increased."), ProjectAssign]
         public int DifficultyIncrementInterval { get; set; } = 15;
 
-        [field: SerializeField, Tooltip("The frequency with which the agent requests a decision. A DecisionPeriod of 5 means that the Agent will request a decision every 5 " +
-            "Academy steps. The DecisionPeriod is ignored if SetConstantDecisionRequestInterval is true.")]
+        [field: SerializeField, Tooltip("The frequency with which the agent requests a decision. A DecisionPeriod of 5 means that the Agent will " +
+            "request a decision every 5 Academy steps. The DecisionPeriod is ignored if SetConstantDecisionRequestInterval is true.")]
         public int DecisionPeriod { get; set; } = 5;
+
+        [field: SerializeField, Tooltip("Defines the reward function of the supervisor agent. \"r_{number}\" is interpreted as the values returned by " +
+            "the \"TaskRewardForSupervisorAgent\" queue of the specific tasks. {number} start with 0 and enumerates the tasks displayed from left to " +
+            "right. All function of the Math library can be used (without Math. prefix). Furthermore, the following variables can be used: t_s: time " +
+            "since last switch; t_d: decision request interval in seconds"), ProjectAssign]
+        public string RewardFunction { get; set; } = "r_0";
 
         [field: SerializeField, ProjectAssign]
         public float TimeScale { get; set; } = 1;
@@ -55,8 +72,14 @@ namespace Supervisor
         [field: SerializeField, ProjectAssign]
         public int StartCountdownAt { get; set; } = 5;
 
+        [field: SerializeField, Tooltip("Must be defined for the training. For all other modes, the size is determined by the provided model.")]
+        public int VectorObservationSize { get; set; }
+
         [field: SerializeField]
-        public Text StopwatchText { get; set; }
+        public Text CumulativeRewardText { get; set; }
+
+        [field: SerializeField]
+        public Text CurrentRewardText { get; set; }
 
         [field: SerializeField]
         public TextMeshProUGUI TextMeshProUGUI { get; set; }
@@ -70,12 +93,50 @@ namespace Supervisor
         [field: SerializeField]
         public GameObject[] TaskGameObjects { get; set; }
 
-        public ITask[] Tasks { get; set; }
+        [field: SerializeField]
+        public GameObject[] TaskGameObjectsProjectSettingsOrdering { get; set; }
+
+        public float TimeSinceLastSwitch { get; set; }
+
+        public ITask[] Tasks 
+        {
+            get
+            {
+                return ITask.GetTasksFromGameObjects(TaskGameObjects);
+            }
+        }
+
+        public ITask[] TasksProjectSettingsOrdering
+        {
+            get
+            {
+                return ITask.GetTasksFromGameObjects(TaskGameObjectsProjectSettingsOrdering);
+            }
+        }
+
+        public string[] TaskNames
+        {
+            get
+            {
+                string[] taskName = new string[Tasks.Length];
+
+                for (int i = 0; i < Tasks.Length; i++)
+                {
+                    taskName[i] = Tasks[i].GetType().Name;
+                }
+
+                return taskName;
+            }
+        }
 
 
-        protected int _activeInstance;
+        protected int _activeInstanceActionLevel;
 
-        protected int _previousActive;
+        protected int _previousActiveActionLevel;
+
+        private int _activeInstanceSwitchingLevel;
+
+        protected int _previousActiveSwitchingLevel;
 
         protected int _pendingInstance;
 
@@ -88,8 +149,6 @@ namespace Supervisor
         protected Dictionary<InputAction, bool> _wasReleased;
 
         protected int _switchCount;
-
-        protected float _timeSinceLastSwitch;
 
         protected AudioSource _audioSource;
 
@@ -104,9 +163,13 @@ namespace Supervisor
 
         private int _stepCounterDecisionRequester;
 
-        private int _previousActiveInstance;
-
         private bool _taskSwitched;
+
+        private bool _notificationActive;
+
+        private float _collectedReward;
+
+        private float _lastCollectedReward;
 
 
         public static event EventHandler<bool> EndEpisodeEvent;
@@ -126,6 +189,7 @@ namespace Supervisor
         public delegate void SetRewardAction(float reward);
         public static event SetRewardAction OnSetReward;
 
+
         public static SupervisorAgent GetSupervisor(GameObject gameObject)
         {
             return gameObject.GetComponents<SupervisorAgent>().Where(x => x.enabled).First();
@@ -144,9 +208,34 @@ namespace Supervisor
             return null;
         }
 
+        public List<T> GetTask<T>()
+        {
+            List<T> result = new();
+
+            foreach(ITask task in Tasks)
+            {
+                if (task.GetType() == typeof(T))
+                {
+                    result.Add((T)task);
+                }
+            }
+
+            return result;
+        }
+
         public int GetActiveTaskNumber()
         {
-            return _activeInstance;
+            return _activeInstanceActionLevel;
+        }
+
+        public int GetPreviousActiveTaskNumber()
+        {
+            return _previousActiveSwitchingLevel;
+        }
+
+        public int GetTaskNumber(ITask task)
+        {
+            return Array.IndexOf(Tasks, task);
         }
 
         public override void OnEpisodeBegin()
@@ -159,19 +248,19 @@ namespace Supervisor
             FixedEpisodeDuration = 0;
             _isDifficultyUpdatedInCurrentInterval = false;
 
-            _activeInstance = 0;
-            _previousActive = 0;
+            _activeInstanceActionLevel = 0;
+            _previousActiveActionLevel = 0;
 
-            if (NotificationMode)
+            if (Mode == Mode.Notification)
             {
                 GetComponent<Unity.MLAgents.Policies.BehaviorParameters>().BehaviorType = Unity.MLAgents.Policies.BehaviorType.InferenceOnly;
                 _isUserInput = false;
             }
 
-            SwitchAgentTo(_activeInstance);
+            Act(_activeInstanceActionLevel);
 
             _switchCount = 1;
-            _timeSinceLastSwitch = 0;
+            TimeSinceLastSwitch = 0;
 
             RunCountDown();
         }
@@ -188,26 +277,35 @@ namespace Supervisor
                 task.IsActive = false;
             }
 
-            _activeInstance = 0;
-            _previousActive = 1;
+            _activeInstanceActionLevel = 0;
+            _previousActiveActionLevel = 1;
 
-            Tasks[_activeInstance].IsActive = true;
+            Tasks[_activeInstanceActionLevel].IsActive = true;
+
+            InitMode();
         }
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            foreach(ITask task in Tasks)
+            foreach (ITask task in Tasks)
             {
-                task.AddObservationsToSensor(sensor);
+                task.AddTrueObservationsToSensor(sensor);
             }
 
             sensor.AddObservation(_switchCount);
+            sensor.AddObservation(TimeSinceLastSwitch);
         }
 
         public override void OnActionReceived(ActionBuffers actionBuffers)
         {
-            Act(actionBuffers.DiscreteActions[0]);
-            ResolveInteraction(actionBuffers.DiscreteActions[0]);
+            //SumOfDiscreteBranchSizes only restricts the actions to be performed for the training. If the model was trained with more actions,
+            //actionBuffers length still can be greater than SumOfDiscreteBranchSizes. The if condition is added to prevent an error in this case,
+            //for instance if the task runs autonomously anyways and the input of the supervisor should be ignored.
+            if (actionBuffers.DiscreteActions[0] < GetComponent<BehaviorParameters>().BrainParameters.ActionSpec.SumOfDiscreteBranchSizes)
+            {
+                Act(actionBuffers.DiscreteActions[0]);
+                ResolveInteraction(actionBuffers.DiscreteActions[0]);
+            }
         }
 
         public void OnEndEpisode(bool aborted)
@@ -227,16 +325,44 @@ namespace Supervisor
 
             //If discreteActionsOut[0] wont be set, then discreteActionsOut[0] = 0. Therefore the following line sets discreteActionsOut[0] to the
             //PreviousAction to prevent this default behavior.
-            discreteActionsOut[0] = _previousActive;
+            discreteActionsOut[0] = _activeInstanceActionLevel;
 
             ControlGamepad(discreteActionsOut);
             ControlKeyboard(discreteActionsOut);
         }
 
 
-        protected virtual float GetReward()
+        protected virtual float PeekLastRewards()
         {
-            float reward = (float)((DecisionRequestIntervalInSeconds / (1 + Math.Exp(-(Math.Exp(2) * (_timeSinceLastSwitch - 0.5))))));
+            Dictionary<string, object> parameters = new();
+
+            for (int i = 0; i < Tasks.Length; i++)
+            {
+                parameters.Add($"r_{i}", TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.IsNullOrEmpty() ? 0 : TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.ElementAt(TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.Count-1));
+            }
+
+            parameters.Add("t_s", TimeSinceLastSwitch);
+            parameters.Add("t_d", DecisionRequestIntervalInSeconds);
+
+            float reward = (float)FunctionInterpreter.Interpret(RewardFunction, parameters);
+
+            return reward;
+        }
+
+        protected virtual float DequeueReward()
+        {
+            Dictionary<string, object> parameters = new();
+
+            for (int i = 0; i < Tasks.Length; i++)
+            {
+                parameters.Add($"r_{i}", TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.IsNullOrEmpty() ? 0 : TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.DequeueAll().Sum());
+            }
+
+            parameters.Add("t_s", TimeSinceLastSwitch);
+            parameters.Add("t_d", DecisionRequestIntervalInSeconds);
+
+            float reward = (float)FunctionInterpreter.Interpret(RewardFunction, parameters);
+
             return reward;
         }
 
@@ -264,7 +390,7 @@ namespace Supervisor
 
         protected virtual void RequestInteractionAfterInterval()
         {
-            bool hasIntervalExpired = _fixedUpdateTimer > DecisionRequestIntervalInSeconds + _advanceNoticeTimer;
+            bool hasIntervalExpired = _fixedUpdateTimer > DecisionRequestIntervalInSeconds + AdvanceNoticeInSeconds;
 
             if (SetConstantDecisionRequestInterval)
             {
@@ -294,7 +420,7 @@ namespace Supervisor
                 _fixedUpdateTimer = 0;
             }
 
-            if (hasIntervalExpired && !_taskSwitched)
+            if (hasIntervalExpired && !_taskSwitched && !_notificationActive)
             {
                 _advanceNoticeTimer = 0;
                 RequestSimpleDecision();
@@ -303,60 +429,32 @@ namespace Supervisor
             _taskSwitched = false;
         }
 
-        protected virtual void SwitchingAction(int activeInstance)
-        {
-            _activeInstance = activeInstance;
-
-            if (_previousActive != _activeInstance)
-            {
-                if (!(GetComponent<Unity.MLAgents.Policies.BehaviorParameters>().BehaviorType == Unity.MLAgents.Policies.BehaviorType.HeuristicOnly))
-                {
-                    if (_audioSource != null)
-                    {
-                        _audioSource.Play();
-                    }
-                }
-
-                if (AdvanceNoticeInSeconds > 0)
-                {
-                    _advanceNoticeTimer = AdvanceNoticeInSeconds;
-                    StartCoroutine(DelayedAgentSwitchTo(AdvanceNoticeInSeconds, _activeInstance));
-                }
-                else
-                {
-                    SwitchAgentTo(_activeInstance);
-                }
-            }
-
-            _previousActive = activeInstance;
-        }
-
         protected virtual void PropagateTimeBetweenSwitches()
         {
             InvokeOnTaskSwitchCompleted();
-            _timeSinceLastSwitch = 0;
+            TimeSinceLastSwitch = 0;
         }
 
         protected void InvokeOnTaskSwitchCompleted()
         {
-            OnTaskSwitchCompleted?.Invoke(_timeSinceLastSwitch, this, false);
+            OnTaskSwitchCompleted?.Invoke(TimeSinceLastSwitch, this, false);
         }
 
         protected void Awake()
         {
             _controls = new SupervisorControls();
-            Tasks = ITask.GetTasksFromGameObjects(TaskGameObjects);
         }
 
         protected override void OnEnable()
         {
-            ITask.TaskCompleted += EndEpisodes;
+            ITask.OnTermination += EndEpisodes;
             base.OnEnable();
             _controls.Heuristic.Enable();
 
-            if (!ShowScore)
+            if (!ShowReward)
             {
-                StopwatchText.text = "";
+                CumulativeRewardText.text = "";
+                CurrentRewardText.text = "";
             }
 
             //-1 => Managed by ml-agents
@@ -368,7 +466,7 @@ namespace Supervisor
 
         protected override void OnDisable()
         {
-            ITask.TaskCompleted -= EndEpisodes;
+            ITask.OnTermination -= EndEpisodes;
             base.OnDisable();
             _controls.Heuristic.Disable();
             OnEndEpisode(true);
@@ -377,26 +475,40 @@ namespace Supervisor
         protected void EndEpisodes()
         {
             OnEndEpisode(false);
-            base.EndEpisode();
+
+            foreach (ITask task in Tasks)
+            {
+                while (task.TaskRewardForSupervisorAgent.Count > 0)
+                {
+                    SetReward(task.TaskRewardForSupervisorAgent.DequeueAll().Sum());
+                }
+            }
+
+            EndEpisode();
         }
 
         protected void Act(int activeInstance)
         {
-            if (NotificationMode)
+            switch (Mode)
             {
-                NotificationAction(activeInstance);
-            }
-            else
-            {
-                SwitchingAction(activeInstance);
+                case Mode.Force:
+                    SwitchingAction(activeInstance);
+                    break;
+                case Mode.Notification:
+                    NotificationAction(activeInstance);
+                    break;
+                case Mode.Suggestion:
+                    SuggestionAction(activeInstance);
+                    break;
             }
         }
 
         protected void ResolveInteraction(int activeInstance)
         {
-            float reward = GetReward();
-            SetReward(reward);
-            OnSetReward?.Invoke(reward);
+            _lastCollectedReward = PeekLastRewards();
+            _collectedReward = DequeueReward();
+            SetReward(_collectedReward);
+            OnSetReward?.Invoke(_collectedReward);
         }
 
         protected void RequestInteraction()
@@ -445,8 +557,9 @@ namespace Supervisor
         protected void UpdateAgentsActiveStatus(int activeInstance)
         {
             OnTaskSwitchTo?.Invoke(Tasks[activeInstance]);
-            OnTaskSwitchFrom?.Invoke(Tasks[_previousActiveInstance]);
-            _previousActiveInstance = activeInstance;
+            OnTaskSwitchFrom?.Invoke(Tasks[_activeInstanceSwitchingLevel]);
+            _previousActiveSwitchingLevel = _activeInstanceSwitchingLevel;
+            _activeInstanceSwitchingLevel = activeInstance;
             _taskSwitched = true;
 
             foreach (ITask task in Tasks)
@@ -457,6 +570,36 @@ namespace Supervisor
 
             Tasks[activeInstance].IsActive = true;
             VisualizeActiveStatusOfTasks(Tasks[activeInstance]);
+        }
+
+        protected void UpdateAgentsFocusStatus(int activeInstance)
+        {
+            OnTaskSwitchTo?.Invoke(Tasks[activeInstance]);
+            OnTaskSwitchFrom?.Invoke(Tasks[_activeInstanceSwitchingLevel]);
+            _previousActiveSwitchingLevel = _activeInstanceSwitchingLevel;
+            _activeInstanceSwitchingLevel = activeInstance;
+            _taskSwitched = true;
+
+            foreach (ITask task in Tasks)
+            {
+                if (task.GetType() == typeof(ICrTask))
+                {
+                    ICrTask crTask = (ICrTask)task;
+                    crTask.FocusStateSpace.DeactivateAllElements();
+                }
+
+                task.IsActive = false;
+                VisualizeSuggestionStatusOfTasks(task);
+            }
+
+            if (Tasks[activeInstance].GetType() == typeof(ICrTask))
+            {
+                ICrTask crTask = (ICrTask)Tasks[activeInstance];
+                crTask.FocusStateSpace.ActivateAllElements();
+            }
+
+            Tasks[activeInstance].IsActive = true;
+            VisualizeSuggestionStatusOfTasks(Tasks[activeInstance]);
         }
 
         protected void FocusActiveInstance()
@@ -494,9 +637,48 @@ namespace Supervisor
 
             camera.clearFlags = CameraClearFlags.SolidColor;
 
+            _notificationActive = true;
+
             yield return new WaitForSeconds(AdvanceNoticeInSeconds);
 
+            _notificationActive = false;
+
             camera.clearFlags = CameraClearFlags.Skybox;
+        }
+
+        private void InitMode()
+        {
+            switch (Mode) 
+            {
+                case Mode.Suggestion:
+                    InitSuggestionMode();
+                    break;
+                default:
+                    InitForceMode();
+                    break;
+            }
+        }
+
+        private void InitSuggestionMode()
+        {
+            foreach (ITask task in Tasks)
+            {
+                if (Mode == Mode.Suggestion)
+                {
+                    task.IsAutonomous = true;
+                }
+
+                task.GetGameObject().transform.parent.GetChildByName("Camera").GetChildByName("Frame").gameObject.SetActive(true);
+            }
+        }
+
+        private void InitForceMode()
+        {
+            foreach(ITask task in Tasks)
+            {
+                PostProcessLayer postProcessLayer = task.GetGameObject().transform.parent.GetChildByName("Camera").GetComponent<PostProcessLayer>();
+                postProcessLayer.volumeLayer = task.IsActive ? (1 << 0) : (1 << 3);
+            }
         }
 
 
@@ -505,7 +687,7 @@ namespace Supervisor
         private void FixedUpdate()
         {
             _fixedUpdateTimer += Time.fixedDeltaTime;
-            _timeSinceLastSwitch += Time.fixedDeltaTime;
+            TimeSinceLastSwitch += Time.fixedDeltaTime;
             _fixedNotificationExecutionTimer += Time.fixedDeltaTime;
             FixedEpisodeDuration += Time.fixedDeltaTime;
 
@@ -520,22 +702,45 @@ namespace Supervisor
             postProcessLayer.volumeLayer = task.IsActive ? (1 << 0) : (1 << 3);
         }
 
+        private void VisualizeSuggestionStatusOfTasks(ITask task)
+        {
+            GameObject imageGameObject = task.GetGameObject().transform.parent.GetChildByName("Camera").GetChildByName("Frame").GetChildByName("Image").gameObject;
+            Image image = imageGameObject.GetComponent<Image>();
+            BlinkingImageAnimation blinkingImageAnimation = imageGameObject.GetComponent<BlinkingImageAnimation>();
+
+            if (task.IsActive)
+            {
+                image.color = new Color(0, 255, 0, 1);
+                blinkingImageAnimation.FadeSpeed = 3;
+            }
+            else
+            {
+                image.color = new Color(255, 0, 0, 1);
+                blinkingImageAnimation.FadeSpeed = 1;
+            }
+        }
+
         private void LogPropertiesOfComponentsToFile()
         {
-            GameObject agentGameObject = TaskGameObjects[0].transform.GetChildByName("Agent").gameObject;
+            //supervisorAgent
+            LogToFile.LogPropertiesFieldsOfObject(this.GetComponent<BehaviorParameters>());
 
-            Type t = agentGameObject.GetComponent<BehaviorParameters>().GetType();
-            LogToFile.LogPropertiesFieldsOfComponent(agentGameObject.GetComponent(t));
+            //focusAgent
+            LogToFile.LogPropertiesFieldsOfObject(this.transform.GetChild(0).GetComponent<BehaviorParameters>());
 
-            t = this.GetComponent<BehaviorParameters>().GetType();
-            LogToFile.LogPropertiesFieldsOfComponent(this.GetComponent(t));
+            TaskGameObjects.DistinctBy(x => x.transform.GetChildByName("Agent").GetComponent<ITask>().GetType()).ToList().ForEach(taskGameObject =>
+            {
+                GameObject agent = taskGameObject.transform.GetChildByName("Agent").gameObject;
+                ITask task = agent.GetComponent<ITask>();
 
-            t = this.transform.GetChild(0).GetComponent<BehaviorParameters>().GetType();
-            LogToFile.LogPropertiesFieldsOfComponent(this.transform.GetChild(0).GetComponent(t));
+                LogToFile.LogPropertiesFieldsOfObject(task);
+                LogToFile.LogPropertiesFieldsOfObject(task.StateInformation);
+                LogToFile.LogPropertiesFieldsOfObject(agent.GetComponent<BehaviorParameters>());
+            });
 
-            LogToFile.LogPropertiesFieldsOfComponent(agentGameObject.GetComponent(typeof(ITask)));
 
-            LogToFile.LogPropertiesFieldsOfComponent(this);
+            LogToFile.LogPropertiesFieldsOfObject(this);
+            LogToFile.LogPropertiesFieldsOfObject(transform.GetChildByName("FocusAgent").GetComponent<FocusAgent>());
         }
 
         private void RunCountDown()
@@ -567,9 +772,10 @@ namespace Supervisor
         //Prints the current reward to Canvas
         private void Update()
         {
-            if (ShowScore)
+            if (ShowReward)
             {
-                StopwatchText.text = Math.Round(GetCumulativeReward()).ToString() + " Points";
+                CumulativeRewardText.text = string.Format("Cumulative Reward:\t{0}", Math.Round(GetCumulativeReward(), 2).ToString());
+                CurrentRewardText.text = string.Format("Current Reward:\t{0}", Math.Round(_lastCollectedReward, 2).ToString());
             }
         }
 
@@ -585,9 +791,35 @@ namespace Supervisor
             Time.timeScale = TimeScale;
         }
 
+        protected virtual void SwitchingAction(int targetInstance)
+        {
+            if (targetInstance != _activeInstanceActionLevel)
+            {
+                if (!(GetComponent<Unity.MLAgents.Policies.BehaviorParameters>().BehaviorType == Unity.MLAgents.Policies.BehaviorType.HeuristicOnly))
+                {
+                    if (_audioSource != null)
+                    {
+                        _audioSource.Play();
+                    }
+                }
+
+                if (AdvanceNoticeInSeconds > 0)
+                {
+                    _advanceNoticeTimer = AdvanceNoticeInSeconds;
+                    StartCoroutine(DelayedAgentSwitchTo(AdvanceNoticeInSeconds, targetInstance));
+                }
+                else
+                {
+                    SwitchAgentTo(targetInstance);
+                }
+            }
+
+            _activeInstanceActionLevel = targetInstance;
+        }
+
         protected virtual void NotificationAction(int targetInstance)
         {
-            if (_previousActive != targetInstance)
+            if (_activeInstanceActionLevel != targetInstance)
             {
                 if (!_isUserInput)
                 {
@@ -608,20 +840,46 @@ namespace Supervisor
                 {
                     _isUserInput = false;
                     GetComponent<Unity.MLAgents.Policies.BehaviorParameters>().BehaviorType = Unity.MLAgents.Policies.BehaviorType.InferenceOnly;
-                    _activeInstance = _previousActive = targetInstance;
-                    SwitchAgentTo(_activeInstance);
+                    _previousActiveActionLevel = _activeInstanceActionLevel;
+                    _activeInstanceActionLevel = targetInstance;
+                    SwitchAgentTo(_activeInstanceActionLevel);
                 }
             }
         }
 
+        protected virtual void SuggestionAction(int targetInstance)
+        {
+            if (targetInstance != _activeInstanceActionLevel)
+            {
+                if (!(GetComponent<Unity.MLAgents.Policies.BehaviorParameters>().BehaviorType == Unity.MLAgents.Policies.BehaviorType.HeuristicOnly))
+                {
+                    if (_audioSource != null)
+                    {
+                        _audioSource.Play();
+                    }
+                }
+
+                if (_switchCount != 0)
+                {
+                    PropagateTimeBetweenSwitches();
+                }
+
+                UpdateAgentsFocusStatus(targetInstance);
+            }
+
+            _activeInstanceActionLevel = targetInstance;
+        }
+
+
         private void ExecutePendingSwitch(int pendingInstance)
         {
-            if (_isUserInput && _fixedNotificationExecutionTimer > 1 && NotificationMode)
+            if (_isUserInput && _fixedNotificationExecutionTimer > 1 && Mode == Mode.Notification)
             {
                 _isUserInput = false;
                 GetComponent<Unity.MLAgents.Policies.BehaviorParameters>().BehaviorType = Unity.MLAgents.Policies.BehaviorType.InferenceOnly;
                 SwitchAgentTo(pendingInstance);
-                _previousActive = _activeInstance = pendingInstance;
+                _previousActiveActionLevel = _activeInstanceActionLevel;
+                _activeInstanceActionLevel = pendingInstance;
             }
         }
 
@@ -651,11 +909,11 @@ namespace Supervisor
 
                 if (isSwitchedToRight)
                 {
-                    discreteActionsOut[0] = _previousActive < Tasks.Length - 1 ? _previousActive + 1 : 0;
+                    discreteActionsOut[0] = _activeInstanceActionLevel < Tasks.Length - 1 ? _activeInstanceActionLevel + 1 : 0;
                 }
                 else
                 {
-                    discreteActionsOut[0] = _previousActive > 0 ? _previousActive - 1 : Tasks.Length - 1;
+                    discreteActionsOut[0] = _activeInstanceActionLevel > 0 ? _activeInstanceActionLevel - 1 : Tasks.Length - 1;
                 }
             }
             else if (!inputAction.IsPressed())

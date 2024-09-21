@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5218332506550151893, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
       propertyPath: m_Name
-      value: Task Variant Variant Variant
+      value: Ball3DAgentHumanCognitionSingleProbabilityDistribution
       objectReference: {fileID: 0}
     - target: {fileID: 5223915989533419915, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
       propertyPath: m_RootOrder
@@ -58,6 +58,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2962796394390472431, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+--- !u!20 &1645472741896026927 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5985175484456478447, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+  m_PrefabInstance: {fileID: 5033469510500965824}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3473371435764490709 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8496495014255295509, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
@@ -79,7 +84,8 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  <Autonomous>k__BackingField: 0
+  <IsAutonomous>k__BackingField: 0
+  <IsTerminatingTask>k__BackingField: 0
   <ResetPlatformToIdentity>k__BackingField: 0
   <ResetSpeed>k__BackingField: 10
   <ForceDifficulty>k__BackingField: 150
@@ -90,10 +96,6 @@ MonoBehaviour:
   <BallAgentDifficulty>k__BackingField: 170
   <BallAgentDifficultyDivisionFactor>k__BackingField: 1.05
   <GlobalDrag>k__BackingField: 0
-  <ActiveMaterial>k__BackingField: {fileID: 2100000, guid: 185106933578dbb44ab7ecbbe2f25663, type: 2}
-  <DefaultMaterial>k__BackingField: {fileID: 2100000, guid: c9fa44c2c3f8ce74ca39a3355ea42631, type: 2}
-  <LoseMaterial>k__BackingField: {fileID: 2100000, guid: fb0931f6ca0b5c94aa449656e5b32453, type: 2}
-  <DeactiveMaterial>k__BackingField: {fileID: 2100000, guid: eaad04b0e0dec42229c9cb00a981d7ac, type: 2}
   <UpdatePeriod>k__BackingField: 0.1
   <NumberOfSamples>k__BackingField: 100
   <Sigma>k__BackingField: 0.1
@@ -105,6 +107,15 @@ MonoBehaviour:
   <NumberOfBins>k__BackingField: 1000
   <ShowBeliefState>k__BackingField: 0
   <UseFocusAgent>k__BackingField: 0
+  <FocusStateSpace>k__BackingField:
+    <VisualElements>k__BackingField:
+    - {fileID: 8018654032358768032}
+    <Camera>k__BackingField: {fileID: 1645472741896026927}
+--- !u!1 &8018654032358768032 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3070754017510695008, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}
+  m_PrefabInstance: {fileID: 5033469510500965824}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9007730199467199288 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4097038975588783864, guid: c2d6bc78dd138d54bbc91cc98ee14a2f, type: 3}

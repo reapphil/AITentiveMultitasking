@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using UnityEngine;
 
 
 public static class NetworkAPI
@@ -31,8 +33,17 @@ public static class NetworkAPI
 
         // Send the packets
         Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        for (int i = 0; i < count; i++)
-            socket.SendTo(buffer, endPoint);
-        socket.Close();
+
+        try
+        {
+            for (int i = 0; i < count; i++)
+                socket.SendTo(buffer, endPoint);
+            socket.Close();
+        }
+        catch (Exception ex)
+        {
+            UnityEngine.Debug.LogWarning(string.Format("Could not send package for message \"{0}\": {1}.", data, ex.Message));
+            socket.Close();
+        }
     }
 }

@@ -7,17 +7,44 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class ChessAgent : Agent, ITask
 {
     public bool IsActive { get; set; }
     public bool IsFocused { get; set; }
 
+    [field: SerializeField, ProjectAssign]
     public bool IsAutonomous { get; set; }
+
+    [field: SerializeField, Tooltip("Determines if the supervisor should end its episode if the episode of the task ends"), ProjectAssign]
+    public bool IsTerminatingTask { get; set; } = false;
+
+    [field: SerializeField, ProjectAssign]
     public int DecisionPeriod { get; set; }
 
     [field: SerializeField]
     public BoardManager BoardManager { get; set; }
+
+    public IStateInformation StateInformation {
+        get
+        {
+            _chessStateInformation ??= new ChessStateInformation();
+
+            return _chessStateInformation;
+        }
+        set
+        {
+            _chessStateInformation = value as ChessStateInformation;
+        }
+    }
+
+    public Dictionary<string, double> Performance => new();
+
+    public Queue<float> TaskRewardForSupervisorAgent { get; private set; }
+
+    public Queue<float> TaskRewardForFocusAgent { get; private set; }
 
 
     private List<(List<ChessFigurePosition>, string)> _puzzle;
@@ -26,8 +53,14 @@ public class ChessAgent : Agent, ITask
 
     private bool _isNewSelection;
 
+    private ChessStateInformation _chessStateInformation;
 
-    public void AddObservationsToSensor(VectorSensor sensor)
+    public void OnMove(InputValue value)
+    {
+        //Not necessary since mouse input is used.
+    }
+
+    public void AddTrueObservationsToSensor(VectorSensor sensor)
     {
         for (int x = 0; x < 8; x++)
         {
@@ -43,7 +76,7 @@ public class ChessAgent : Agent, ITask
 
     public void AddPerceivedObservationsToSensor(VectorSensor sensor)
     {
-        AddObservationsToSensor(sensor);
+        AddTrueObservationsToSensor(sensor);
     }
 
     public GameObject GetGameObject()
@@ -54,6 +87,12 @@ public class ChessAgent : Agent, ITask
     public void UpdateDifficultyLevel()
     {
         //throw new System.NotImplementedException();
+    }
+
+    public override void Initialize()
+    {
+        TaskRewardForSupervisorAgent = new();
+        TaskRewardForFocusAgent = new();
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -89,6 +128,8 @@ public class ChessAgent : Agent, ITask
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
+        ITask.InvokeOnAction(actionBuffers, this);
+
         int targetX = actionBuffers.DiscreteActions[0];
         int targetY = actionBuffers.DiscreteActions[1];
 
@@ -121,6 +162,8 @@ public class ChessAgent : Agent, ITask
     {
         InitBoardManagerWithLichessMateIn1Format();
     }
+
+    public void ResetPerformance() { }
 
 
     private int ChessFigureToIndex(ChessFigure chessFigure)

@@ -18,7 +18,7 @@ Change the directory to `config`. Here you can find the script `train.py` that i
 The following command starts the training:
 
 ```
-python train.py model_config\<model_config_file>.yaml session_config\<environment_config_file>.json <session_dir>
+train.py [-h] [--num_envs NUM_ENVS] model_config_file environment_config_file session_dir
 ```
 
 This command trains the model and saves the result to `session_dir`. The function takes the following parameters:
@@ -69,13 +69,35 @@ Example `environment_config_file` used for the training of the CR and supervisor
 	}
 }
 ```
+You can configure your components directly in this file, as outlined in the following section.
+
+### Settings Definition
+When using vanilla ML-Agents, changing your environment (e.g., the parameters of CR-agents) requires manual adjustments in the Unity editor, which can be error-prone as it’s easy to overlook certain configurations. The toolkit simplifies this process by enabling component configuration without additional implementation. It automatically checks the provided configuration files for your components (e.g., tasks) and uses reflection to assign the specified values directly to the corresponding fields in your class. All that’s needed is to assign the `[field: SerializeField]` attribute to the relevant field. After that, you can configure your component using its name, along with the associated fields and values. An example configuration for the typing agent might look like this:
+
+```
+{
+	
+	...
+
+	"typingAgentHumanCognition": {
+		"quizName": "quiztest.csv",
+		"screenWidthPixel": 1920,
+		"screenHightPixel": 1080,
+		"screenDiagonalInch": 27,
+		"showBeliefState": true,
+		"fullVision": true,
+		"numberOfSamples": 99,
+		"observationProbability": 0.5
+	},
+}
+```
 
 
 ### run_trainings.py
 The following command starts the trainings:
 
 ```
-python run_trainings.py model_config\<model_config_file>.yaml session_config\<environment_config_list_file>.json [--number_of_environments NUMBER_OF_ENVIRONMENTS] [--verbose]
+run_trainings.py [-h] [--number_of_environments NUMBER_OF_ENVIRONMENTS] [--verbose] model_config_file environment_config_list_file 
 ```
 
 The function takes the following parameters that were not already described:
@@ -135,7 +157,7 @@ The `maxNumberOfActions` parameter determines when the measurement process concl
 The following command starts the evaluation:
 
 ```
-python run_evaluations.py <ball_agent_models_dir_name> <evaluation_config_file> <comparison_file_name> [--environment_config_list_file] [--number_of_environments] [--nobuild] [--start_index] [--copy_raw_data] [--target_dir]
+usage: run_evaluations.py [-h] [--environment_config_list_file ENVIRONMENT_CONFIG_LIST_FILE] [--number_of_environments NUMBER_OF_ENVIRONMENTS] [--nobuild NOBUILD] [--start_index START_INDEX] [--copy_raw_data] [--target_dir TARGET_DIR] ball_agent_models_dir_name evaluation_config_file [comparison_file_name]
 ```
 
 The function takes the following parameters:
@@ -149,8 +171,6 @@ The function takes the following parameters:
 * `copy_raw_data` - If given also the raw data is copied to the Scores directory. This data can then be converted to the preferred discretization.
 * `target_dir` - If given the results are saved to the target- instead of the session directory.
 
-Currently the behavioral measurement is still strongly coupled to the balancing task used in the CHI paper and is part of the supervisor and not the task itself. Therefore currently only the evaluation of the balancing task can be performed with this pipeline.
-
 
 ## Next Step
-The last stage involves comparing the behavioral measurements through distance calculation. The [User Study: Results and Setup](User-Study-Results-and-Setup.md) page demonstrates how this was done for this paper.
+The last stage involves comparing the behavioral measurements through distance calculation. The [User Study: Results and Setup](User-Study-Results-and-Setup.md) page demonstrates how this was done for ["Supporting Task Switching with Reinforcement Learning"](https://dl.acm.org/doi/10.1145/3613904.3642063).

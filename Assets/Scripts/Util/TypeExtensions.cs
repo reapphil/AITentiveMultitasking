@@ -40,7 +40,7 @@ public static class TypeExtensions
     {
         Type searchedType = type;
 
-        while (searchedType.BaseType.GetInterfaces().Contains(baseType) || searchedType.BaseType.IsSubclassOf(baseType))
+        while (type.BaseType != baseType && (searchedType.BaseType.GetInterfaces().Contains(baseType) || searchedType.BaseType.IsSubclassOf(baseType)))
         {
             searchedType = searchedType.BaseType;
         }
@@ -60,7 +60,7 @@ public static class TypeExtensions
         {
             return type.GetField(name);
         }
-
+        
         return type.GetField($"<{name}>k__BackingField", bindingFlags);
     }
 

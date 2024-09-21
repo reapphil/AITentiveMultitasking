@@ -12,6 +12,7 @@ public static class SceneManagement
 {
     public static IProjectSettings ProjectSettings { get; set; }
 
+
     public static string BackUpScene()
     {
         string backupPath = Path.Combine(UnityEngine.Application.dataPath, "Scenes", "SupervisorML_Backup.unity");
@@ -51,13 +52,13 @@ public static class SceneManagement
 
     public static void ConfigScene(Dictionary<Type, ISettings> settings)
     {
-        ProjectSettings.Mode = Mode.DefaultMode;
+        ProjectSettings.GameMode = false;
 
         AssignProjectSettings(settings);
 
         LoadModelsInProjectSettings(settings);
 
-        ProjectSettings.UpdateSettings();
+        ProjectSettings.UpdateSettings(true);
 
         PersistProgrammaticChanges(ProjectSettings);
     }
@@ -67,9 +68,9 @@ public static class SceneManagement
         var currentScene = EditorSceneManager.OpenScene(Path.Combine("Assets", "Scenes", "SupervisorML.unity"));
         ProjectSettings = global::ProjectSettings.GetProjectSettings(currentScene);
 
-        ProjectSettings.GetManagedComponentFor<BalancingTaskBehaviourMeasurementBehaviour>().IsRawDataCollected = isRawDataCollected;
+        ProjectSettings.GetManagedComponentFor<BehaviorMeasurementBehavior>().IsRawDataCollected = isRawDataCollected;
 
-        ProjectSettings.UpdateSettings();
+        ProjectSettings.UpdateSettings(true);
 
         PersistProgrammaticChanges(ProjectSettings);
 
@@ -80,29 +81,78 @@ public static class SceneManagement
 
     private static void AssignProjectSettings(Dictionary<Type, ISettings> settings)
     {
+        AssignHyperparametersToProjectSettings(settings);
+        AssignExperimentSettingsToProjectSettings(settings);
+        AssignJsonSettingsToProjectSettings(settings);
+        AssignPerformanceMeasurementSettingsToProjectSettings(settings);
+        AssignSupervisorSettingsToProjectSettings(settings);
+        AssignBehavioralDataCollectionSettingsToProjectSettings(settings);
+        AssignBall3DAgentHumanCognitionSettingsToProjectSettings(settings);
+        AssignBalancingTaskSettingsToProjectSettings(settings);
+    }
+
+    private static void AssignHyperparametersToProjectSettings(Dictionary<Type, ISettings> settings)
+    {
         Hyperparameters hyperparameters = settings[typeof(Hyperparameters)] as Hyperparameters;
         if (!Util.HasDefaultValuesForFields(hyperparameters)) { ProjectSettingsMapper.HyperparametersToProjectSettings(settings, ProjectSettings); }
+    }
 
-        if (settings.ContainsKey(typeof(ExperimentSettings)))
+    private static void AssignJsonSettingsToProjectSettings(Dictionary<Type, ISettings> settings)
+    {
+        foreach (var kvp in settings)
+        {
+            if (!kvp.Key.GetInterfaces().Contains(typeof(ISettings)))
+            {
+                JsonSettings jsonSettings = kvp.Value as JsonSettings;
+                ProjectSettingsMapper.JsonSettingsToProjectSettings(jsonSettings, ProjectSettings);
+            }
+        }
+    }
+
+    private static void AssignExperimentSettingsToProjectSettings(Dictionary<Type, ISettings> settings)
+    {
+        if (settings.ContainsKey(typeof(ExperimentSettings)) && settings.ContainsKey(typeof(SupervisorSettings)))
         {
             ExperimentSettings experimentSettings = settings[typeof(ExperimentSettings)] as ExperimentSettings;
-            ProjectSettingsMapper.ExperimentSettingsToProjectSettings(experimentSettings, ProjectSettings);
+            SupervisorSettings supervisorSettings = settings[typeof(SupervisorSettings)] as SupervisorSettings;
+
+            ProjectSettingsMapper.ExperimentSettingsToProjectSettings(experimentSettings, supervisorSettings, ProjectSettings);
         }
+    }
+
+    private static void AssignPerformanceMeasurementSettingsToProjectSettings(IDictionary<Type, ISettings> settings)
+    {
         if (settings.ContainsKey(typeof(PerformanceMeasurementSettings)))
         {
             PerformanceMeasurementSettings performanceMeasurementSettings = settings[typeof(PerformanceMeasurementSettings)] as PerformanceMeasurementSettings;
             if (!Util.HasDefaultValuesForFields(performanceMeasurementSettings)) { ProjectSettingsMapper.PerformanceMeasurementSettingsToProjectSettings(performanceMeasurementSettings, ProjectSettings); }
         }
+    }
+
+    private static void AssignSupervisorSettingsToProjectSettings(Dictionary<Type, ISettings> settings)
+    {
         if (settings.ContainsKey(typeof(SupervisorSettings)))
         {
             SupervisorSettings supervisorSettings = settings[typeof(SupervisorSettings)] as SupervisorSettings;
-            if (!Util.HasDefaultValuesForFields(supervisorSettings)) { ProjectSettingsMapper.SupervisorSettingsToProjectSettings(supervisorSettings, ProjectSettings); }
+            ExperimentSettings experimentSettings = settings.ContainsKey(typeof(ExperimentSettings)) ? settings[typeof(ExperimentSettings)] as ExperimentSettings : null;
+            if (!Util.HasDefaultValuesForFields(supervisorSettings)) { ProjectSettingsMapper.SupervisorSettingsToProjectSettings(supervisorSettings, ProjectSettings, experimentSettings); }
         }
+    }
+
+    private static void AssignBehavioralDataCollectionSettingsToProjectSettings(Dictionary<Type, ISettings> settings)
+    {
         if (settings.ContainsKey(typeof(BehavioralDataCollectionSettings)))
         {
+            MeasurementSettings measurementSettings = ProjectSettings.MeasurementSettings;
             BehavioralDataCollectionSettings behavioralDataCollectionSettings = settings[typeof(BehavioralDataCollectionSettings)] as BehavioralDataCollectionSettings;
-            if (!Util.HasDefaultValuesForFields(behavioralDataCollectionSettings)) { ProjectSettingsMapper.BehavioralDataCollectionSettingsToProjectSettings(behavioralDataCollectionSettings, ProjectSettings); }
+            if (!Util.HasDefaultValuesForFields(behavioralDataCollectionSettings)) { ProjectSettingsMapper.BehavioralDataCollectionSettingsToProjectSettings(behavioralDataCollectionSettings, ProjectSettings, measurementSettings); }
         }
+    }
+
+    private static void AssignBall3DAgentHumanCognitionSettingsToProjectSettings(Dictionary<Type, ISettings> settings)
+    {
+        Hyperparameters hyperparameters = settings[typeof(Hyperparameters)] as Hyperparameters;
+
         if (settings.ContainsKey(typeof(Ball3DAgentHumanCognitionSettings)))
         {
             Ball3DAgentHumanCognitionSettings ball3DAgentHumanCognitionSettings = settings[typeof(Ball3DAgentHumanCognitionSettings)] as Ball3DAgentHumanCognitionSettings;
@@ -111,6 +161,10 @@ public static class SceneManagement
                 ProjectSettingsMapper.Ball3DAgentHumanCognitionSettingsToProjectSettings(ball3DAgentHumanCognitionSettings, ProjectSettings);
             }
         }
+    }
+
+    private static void AssignBalancingTaskSettingsToProjectSettings(Dictionary<Type, ISettings> settings)
+    {
         if (settings.ContainsKey(typeof(BalancingTaskSettings)))
         {
             BalancingTaskSettings balancingTaskSettings = settings[typeof(BalancingTaskSettings)] as BalancingTaskSettings;
@@ -120,11 +174,17 @@ public static class SceneManagement
 
     private static void LoadModelsInProjectSettings(Dictionary<Type, ISettings> settings)
     {
-        SupervisorSettings supervisorSettings = settings[typeof(SupervisorSettings)] as SupervisorSettings;
-        Hyperparameters hyperparameters = settings[typeof(Hyperparameters)] as Hyperparameters;
-        Dictionary <string, string> models = hyperparameters.taskModels;
+        SupervisorSettings supervisorSettings = null;
 
-        if (supervisorSettings.randomSupervisor)
+        if (settings.ContainsKey(typeof(SupervisorSettings)))
+        {
+            supervisorSettings = settings[typeof(SupervisorSettings)] as SupervisorSettings;
+        }
+
+        Hyperparameters hyperparameters = settings[typeof(Hyperparameters)] as Hyperparameters;
+        Dictionary<string, string> models = hyperparameters.taskModels != null ? hyperparameters.taskModels : new();
+
+        if (supervisorSettings == null || supervisorSettings.randomSupervisor.GetValueOrDefault() || hyperparameters.autonomous.GetValueOrDefault())
         {
             string dummyModel = "AUI.asset";
             models[typeof(Supervisor.SupervisorAgent).FullName] = dummyModel;
@@ -134,7 +194,7 @@ public static class SceneManagement
             models[typeof(Supervisor.SupervisorAgent).FullName] = hyperparameters.supervisorModelName;
         }
 
-        if (hyperparameters.useFocusAgent)
+        if (hyperparameters.useFocusAgent.GetValueOrDefault())
         {
             models[typeof(FocusAgent).Name] = hyperparameters.focusAgentModelName;
         }
@@ -148,11 +208,10 @@ public static class SceneManagement
 
         foreach (var kvp in models)
         {
-            if(kvp.Value != null && kvp.Value != "")
+            if (kvp.Value != null && kvp.Value != "")
             {
                 ProjectSettings.AITentiveModels = ProjectSettings.AITentiveModels.Concat(GetTaskModels(Path.Combine("Assets", "Models", kvp.Value), Util.GetType(kvp.Key))).ToList();
             }
-            
         }
     }
 
@@ -165,7 +224,7 @@ public static class SceneManagement
             var d = new DirectoryInfo(@path);
             foreach (FileInfo fi in d.GetFiles("*", SearchOption.AllDirectories))
             {
-                AITentiveModel taskModel = (AITentiveModel)AssetDatabase.LoadAssetAtPath(fi.FullName.Substring(fi.FullName.IndexOf("Assets")), typeof(AITentiveModel));
+                AITentiveModel taskModel = GetTaskModel(fi.FullName.Substring(fi.FullName.IndexOf("Assets")));
 
                 if (taskModel != null && taskModel.GetType() == type)
                 {
@@ -175,18 +234,37 @@ public static class SceneManagement
         }
         else
         {
-            if(Path.GetExtension(path) != ".asset")
+            if (Path.GetExtension(path) != ".asset")
             {
                 Debug.LogError(string.Format("The file {0} is not a valid model file.", path));
             }
             else
             {
-                taskModels.Add((AITentiveModel)AssetDatabase.LoadAssetAtPath(path, typeof(AITentiveModel)));
+                taskModels.Add(GetTaskModel(path));
             }
-            
+
         }
 
         return taskModels;
+    }
+
+    private static AITentiveModel GetTaskModel(string path)
+    {
+        AITentiveModel taskModel = (AITentiveModel)AssetDatabase.LoadAssetAtPath(path, typeof(AITentiveModel));
+
+        if (taskModel != null)
+        {
+            if (taskModel.Model == null)
+            {
+                Debug.LogError(string.Format("The AITentiveModel {0} does not contain a model.", path));
+            }
+            else if (taskModel.Type == null)
+            {
+                Debug.LogError(string.Format("The AITentiveModel {0} does not contain a type.", path));
+            }
+        }
+
+        return taskModel;
     }
 
     private static void LoadProjectSettings(Scene currentScene)
@@ -197,7 +275,7 @@ public static class SceneManagement
         {
             ProjectSettings = global::ProjectSettings.GetProjectSettings(currentScene);
         }
-    }   
+    }
 
     //Unity does not realize that the object has been changed and does not properly re-serialize it. When an object is edited in the editor, the object
     //instance is not actually edited, but the serialized data instead. When objects are directly changed, Unity might just discard it and use its
@@ -215,7 +293,7 @@ public static class SceneManagement
             EditorUtility.SetDirty(agents[i].GetComponent<Unity.MLAgents.Policies.BehaviorParameters>());
         }
 
-        if (supervisorAgent2 is not null)
+        if (supervisorAgent2 != null)
         {
             EditorUtility.SetDirty(supervisorAgent2);
         }

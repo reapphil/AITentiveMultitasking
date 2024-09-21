@@ -31,22 +31,33 @@ public class LogToFile : MonoBehaviour
         catch (IOException){}
     }
 
-    public static void LogPropertiesFieldsOfComponent(Component comp)
+    public static void LogPropertiesFieldsOfObject(object obj)
     {
         BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 ;
-        MemberInfo[] members = comp.GetType().GetMemberInfos(bindingFlags);
+        MemberInfo[] members = obj.GetType().GetMemberInfos(bindingFlags);
 
-        string str = String.Format("Component {0} has the following parameters:\n", comp.GetType());
+        string str = String.Format("Component {0} has the following parameters:\n", obj.GetType());
         foreach (var thisVar in members)
         {
             try
             {
-                str += String.Format("{0} = {1}\n", thisVar.Name, thisVar.GetValue(comp));
+                if (thisVar.GetUnderlyingType() != typeof(char)) //chars are not correctly logged
+                {
+                    str += String.Format("{0} = {1}\n", thisVar.Name, thisVar.GetValue(obj));
+                }
             }
             catch (Exception e)
             {
-                Debug.LogWarning(e);
+                if(e.InnerException != null && e.InnerException.GetType() == typeof(NotImplementedException))
+                {
+                    Debug.Log(string.Format("{0}: {1}", thisVar.Name, "Not implemented."));
+                }
+                else
+                {
+                    Debug.LogWarning(string.Format("{0}: {1}", thisVar.Name, e));
+                }
+                
             }
         }
 

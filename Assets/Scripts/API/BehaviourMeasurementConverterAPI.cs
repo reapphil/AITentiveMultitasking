@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 public class BehaviourMeasurementConverterAPI
 {
-    public static void ConvertRawToBinData(string supervisorSettingsPath, string behavioralDataCollectionSettingsPath, string rawDataPath)
+    public static void ConvertRawToBinData(string settingsPath, string behavioralDataCollectionSettingsPath, string rawDataPath)
     {
-        List<ISettings> settings = ConfigVersioning.UnifySettings(supervisorSettingsPath, typeof(SupervisorSettings));
-        SupervisorSettings supervisorSettings = (SupervisorSettings)settings[0];
-        BalancingTaskSettings balancingTaskSettings = (BalancingTaskSettings)settings[1];
+        Dictionary<Type, ISettings> settings = SettingsLoader.LoadSettings(settingsPath);
+        SupervisorSettings supervisorSettings = (SupervisorSettings)settings[typeof(SupervisorSettings)];
+        Hyperparameters hyperparameters = (Hyperparameters)settings[typeof(Hyperparameters)];
 
         BehavioralDataCollectionSettings behavioralDataCollectionSettings = Util.ImportJson<BehavioralDataCollectionSettings>(behavioralDataCollectionSettingsPath);
 
-        BalancingTaskBehaviourMeasurementConverter.ConvertRawToBinData(supervisorSettings, balancingTaskSettings, behavioralDataCollectionSettings, rawDataPath);
+        BehaviorMeasurementConverter.ConvertRawToBinData(supervisorSettings, hyperparameters, behavioralDataCollectionSettings, rawDataPath);
     }
 }

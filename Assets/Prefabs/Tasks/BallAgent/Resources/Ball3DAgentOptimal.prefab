@@ -202,6 +202,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 230223718562492805, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: d01867cec3c31274cb9abb9d761c8093, type: 3}
+    - target: {fileID: 230223718562492805, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Heuristic
+      objectReference: {fileID: 0}
+    - target: {fileID: 5228502532882627971, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6232249573398058020, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -314,7 +326,8 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  <Autonomous>k__BackingField: 0
+  <IsAutonomous>k__BackingField: 0
+  <IsTerminatingTask>k__BackingField: 0
   <ResetPlatformToIdentity>k__BackingField: 0
   <ResetSpeed>k__BackingField: 10
   <ForceDifficulty>k__BackingField: 150

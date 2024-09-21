@@ -12,6 +12,7 @@
 		"numberOfPlatforms": 4
 	},
 	"supervisorSettings": {
+		"mode": "Force",
 		"randomSupervisor": false,
 		"vectorObservationSize": 16,
 		"setConstantDecisionRequestInterval": true,
@@ -26,6 +27,9 @@
 		"ballAgentDifficultyDivisionFactor": 3,
 		"ballStartingRadius": 1,
 		"resetSpeed": 10
+	},
+	"balancingTaskSettings" : {
+		"isTerminatingTask": true
 	},
 	"ball3DAgentHumanCognitionSettings": {
 		"useFocusAgent": true,

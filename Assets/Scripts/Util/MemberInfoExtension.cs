@@ -16,7 +16,8 @@ public static class MemberInfoExtension
             case MemberTypes.Property:
                 return ((PropertyInfo)memberInfo).GetValue(forObject);
             default:
-                throw new NotImplementedException(string.Format("Member type {0} is not implemented.", memberInfo.MemberType));
+                //Debug.LogWarning(string.Format("Member type {0} is not implemented.", memberInfo.MemberType));
+                return null;
         }
     }
 
@@ -31,7 +32,8 @@ public static class MemberInfoExtension
                 ((PropertyInfo)memberInfo).SetValue(obj, value);
                 break;
             default:
-                throw new NotImplementedException(string.Format("Member type {0} is not implemented.", memberInfo.MemberType));
+                //Debug.LogWarning(string.Format("Member type {0} is not implemented.", memberInfo.MemberType));
+                break;
         }
     }
 
@@ -48,7 +50,8 @@ public static class MemberInfoExtension
             case MemberTypes.Property:
                 return ((PropertyInfo)memberInfo).PropertyType;
             default:
-                throw new NotImplementedException(string.Format("Member type {0} is not implemented.", memberInfo.MemberType));
+                //Debug.LogWarning(string.Format("Member type {0} is not implemented.", memberInfo.MemberType));
+                return null;
         }
     }
 }

@@ -1,38 +1,22 @@
-using Castle.Core.Internal;
-using CsvHelper;
-using NSubstitute.Routing.Handlers;
-using Numpy;
 using Supervisor;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using TMPro;
 using Unity.Barracuda;
 using Unity.MLAgents;
 using Unity.MLAgents.Policies;
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEditor.PackageManager;
-using UnityEditor.PackageManager.UI;
-using UnityEditor.SceneManagement;
 #endif
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Search;
 using UnityEngine.UI;
-
-public enum Mode
-{
-    GameModeSupervisor,
-    GameModeNoSupervisor,
-    GameModeNotification,
-    DefaultMode
-};
 
 
 public enum AgentChoice
@@ -47,15 +31,16 @@ public enum SupervisorChoice
 {
     SupervisorAgent,
     SupervisorAgentV1,
-    SupervisorAgentRandom
+    SupervisorAgentRandom,
+    NoSupport
 }
 
 
 public class ProjectSettings : MonoBehaviour, IProjectSettings
 {
-    //Managed by Script
+    //Managed by Script and set by SupervisorChoice.Set
     [field: SerializeField, ShowIf(ActionOnConditionFail.JustDisable, ConditionOperator.And, nameof(False))]
-    public Supervisor.SupervisorAgent SupervisorAgent { get; set; }
+    public Supervisor.SupervisorAgent SupervisorAgent { get; private set; }
 
     //Managed by Script
     [field: SerializeField, ShowIf(ActionOnConditionFail.JustDisable, ConditionOperator.And, nameof(False))]
@@ -65,13 +50,32 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
     [field: SerializeField, ShowIf(ActionOnConditionFail.JustDisable, ConditionOperator.And, nameof(False))]
     public Text ProjectSettingsText { get; set; }
 
-    [field: SerializeField, Header("General Settings"), Tooltip("Definition of the following modes: \n" +
-    "GameModeSupervisor - human player controls only the platform, \n" +
-    "GameModeNoSupervisor - human player controls the platform and the task switch")]
-    public Mode Mode { get; set; }
+    //Could also be displayed via the respective property of the SupervisorAgent and the ProjectAssign attribute but is displayed here for better
+    //overview.
+    [field: SerializeField, Header("General Settings"), Tooltip("Mode of the supervisor: " +
+    "Force -> automatic switch, the user cannot decide if the switch should be performed;   " +
+    "Notification -> the user will be notified about upcoming switch and can perform the switch during 1 second " +
+    "If the switch was not performed by the user, the switch is performed after expiry of this 1 second;   " +
+    "Suggestion: the supervisor only suggestion a switch, the decision remains by the user")]
+    public Supervisor.Mode Mode { get; set; }
 
-    [field: SerializeField]
-    public SupervisorChoice SupervisorChoice { get; set; }
+    public SupervisorChoice SupervisorChoice { 
+        get 
+        {
+            return _supervisorChoice; 
+        } 
+        set 
+        {
+            _supervisorChoice = value;
+            UpdateSupervisorAgent();
+        } 
+    }
+
+    [SerializeField]
+    private SupervisorChoice _supervisorChoice;
+
+    [field: SerializeField, Tooltip("The user controls the task if true, otherwise the task-agent.") ]
+    public bool GameMode { get; set; }
 
     [field: Header("Generate Bin Data with Raw Data"),
     SerializeField, Tooltip("Path to raw data which should be used for the generation of bin data based on the bin settings.")]
@@ -83,19 +87,26 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
     [InspectorButton("OnGenerateBinDataButtonClicked")]
     public bool GenerateBinData;
 
-    [field: SerializeField]
+    [field: SerializeField, Tooltip("List of models used in the experiment. The AITentiveModel allows to automatically assign the correct model to " +
+        "a specific agent. Usually this list contains a supervisor model. In case of the training of the supervisor, also task agent models are " +
+        "defined.")]
     public List<AITentiveModel> AITentiveModels { get; set; }
 
-    [field: SerializeField]
+    [field: SerializeField, Tooltip("List of task prefabs that should be used for the experiment."), SearchContext("Tagstring:Task")]
     public GameObject[] TasksGameObjects { get; set; }
+
+    [field: SerializeField, Tooltip("The index of the input list corresponds to task game object. The configured Input Action Asset is used for the" +
+        "corresponding task and allows different input settings on task instance level.")]
+    public List<InputActionAsset> Inputs { get; set; }
 
     public Agent[] Agents { get; private set; }
 
-    public ITask[] Tasks 
-    { 
-        get => TasksGameObjects?.ToList().ConvertAll(x => x != null ? x.transform.GetChildByName("Agent").GetComponent<ITask>() : null).ToArray(); 
+    public ITask[] Tasks
+    {
+        get => TasksGameObjects?.ToList().ConvertAll(x => x != null ? x.transform.GetChildByName("Agent").GetComponent<ITask>() : null).ToArray();
     }
 
+    public MeasurementSettings MeasurementSettings => gameObject.GetComponent<MeasurementSettings>();
 
     private int _sampleSize;
 
@@ -134,39 +145,25 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         return false;
     }
 
+    public bool AllTasksAreAutonomous()
+    {
+        if (Tasks is not null)
+        {
+            foreach (ITask task in Tasks)
+            {
+                if (task != null && !task.IsAutonomous)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     public bool SupervisorIsRandomSupervisor()
     {
         return SupervisorChoice == SupervisorChoice.SupervisorAgentRandom;
-    }
-
-    public bool ModeIsGameModeSupervisor()
-    {
-        return Mode == Mode.GameModeSupervisor;
-    }
-
-    public bool ModeIsGameModeNoSupervisor()
-    {
-        return Mode == Mode.GameModeNoSupervisor;
-    }
-
-    public bool ModeIsGameModeNotification()
-    {
-        return Mode == Mode.GameModeNotification;
-    }
-
-    public bool ModeIsDefaultMode()
-    {
-        return Mode == Mode.DefaultMode;
-    }
-
-    public bool ModeIsGameMode()
-    {
-        return Mode == Mode.GameModeSupervisor || Mode == Mode.GameModeNoSupervisor || Mode == Mode.GameModeNotification;
-    }
-
-    public bool ModeIsNotGameMode()
-    {
-        return Mode != Mode.GameModeSupervisor && Mode != Mode.GameModeNoSupervisor && Mode != Mode.GameModeNotification;
     }
 
     public static IProjectSettings GetProjectSettings(Scene scene)
@@ -201,7 +198,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         List<(Component, FieldInfo)> result = GetProjectAssignFieldsFor(new List<GameObject>() { SupervisorAgent.gameObject });
         result.RemoveAll(x => x.Item1.GetType().IsSubclassOf(typeof(SupervisorAgent)) || x.Item1.GetType() == typeof(SupervisorAgent));
 
-        return GetProjectAssignFieldsFor(GetManagedComponentFor(Util.GetType("Supervisor." + SupervisorChoice.ToString())), result);
+        return GetProjectAssignFieldsFor(GetSupervisorAgentForSupervisorChoice(), result);
     }
 
     public List<(Component, FieldInfo)> GetProjectAssignFieldsForFocusAgent()
@@ -222,7 +219,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
 
                 List<Type> types = new();
 
-                if(component != null)
+                if (component != null)
                 {
                     types = component.GetType().GetParentTypes().ToList();
                     types.Add(component.GetType());
@@ -260,11 +257,11 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
     }
 
     //the optional parameter t is needed for Build scripts since the UnityEditor library cannot be used for these scripts.
-    public void UpdateSettings()
+    public void UpdateSettings(bool isBuild = false)
     {
         CreateAgents(GetTasks());
         UpdateSupervisorAgent();
-        UpdateMode();
+        UpdateMode(isBuild);
 
         ConfigurePerformanceMeasurment(GetTaskModels(), GetSupervisorModels());
     }
@@ -272,7 +269,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
     public void GenerateFilename()
     {
         GetManagedComponentFor<PerformanceMeasurement>().FileNameForScores = Util.GenerateScoreFilename();
-        GetManagedComponentFor<BalancingTaskBehaviourMeasurementBehaviour>().FileNameForBehavioralData = Util.GenerateBehavioralFilename();
+        GetManagedComponentFor<BehaviorMeasurementBehavior>().FileNameForBehavioralData = Util.GenerateBehavioralFilename();
     }
 
     public Dictionary<Type, List<AITentiveModel>> GetTaskModels()
@@ -301,12 +298,15 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
 
         foreach (AITentiveModel aITentiveModel in AITentiveModels)
         {
-            if (!models.ContainsKey(aITentiveModel.GetType()))
+            if(aITentiveModel != null)
             {
-                models[aITentiveModel.GetType()] = new();
-            }
+                if (!models.ContainsKey(aITentiveModel.GetType()))
+                {
+                    models[aITentiveModel.GetType()] = new();
+                }
 
-            models[aITentiveModel.GetType()].Add(aITentiveModel);
+                models[aITentiveModel.GetType()].Add(aITentiveModel);
+            }
         }
 
         return models;
@@ -325,6 +325,21 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
     public T GetManagedComponentFor<T>()
     {
         return (T)(object)GetManagedComponentFor(typeof(T));
+    }
+
+    public SupervisorAgent GetActiveSupervisor()
+    {
+        List<SupervisorAgent> supervisorAgents = SupervisorAgent.gameObject.GetComponents<SupervisorAgent>().ToList();
+
+        foreach (SupervisorAgent supervisorAgent in supervisorAgents)
+        {
+            if (supervisorAgent.isActiveAndEnabled)
+            {
+                return supervisorAgent;
+            }
+        }
+
+        return null;
     }
 
     public Component GetManagedComponentFor(Type t)
@@ -350,6 +365,29 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         return default;
     }
 
+    public List<Component> GetManagedComponentsFor(Type t)
+    {
+        if (SupervisorAgent.gameObject.GetBaseComponent(t) != null)
+        {
+            return SupervisorAgent.gameObject.GetComponents(t).ToList();
+        }
+
+        if (FocusAgent.GetComponent(t) != null)
+        {
+            return FocusAgent.GetComponents(t).ToList();
+        }
+
+        foreach (GameObject task in TasksGameObjects)
+        {
+            if (task != null && task.GetComponentInChildren(t) != null)
+            {
+                return task.GetComponentsInChildren(t).ToList();
+            }
+        }
+
+        return new();
+    }
+
     public bool IsTrainingModeSupervisor(List<AITentiveModel> supervisorAgentModels)
     {
         bool isModelProvided = false;
@@ -363,12 +401,12 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
             }
         }
 
-        return !isModelProvided && SupervisorChoice != SupervisorChoice.SupervisorAgentRandom && ModeIsNotGameMode();
+        return !isModelProvided && SupervisorChoice != SupervisorChoice.SupervisorAgentRandom && !GameMode;
     }
 
     public bool IsTrainingModeTasks(Dictionary<Type, List<AITentiveModel>> taskModels = null)
     {
-        return (taskModels == null || GetNumberOfDifferentTasks() != taskModels.Count) && ModeIsNotGameMode();
+        return (taskModels == null || GetNumberOfDifferentTasks() != taskModels.Count) && !GameMode;
     }
 
     public bool IsTrainingMode(Dictionary<Type, List<AITentiveModel>> taskModels, List<AITentiveModel> supervisorAgentModels)
@@ -392,10 +430,10 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
     {
         if (args.ContainsKey("-simulation"))
         {
-            GetManagedComponentFor<PerformanceMeasurement>().IsAbcSimulation = GetManagedComponentFor<BalancingTaskBehaviourMeasurementBehaviour>().IsAbcSimulation = true;
+            GetManagedComponentFor<PerformanceMeasurement>().IsAbcSimulation = GetManagedComponentFor<BehaviorMeasurementBehavior>().IsAbcSimulation = true;
             SupervisorChoice = SupervisorChoice.SupervisorAgentRandom;
             Core.ExitOnNumberOfCalls = 2;
-            
+
             SetHumanCognitionParameters(args);
             UpdateSimulationSettings(int.Parse(args["-simulation"]));
             SetBehaviorTypeOfTaskAgents(GetTaskModels());
@@ -404,7 +442,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         }
         else
         {
-            GetManagedComponentFor<PerformanceMeasurement>().IsAbcSimulation = GetManagedComponentFor<BalancingTaskBehaviourMeasurementBehaviour>().IsAbcSimulation = false;
+            GetManagedComponentFor<PerformanceMeasurement>().IsAbcSimulation = GetManagedComponentFor<BehaviorMeasurementBehavior>().IsAbcSimulation = false;
         }
     }
 
@@ -424,7 +462,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         }
 
         GetManagedComponentFor<PerformanceMeasurement>().SimulationId = int.Parse(args["-id"], CultureInfo.InvariantCulture);
-        GetManagedComponentFor<BalancingTaskBehaviourMeasurementBehaviour>().SimulationId = int.Parse(args["-id"], CultureInfo.InvariantCulture);
+        GetManagedComponentFor<BehaviorMeasurementBehavior>().SimulationId = int.Parse(args["-id"], CultureInfo.InvariantCulture);
 
         double ObservationProbability = double.Parse(args["-observationProbability"].Replace(',', '.'), CultureInfo.InvariantCulture);
 
@@ -436,7 +474,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         InitBallAgents();
 
         PerformanceMeasurement performanceMeasurement = GetManagedComponentFor<PerformanceMeasurement>();
-        BalancingTaskBehaviourMeasurementBehaviour behaviourMeasurementBehaviour = GetManagedComponentFor<BalancingTaskBehaviourMeasurementBehaviour>();
+        BehaviorMeasurementBehavior behaviourMeasurementBehaviour = GetManagedComponentFor<BehaviorMeasurementBehavior>();
 
         behaviourMeasurementBehaviour.UpdateExistingModelBehavior = false;
         performanceMeasurement.FileNameForScores = "sim_scores.csv";
@@ -489,38 +527,21 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
             SupervisorAgent.DecisionPeriod,
             SupervisorAgent.AdvanceNoticeInSeconds);
 
-        BallAgent ballAgent = GetManagedComponentFor<BallAgent>();
+        Hyperparameters hyperparameters = new Hyperparameters
+        {
+            tasks = SupervisorAgent.TaskNames
+        };
 
-        BalancingTaskSettings balancingTaskSettings = new BalancingTaskSettings(
-            -1,
-            ballAgent.GlobalDrag,
-            ballAgent.UseNegativeDragDifficulty,
-            ballAgent.BallAgentDifficulty,
-            ballAgent.BallAgentDifficultyDivisionFactor,
-            ballAgent.BallStartingRadius,
-            ballAgent.ResetSpeed,
-            ballAgent.ResetPlatformToIdentity,
-            ballAgent.DecisionPeriod);
-
-        BalancingTaskBehaviourMeasurementBehaviour behaviourMeasurementBehaviour = GetManagedComponentFor<BalancingTaskBehaviourMeasurementBehaviour>();
+        BehaviorMeasurementBehavior behaviourMeasurementBehaviour = GetManagedComponentFor<BehaviorMeasurementBehavior>();
 
         BehavioralDataCollectionSettings behavioralDataCollectionSettings = new BehavioralDataCollectionSettings
         {
             updateExistingModelBehavior = behaviourMeasurementBehaviour.UpdateExistingModelBehavior,
             fileNameForBehavioralData = behaviourMeasurementBehaviour.FileNameForBehavioralData,
-            numberOfAreaBins_BehavioralData = behaviourMeasurementBehaviour.NumberOfAreaBins_BehavioralData,
-            numberOfBallVelocityBinsPerAxis_BehavioralData = behaviourMeasurementBehaviour.NumberOfBallVelocityBinsPerAxis_BehavioralData,
-            numberOfAngleBinsPerAxis = behaviourMeasurementBehaviour.NumberOfAngleBinsPerAxis,
             numberOfTimeBins = behaviourMeasurementBehaviour.NumberOfTimeBins,
-            numberOfDistanceBins = behaviourMeasurementBehaviour.NumberOfDistanceBins,
-            numberOfDistanceBins_velocity = behaviourMeasurementBehaviour.NumberOfDistanceBins_velocity,
-            numberOfActionBinsPerAxis = behaviourMeasurementBehaviour.NumberOfActionBinsPerAxis,
-            collectDataForComparison = behaviourMeasurementBehaviour.CollectDataForComparison,
-            comparisonFileName = behaviourMeasurementBehaviour.ComparisonFileName,
-            comparisonTimeLimit = behaviourMeasurementBehaviour.ComparisonTimeLimit,
         };
 
-        BalancingTaskBehaviourMeasurementConverter.ConvertRawToBinData(supervisorSettings, balancingTaskSettings, behavioralDataCollectionSettings, RawData);
+        BehaviorMeasurementConverter.ConvertRawToBinData(supervisorSettings, hyperparameters, behavioralDataCollectionSettings, RawData);
 
         GUIUtility.ExitGUI();
     }
@@ -528,22 +549,37 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
 
     private void UpdateSupervisorAgent()
     {
-        GameObject gameObject = SupervisorAgent.gameObject;
         List<SupervisorAgent> supervisorAgents = new();
         SupervisorAgent.GetComponents(supervisorAgents);
         supervisorAgents.ForEach(i => i.enabled = false);
+        SupervisorAgent supervisorAgent = GetSupervisorAgentForSupervisorChoice();
 
-        SupervisorAgent supervisorAgent = (SupervisorAgent)gameObject.GetBaseComponent(Util.GetType("Supervisor." + SupervisorChoice.ToString()));
         RestoreSupervisorConfiguration(SupervisorAgent, supervisorAgent);
         SupervisorAgent = supervisorAgent;
 
         SupervisorAgent.enabled = true;
     }
 
+    private SupervisorAgent GetSupervisorAgentForSupervisorChoice()
+    {
+        GameObject gameObject = SupervisorAgent.gameObject;
+
+        if (_supervisorChoice == SupervisorChoice.NoSupport)
+        {
+            return SupervisorAgent;
+        }
+        else
+        {
+            string supervisorChoice = "Supervisor." + _supervisorChoice.ToString();
+            return (SupervisorAgent)gameObject.GetBaseComponent(Util.GetType(supervisorChoice));
+        }
+    }
+
     private void RestoreSupervisorConfiguration(Supervisor.SupervisorAgent source, Supervisor.SupervisorAgent target)
     {
         target.TaskGameObjects = source.TaskGameObjects;
-        target.StopwatchText = source.StopwatchText;
+        target.TaskGameObjectsProjectSettingsOrdering = source.TaskGameObjectsProjectSettingsOrdering;
+        target.CumulativeRewardText = source.CumulativeRewardText;
         target.TextMeshProUGUI = source.TextMeshProUGUI;
     }
 
@@ -568,11 +604,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
                 }
                 result.Add(prefab);
             }
-
         }
-
-        //The order of the state information is relevant. Therefore, a supervisor trained on TaskA, TaskB would not work for the order TaskB, TaskA
-        result.Sort((x, y) => string.Compare(x.name, y.name));
 
         return result;
     }
@@ -594,7 +626,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
 
     private List<(Component, FieldInfo)> GetProjectAssignFieldsFor(Component component, List<(Component, FieldInfo)> projectAssignFields = null)
     {
-        if(projectAssignFields == null)
+        if (projectAssignFields == null)
         {
             projectAssignFields = new();
         }
@@ -683,8 +715,37 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
             taskGameObjects[i] = result;
         }
 
-        FocusAgent.TaskGameObjects = taskGameObjects.ToArray();
-        SupervisorAgent.TaskGameObjects = taskGameObjects.ToArray();
+        List<GameObject> sortetTaskGameObjects = new List<GameObject>(taskGameObjects);
+        //The order of the state information is relevant. Therefore, a supervisor trained on TaskA, TaskB would not work for the order TaskB, TaskA
+        sortetTaskGameObjects.Sort((x, y) => string.Compare(x.name, y.name));
+
+        FocusAgent.TaskGameObjects = sortetTaskGameObjects.ToArray();
+        FocusAgent.TaskGameObjectsProjectSettingsOrdering = taskGameObjects.ToArray();
+        SupervisorAgent.TaskGameObjects = sortetTaskGameObjects.ToArray();
+        SupervisorAgent.TaskGameObjectsProjectSettingsOrdering = taskGameObjects.ToArray();
+
+        if (GameMode) 
+        {
+            AssignInputs(taskGameObjects);
+        }
+    }
+
+    private void AssignInputs(List<GameObject> taskGameObjects)
+    {
+        for (int i = 0; i < taskGameObjects.Count; i++)
+        {
+            PlayerInput playerInput = taskGameObjects[i].transform.GetChildByName("Agent").GetComponent<PlayerInput>();
+
+            try 
+            {
+                playerInput.actions = Inputs[i];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Inputs.Add(Inputs[0]);
+                playerInput.actions = Inputs[i];
+            }
+        }
     }
 
     private void ConfigCamera(GameObject cameraGameObject, int platformNumber)
@@ -702,7 +763,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
             GameObject parent = gameObject;
             GameObject child = null;
 
-            for(int i = 0; i <= level && parent != null; i++)
+            for (int i = 0; i <= level && parent != null; i++)
             {
                 child = parent;
                 parent = parent.transform.parent != null ? parent.transform.parent.gameObject : null;
@@ -716,7 +777,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
     {
         int distanceBetweenTasks = 1500;
         Vector3[] coordinates = new Vector3[numberOfTasks];
-        int xStart = numberOfTasks % 2 == 0 ? (numberOfTasks / 2) * (-distanceBetweenTasks) + distanceBetweenTasks/2 : (numberOfTasks / 2) * (-distanceBetweenTasks);
+        int xStart = numberOfTasks % 2 == 0 ? (numberOfTasks / 2) * (-distanceBetweenTasks) + distanceBetweenTasks / 2 : (numberOfTasks / 2) * (-distanceBetweenTasks);
         coordinates[0] = new Vector3(xStart, 0, 5);
 
         for (int i = 1; i < numberOfTasks; i++)
@@ -727,22 +788,22 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         return coordinates;
     }
 
-    private void UpdateMode()
+    private void UpdateMode(bool isBuild = false)
     {
         Dictionary<Type, List<AITentiveModel>> taskModels = GetTaskModels();
-        List<AITentiveModel> supervisorAgentModels = GetSupervisorModels();
         List<AITentiveModel> focusAgentModels = GetFocusModels();
+        List<AITentiveModel> supervisorAgentModels = GetSupervisorModels();
 
         SetBehaviorTypeOfTaskAgents(taskModels);
         NNModel focusAgentModel = SetBehaviorTypeOfFocusAgent(taskModels, focusAgentModels);
-        NNModel supervisorAgentModel = SetBehaviorTypeOfSupervisorAgent(supervisorAgentModels);
+        NNModel supervisorAgentModel = SetBehaviorTypeOfSupervisorAgent(supervisorAgentModels, isBuild);
         SetBehaviorTypeForAutonomousTaskAgentsTraining(taskModels, supervisorAgentModels);
 
-        SetObservationShape(supervisorAgentModel, SupervisorAgent);
+        SetObservationShape(supervisorAgentModel, SupervisorAgent, SupervisorAgent.VectorObservationSize);
         SetActionSpec(SupervisorAgent);
 
-        SetObservationShape(focusAgentModel, FocusAgent);
-        SetActionSpec(FocusAgent);
+        SetObservationShape(focusAgentModel, FocusAgent, FocusAgent.VectorObservationSize);
+        SetActionSpec(FocusAgent, CRUtil.GetFocusableGameObjectsOfTasks(Tasks.ToList()).Sum(x => x.VisualElements.Count));
     }
 
     private void SetBehaviorTypeForAutonomousTaskAgentsTraining(Dictionary<Type, List<AITentiveModel>> taskModels, List<AITentiveModel> supervisorAgentModels)
@@ -764,7 +825,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
     {
         for (int i = 0; i < Agents.Length; i++)
         {
-            if (ModeIsGameMode())
+            if (GameMode)
             {
                 Agents[i].GetComponent<BehaviorParameters>().BehaviorType = BehaviorType.HeuristicOnly;
             }
@@ -774,9 +835,8 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
 
                 if (taskModels.ContainsKey(baseType))
                 {
-                    Agents[i].GetComponent<BehaviorParameters>().BehaviorType = BehaviorType.InferenceOnly;
-
                     SetModelForAgent(Agents[i], taskModels[baseType], ((ITask)GetManagedComponentFor(baseType)).DecisionPeriod);
+                    Agents[i].GetComponent<BehaviorParameters>().BehaviorType = BehaviorType.InferenceOnly;
                 }
                 else
                 {
@@ -801,6 +861,10 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
             {
                 FocusAgent.GetComponent<BehaviorParameters>().BehaviorType = BehaviorType.Default;
             }
+            else
+            {
+                FocusAgent.GetComponent<BehaviorParameters>().BehaviorType = BehaviorType.InferenceOnly;
+            }
         }
         else
         {
@@ -810,7 +874,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         return focusAgentModel;
     }
 
-    private NNModel SetBehaviorTypeOfSupervisorAgent(List<AITentiveModel> supervisorAgentModels = null)
+    private NNModel SetBehaviorTypeOfSupervisorAgent(List<AITentiveModel> supervisorAgentModels = null, bool isBuild = false)
     {
         NNModel supervisorAgentModel = null;
 
@@ -819,16 +883,12 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
             supervisorAgentModel = SetModelForAgent(SupervisorAgent, supervisorAgentModels);
         }
 
-        if (Mode == Mode.GameModeNotification)
+        if (!isBuild)
         {
-            SupervisorAgent.NotificationMode = true;
-        }
-        else
-        {
-            SupervisorAgent.NotificationMode = false;
+            SupervisorAgent.Mode = Mode;
         }
 
-        if (ModeIsGameModeNoSupervisor())
+        if (SupervisorChoice == SupervisorChoice.NoSupport)
         {
             SupervisorAgent.AdvanceNoticeInSeconds = 0;
             GetManagedComponentFor<BehaviorParameters>().BehaviorType = BehaviorType.HeuristicOnly;
@@ -840,6 +900,12 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         else
         {
             GetManagedComponentFor<BehaviorParameters>().BehaviorType = BehaviorType.InferenceOnly;
+        }
+
+        //return dummy model for random supervisor
+        if (SupervisorIsRandomSupervisor())
+        {
+            supervisorAgentModel = SupervisorAgent.GetComponent<BehaviorParameters>().Model;
         }
 
         return supervisorAgentModel;
@@ -867,7 +933,6 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
     private NNModel SetModelForAgent(Agent agent, List<AITentiveModel> models, int decisionPeriod = 0)
     {
         NNModel model = GetModelForDecisionPeriod(models, decisionPeriod);
-
         agent.GetComponent<BehaviorParameters>().Model = model;
 
         return model;
@@ -890,18 +955,25 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         return CountUniqueTypes(Agents);
     }
 
-    private void SetObservationShape(NNModel agentModel, Agent agent)
+    private void SetObservationShape(NNModel agentModel, Agent agent, int shape = 0)
     {
         if (agentModel != null)
         {
             int observationShape = GetObservationShape(ModelLoader.Load(agentModel));
             agent.gameObject.GetComponent<BehaviorParameters>().BrainParameters.VectorObservationSize = observationShape;
         }
+        else
+        {
+            if (shape != 0)
+            {
+                agent.gameObject.GetComponent<BehaviorParameters>().BrainParameters.VectorObservationSize = shape;
+            }
+        }
     }
 
-    private void SetActionSpec(Agent agent)
+    private void SetActionSpec(Agent agent, int number = 0)
     {
-        agent.GetComponent<BehaviorParameters>().BrainParameters.ActionSpec = new Unity.MLAgents.Actuators.ActionSpec(discreteBranchSizes: new int[] { TasksGameObjects.Length });
+        agent.GetComponent<BehaviorParameters>().BrainParameters.ActionSpec = new Unity.MLAgents.Actuators.ActionSpec(discreteBranchSizes: new int[] { number == 0 ? TasksGameObjects.Length : number });
     }
 
     //see GetInputTensors in BarracudaModelExtensions
@@ -915,7 +987,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
     private void ConfigurePerformanceMeasurment(Dictionary<Type, List<AITentiveModel>> taskModels, List<AITentiveModel> supervisorAgentModels)
     {
         PerformanceMeasurement performanceMeasurement = GetManagedComponentFor<PerformanceMeasurement>();
-        BalancingTaskBehaviourMeasurementBehaviour behaviourMeasurementBehaviour = GetManagedComponentFor<BalancingTaskBehaviourMeasurementBehaviour>();
+        BehaviorMeasurementBehavior behaviourMeasurementBehaviour = GetManagedComponentFor<BehaviorMeasurementBehavior>();
 
         if (IsTrainingMode(taskModels, supervisorAgentModels))
         {
@@ -927,7 +999,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         }
 
         performanceMeasurement.IsSupervised = true;
-        if (Mode == Mode.GameModeNoSupervisor)
+        if (SupervisorChoice == SupervisorChoice.NoSupport)
         {
             performanceMeasurement.IsSupervised = false;
         }
@@ -954,20 +1026,6 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
             {
                 behaviourMeasurementBehaviour.NumberOfTimeBins = 1;
             }
-
-            if (!behaviourMeasurementBehaviour.CollectDataForComparison)
-            {
-                behaviourMeasurementBehaviour.ComparisonFileName = "";
-            }
-
-            if (behaviourMeasurementBehaviour.FileNameForBehavioralData != "" && behaviourMeasurementBehaviour.FileNameForBehavioralData == behaviourMeasurementBehaviour.ComparisonFileName)
-            {
-                throw new ArgumentException("FileNameForBehavioralData and ComparisonFileName must be unequal.");
-            }
-        }
-        else
-        {
-            behaviourMeasurementBehaviour.CollectDataForComparison = false;
         }
     }
 

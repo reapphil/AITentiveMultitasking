@@ -1,0 +1,18 @@
+{
+    "name": "RealisticCarControllerV3.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:7205c04179fb2464986237f83277ff7b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

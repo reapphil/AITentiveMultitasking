@@ -18,6 +18,30 @@ public static class TransformExtension
         return null;
     }
 
+    public static Transform GetChildInHierarchyByName(this Transform transform, string name)
+    {
+        Transform result = null;
+
+        foreach (Transform child in transform)
+        {
+            if (child.name == name)
+            {
+                return child;
+            }
+            else
+            {
+                result = GetChildInHierarchyByName(child.transform, name);
+                
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public static List<Transform> GetChildren(this Transform transform)
     {
         List<Transform> childs = new List<Transform>();

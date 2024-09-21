@@ -1,0 +1,29 @@
+{
+    "AUI": {
+        "checkpoints": [
+            {
+                "steps": 27,
+                "file_path": "results\\..\\..\\Assets\\Models\\AUI_2024_NOFAST_2P\\AUITestConfAUI_2024_NOFAST_2P\\AUI\\AUI-27.onnx",
+                "reward": 18.776376724243164,
+                "creation_time": 1724412683.0350466,
+                "auxillary_file_paths": [
+                    "results\\..\\..\\Assets\\Models\\AUI_2024_NOFAST_2P\\AUITestConfAUI_2024_NOFAST_2P\\AUI\\AUI-27.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 27,
+            "file_path": "results\\..\\..\\Assets\\Models\\AUI_2024_NOFAST_2P\\AUITestConfAUI_2024_NOFAST_2P\\AUI.onnx",
+            "reward": 18.776376724243164,
+            "creation_time": 1724412683.0350466,
+            "auxillary_file_paths": [
+                "results\\..\\..\\Assets\\Models\\AUI_2024_NOFAST_2P\\AUITestConfAUI_2024_NOFAST_2P\\AUI\\AUI-27.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.0.0+cpu"
+    }
+}

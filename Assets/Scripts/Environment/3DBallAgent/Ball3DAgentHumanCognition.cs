@@ -33,7 +33,7 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
     [field: SerializeField, Tooltip("Time in seconds in which the target agent acts based on the distribution of the source agent."), ProjectAssign]
     public float OldDistributionPersistenceTime { get; set; } = 0;
 
-    [field: SerializeField, Tooltip("Observation is active for both agents."), ProjectAssign]
+    [field: SerializeField, Tooltip("Observation is active for this agent independent of the focus/supervisor agent."), ProjectAssign]
     public bool FullVision { get; set; } = false;
 
     [field: SerializeField, Tooltip("Specify the number of bins in which the platform should be divided."), ProjectAssign]
@@ -45,22 +45,31 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
     [field: SerializeField, Tooltip("If active the observations of the ballagents are provided by the focus- instead of the supervisor agent."), ProjectAssign]
     public bool UseFocusAgent { get; set; }
 
+    [field: SerializeField]
+    public VisualStateSpace FocusStateSpace { get; set; }
+
     public override bool IsVisible
     {
         get
         {
-            if (IsFocused || FullVision)
+            if (FullVision)
             {
                 return true;
             }
             else
             {
-                return _visibilityTimer > ConstantReactionTime && _visibilityTimer > OldDistributionPersistenceTime;
+                if (UseFocusAgent)
+                {
+                    return FocusStateSpace.Encoding[0] == 1;
+                }
+                else
+                {
+                    return _visibilityTimer > ConstantReactionTime && _visibilityTimer > OldDistributionPersistenceTime;
+                }
+                
             }
         }
     }
-
-    public bool IsFocused { get; set; }
 
     protected double[] _ballLocationProbabilities;
 
@@ -74,9 +83,6 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
     private static readonly ProfilerMarker s_updateBallLocationProbabilitiesPerfMarker = new ProfilerMarker("UpdateBallLocationProbabilities.UpdateBallLocationProbabilities");
     private static readonly ProfilerMarker s_normalizationPerfMarker = new ProfilerMarker("UpdateBallLocationProbabilities.Normalization");
 
-
-    private FocusAgent _focusAgent;
-    
     private GameObject _beliefBallPosition;
 
     private LineRenderer _averageLine;
@@ -110,8 +116,6 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
         base.Initialize();
 
         InitializeBallLocationProbabilities(_numberOfBins, _platformRadius);
-
-        _focusAgent = gameObject.transform.parent.parent.GetComponent<FocusAgent>();
 
         if (ShowBeliefState)
         {
@@ -164,7 +168,11 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
 
         var curDist = Vector3.Distance(Ball.transform.localPosition, gameObject.transform.localPosition);
         //divided by the radius of the platform (which is 5)
-        SetReward(1 - curDist / 5);
+        float reward = 1 - curDist / 5;
+
+        TaskRewardForFocusAgent.Enqueue(reward);
+        TaskRewardForSupervisorAgent.Enqueue(reward);
+        SetReward(reward);
     }
 
     //returns bin for the position with the highest probability
@@ -178,7 +186,7 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
             return ((Ball3DAgentHumanCognition)_sourceBallAgent).GetBallBeliefPosition();
         }
 
-        return PositionConverter.BinToCoordinates(maxIndex, _platformRadius, _numberOFBinsPerDirection, Ball.transform.position.y);
+        return PositionConverter.BinToSquareCoordinates(maxIndex, _platformRadius, _numberOFBinsPerDirection, Ball.transform.position.y);
     }
 
     public new Vector3 GetObservedBallPosition()
@@ -191,7 +199,7 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
         return _averageVelocity;
     }
 
-    public override void AddPerceivedObservationsToSensor(VectorSensor sensor)
+    public override void AddBeliefObservationsToSensor(VectorSensor sensor)
     {
         sensor.AddObservation(GetObservedBallPosition() - gameObject.transform.position);
         sensor.AddObservation(GetObservedBallVelocity());
@@ -239,7 +247,7 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
 
         for (int i = 0; i < NumberOFBins; i++)
         {
-            if (PositionConverter.CoordinatesToBin(BallStartingPosition, platformRadius, _numberOFBinsPerDirection) == i)
+            if (PositionConverter.SquareCoordinatesToBin(BallStartingPosition, platformRadius, _numberOFBinsPerDirection) == i)
             {
                 _ballLocationProbabilities[i] = 1;
             }
@@ -254,7 +262,6 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
     private void FixedUpdate()
     {
         base.AddForceToBall();
-        base.UpdateTimeSinceLastSwitch();
         base.PropagateTaskCompletion();
 
         if (IsAutonomous)
@@ -365,7 +372,7 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
             NormalDistribution normalDistributionMeanX = new NormalDistribution(_estimatedVelocity.x, _currentSigmaMean);
             NormalDistribution normalDistributionMeanZ = new NormalDistribution(_estimatedVelocity.z, _currentSigmaMean);
 
-            _currentSigmaMean = _currentSigmaMean/2;
+            _currentSigmaMean = _currentSigmaMean / 2;
 
             //taking into account the decreasing speed
             double distanceRatio = _estimatedVelocity.magnitude == 0 ? 0 : currentVelocity.magnitude / _estimatedVelocity.magnitude;
@@ -377,7 +384,7 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
         }
 
         s_calculateNormalDistributionForVelocityPerfMarker.Begin();
-        Vector3[] normal = GetNormalDistributionForVelocity(NumberOfSamples, _estimatedVelocity);
+        Vector3[] normal = CRUtil.GetNormalDistributionForVelocity(NumberOfSamples, _estimatedVelocity, Sigma, _rand);
         s_calculateNormalDistributionForVelocityPerfMarker.End();
 
         double[] currentBallLocationProbabilities = (double[])_ballLocationProbabilities.Clone();
@@ -386,19 +393,17 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
         NativeArray<double> currentBallLocationProbabilitiesNative = new NativeArray<double>(currentBallLocationProbabilities, Allocator.TempJob);
         NativeArray<double> ballLocationProbabilitiesNative = new NativeArray<double>(_numberOfBins, Allocator.TempJob);
 
-        Assert.AreEqual(_numberOFBinsPerDirection*_numberOFBinsPerDirection, _numberOfBins);
+        Assert.AreEqual(_numberOFBinsPerDirection * _numberOFBinsPerDirection, _numberOfBins);
 
-        BallLocationProbabilitiesUpdateJob ballLocationProbabilitiesUpdateJob = new BallLocationProbabilitiesUpdateJob
+        ObjectIn2DSquareLocationProbabilitiesUpdateJob ballLocationProbabilitiesUpdateJob = new ObjectIn2DSquareLocationProbabilitiesUpdateJob
         {
             NormalDistributionForVelocity = normalNative,
-            CurrentBallLocationProbabilities = currentBallLocationProbabilitiesNative,
-            BallLocationProbabilities = ballLocationProbabilitiesNative,
+            CurrentObjectLocationProbabilities = currentBallLocationProbabilitiesNative,
+            ObjectLocationProbabilities = ballLocationProbabilitiesNative,
             PlatformRadius = _platformRadius,
             NumberOFBinsPerDirection = _numberOFBinsPerDirection,
             NumberOFBins = _numberOfBins,
-            BallPosition = Ball.transform.localPosition,
-            LocalScaleZ = this.transform.localScale.z,
-            LocalScaleX = this.transform.localScale.x,
+            ObjectPosition = Ball.transform.localPosition,
             IsVisibleInstance = IsVisible,
             ObservationProbability = ObservationProbability
         };
@@ -411,7 +416,7 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
         Array.Copy(ballLocationProbabilitiesNative.ToArray(), _ballLocationProbabilities, _numberOfBins);
         s_updateBallLocationProbabilitiesPerfMarker.End();
 
-        _averageVelocity = GetAverageVelocity(normal);
+        _averageVelocity = CRUtil.GetAverageVelocity(normal);
 
         if (ShowBeliefState)
         {
@@ -423,9 +428,9 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
             var keyOfMaxValue = t.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
             _maxProbBinLine.SetPosition(0, _beliefBallPosition.transform.position);
             Vector3 maxProbBinDirection = new Vector3(
-                PositionConverter.BinToCoordinates(keyOfMaxValue, _platformRadius, _numberOFBinsPerDirection, Ball.transform.position.y).x * 2,
+                PositionConverter.BinToSquareCoordinates(keyOfMaxValue, _platformRadius, _numberOFBinsPerDirection, Ball.transform.position.y).x * 2,
                 _beliefBallPosition.transform.position.y,
-                PositionConverter.BinToCoordinates(keyOfMaxValue, _platformRadius, _numberOFBinsPerDirection, Ball.transform.position.y).z * 2);
+                PositionConverter.BinToSquareCoordinates(keyOfMaxValue, _platformRadius, _numberOFBinsPerDirection, Ball.transform.position.y).z * 2);
             _maxProbBinLine.SetPosition(1, maxProbBinDirection + gameObject.transform.position);
         }
 
@@ -443,38 +448,6 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
         ballLocationProbabilitiesNative.Dispose();
     }
 
-    private Vector3[] GetNormalDistributionForVelocity(int numberOfSamples, Vector3 velocity)
-    {
-        Vector3[] normal = new Vector3[numberOfSamples];
-
-        NormalDistribution normalDistributionX = new NormalDistribution(velocity.x, Sigma);
-        NormalDistribution normalDistributionZ = new NormalDistribution(velocity.z, Sigma);
-
-        for (int i = 0; i < numberOfSamples; i++)
-        {
-            normal[i] = new Vector3((float)normalDistributionX.Sample(_rand), velocity.y, (float)normalDistributionZ.Sample(_rand)); //TODO: change velocity.y to the actual position of y in respect of the sample of x and z
-        }
-
-        return normal;
-    }
-
-    private Vector3 GetAverageVelocity(Vector3[] normalDistributionForVelocity)
-    {
-        float x, y, z;
-        x = y = z = 0;
-
-        foreach (Vector3 vector in normalDistributionForVelocity)
-        {
-            x = x + vector.x;
-            y = y + vector.y;
-            z = z + vector.z;
-        }
-
-        int numberOfSamples = normalDistributionForVelocity.Length;
-
-        return new Vector3(x / numberOfSamples, y / numberOfSamples, z / numberOfSamples);
-    }
-
     //Calculates the transition probabilities for the given position based on the NormalDistributionForVelocity. Attention: if the UpdatePeriode, the
     //NumberOfBins and the actual velocity of the Ball are too small then there are no transitions because the velocity per UpdatePeriode is too
     //small to point to another bin. Therefore, in this case the bin stays the same. 
@@ -486,15 +459,16 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
         foreach (Vector3 velocity in normalDistributionForVelocity)
         {
             Vector3 target = position + velocity;
-            int targetBin = PositionConverter.CoordinatesToBin(target, _platformRadius, _numberOFBinsPerDirection);
+            int targetBin = PositionConverter.SquareCoordinatesToBin(target, _platformRadius, _numberOFBinsPerDirection);
 
-            if (numberOfTransitionsPerBin.ContainsKey(targetBin)){
+            if (numberOfTransitionsPerBin.ContainsKey(targetBin))
+            {
                 numberOfTransitionsPerBin[targetBin] = numberOfTransitionsPerBin[targetBin] + 1;
             }
             else
             {
                 numberOfTransitionsPerBin[targetBin] = 1;
-            }       
+            }
         }
 
         foreach (KeyValuePair<int, int> entry in numberOfTransitionsPerBin)
@@ -505,7 +479,7 @@ public class Ball3DAgentHumanCognition : BallAgent, ICrTask
         return transitionProbabilities;
     }
 
-    private Vector3 CalculateRateOfChange(Vector3 oldPosition, Vector3 newPosition)  
+    private Vector3 CalculateRateOfChange(Vector3 oldPosition, Vector3 newPosition)
     {
         return new Vector3(newPosition.x - oldPosition.x, newPosition.y - oldPosition.y, newPosition.z - oldPosition.z);
     }

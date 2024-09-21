@@ -51,7 +51,7 @@ namespace Supervisor
 
         protected override void RequestInteractionAfterInterval()
         {
-            bool hasIntervalExpired = _fixedUpdateTimer > _chosenInterval + _advanceNoticeTimer;
+            bool hasIntervalExpired = _fixedUpdateTimer > _chosenInterval + AdvanceNoticeInSeconds;
 
             if (SetConstantDecisionRequestInterval)
             {

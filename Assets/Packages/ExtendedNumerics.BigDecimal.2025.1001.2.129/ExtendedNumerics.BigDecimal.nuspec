@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>ExtendedNumerics.BigDecimal</id>
+    <version>2025.1001.2.129</version>
+    <title>ExtendedNumerics.BigDecimal</title>
+    <authors>Adam White, Jan Christoph Bernack, Rick Harker</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <readme>README.md</readme>
+    <projectUrl>https://www.nuget.org/packages/ExtendedNumerics.BigDecimal/</projectUrl>
+    <description>An arbitrary precision decimal (base 10) floating point number type using a mantissa and exponent. Supports nth roots, trigonometric functions, logarithms, natural e, pi, etc.</description>
+    <copyright>Adam White. MIT License. See License.</copyright>
+    <tags>math mathematics arbitrary-precision floating-point decimal arithmetic trigonometry logarithms numerics numbers biginteger bigdecimal hyperbolic inverse trigonometric sine cosine tangent secant circular angles sin cos tan mantissa exponent floating point base10 csharp</tags>
+    <repository type="git" url="https://github.com/AdamWhiteHat/BigDecimal" commit="8d3de28cf6ee59e9c6be864dacdba7d450c2a026" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.5" />
+      <group targetFramework=".NETFramework4.6" />
+      <group targetFramework=".NETFramework4.7.2" />
+      <group targetFramework=".NETFramework4.8" />
+      <group targetFramework=".NETCoreApp3.1" />
+      <group targetFramework="net5.0" />
+      <group targetFramework="net6.0" />
+      <group targetFramework="net7.0" />
+      <group targetFramework="net8.0" />
+      <group targetFramework=".NETStandard2.0" />
+      <group targetFramework=".NETStandard2.1" />
+    </dependencies>
+  </metadata>
+</package>

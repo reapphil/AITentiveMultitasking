@@ -9,6 +9,7 @@
 		"numberOfBallVelocityBinsPerAxis_BehavioralData": 6,
 		"numberOfAngleBinsPerAxis": 4,
 		"numberOfDistanceBins": 45,
+		"numberOfDistanceBins_angle": 47,
 		"numberOfDistanceBins_velocity": 46,
 		"numberOfActionBinsPerAxis": 9,
 		"numberOfTimeBins": 1

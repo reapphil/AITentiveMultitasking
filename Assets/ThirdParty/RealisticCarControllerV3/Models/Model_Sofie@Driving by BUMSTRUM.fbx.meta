@@ -1,0 +1,2751 @@
+fileFormatVersion: 2
+guid: d514b359ae6b474458213a56103fa9fe
+ModelImporter:
+  serializedVersion: 25
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: base
+  - first:
+      1: 100002
+    second: basecontrol
+  - first:
+      1: 100004
+    second: BLwheel
+  - first:
+      1: 100006
+    second: BRwheel
+  - first:
+      1: 100008
+    second: chest
+  - first:
+      1: 100010
+    second: chestcontrol
+  - first:
+      1: 100012
+    second: CoM
+  - first:
+      1: 100014
+    second: FLwheel
+  - first:
+      1: 100016
+    second: FRwheel
+  - first:
+      1: 100018
+    second: glasses
+  - first:
+      1: 100020
+    second: head
+  - first:
+      1: 100022
+    second: headcontrol
+  - first:
+      1: 100024
+    second: hipcontrol
+  - first:
+      1: 100026
+    second: hips
+  - first:
+      1: 100028
+    second: jaw
+  - first:
+      1: 100030
+    second: Joint_3
+  - first:
+      1: 100032
+    second: Joint_3_2
+  - first:
+      1: 100034
+    second: Joint_3_3
+  - first:
+      1: 100036
+    second: Joint_3_4
+  - first:
+      1: 100038
+    second: L_ankle
+  - first:
+      1: 100040
+    second: L_ankle_Goal
+  - first:
+      1: 100042
+    second: L_arm
+  - first:
+      1: 100044
+    second: L_arm_Goal
+  - first:
+      1: 100046
+    second: L_arm_Pole
+  - first:
+      1: 100048
+    second: L_elbow
+  - first:
+      1: 100050
+    second: L_eye
+  - first:
+      1: 100052
+    second: L_FOOT
+  - first:
+      1: 100054
+    second: L_foot
+  - first:
+      1: 100056
+    second: L_foot_Goal
+  - first:
+      1: 100058
+    second: L_knee
+  - first:
+      1: 100060
+    second: L_leg
+  - first:
+      1: 100062
+    second: L_leg_Pole
+  - first:
+      1: 100064
+    second: L_middle1
+  - first:
+      1: 100066
+    second: L_middle2
+  - first:
+      1: 100068
+    second: L_middle3
+  - first:
+      1: 100070
+    second: L_pink
+  - first:
+      1: 100072
+    second: L_pink1
+  - first:
+      1: 100074
+    second: L_pink2
+  - first:
+      1: 100076
+    second: L_pink3
+  - first:
+      1: 100078
+    second: L_point1
+  - first:
+      1: 100080
+    second: L_point2
+  - first:
+      1: 100082
+    second: L_point3
+  - first:
+      1: 100084
+    second: L_ring
+  - first:
+      1: 100086
+    second: L_ring1
+  - first:
+      1: 100088
+    second: L_ring2
+  - first:
+      1: 100090
+    second: L_ring3
+  - first:
+      1: 100092
+    second: L_shoulder
+  - first:
+      1: 100094
+    second: L_thumb
+  - first:
+      1: 100096
+    second: L_thumb1
+  - first:
+      1: 100098
+    second: L_thumb2
+  - first:
+      1: 100100
+    second: L_thumb3
+  - first:
+      1: 100102
+    second: L_toes
+  - first:
+      1: 100104
+    second: L_toes_Goal
+  - first:
+      1: 100106
+    second: L_wrist
+  - first:
+      1: 100108
+    second: L_wrist_Goal
+  - first:
+      1: 100110
+    second: Lhandonstraint
+  - first:
+      1: 100112
+    second: lip
+  - first:
+      1: 100114
+    second: mesh
+  - first:
+      1: 100116
+    second: neck
+  - first:
+      1: 100118
+    second: neckcontrol
+  - first:
+      1: 100120
+    second: poke
+  - first:
+      1: 100122
+    second: R_ankle
+  - first:
+      1: 100124
+    second: R_ankle_Goal
+  - first:
+      1: 100126
+    second: R_arm
+  - first:
+      1: 100128
+    second: R_arm_Goal
+  - first:
+      1: 100130
+    second: R_arm_Pole
+  - first:
+      1: 100132
+    second: R_elbow
+  - first:
+      1: 100134
+    second: R_eye
+  - first:
+      1: 100136
+    second: R_FOOT
+  - first:
+      1: 100138
+    second: R_foot
+  - first:
+      1: 100140
+    second: R_foot_Goal
+  - first:
+      1: 100142
+    second: R_knee
+  - first:
+      1: 100144
+    second: R_leg
+  - first:
+      1: 100146
+    second: R_leg_Pole
+  - first:
+      1: 100148
+    second: R_middle1
+  - first:
+      1: 100150
+    second: R_middle2
+  - first:
+      1: 100152
+    second: R_middle3
+  - first:
+      1: 100154
+    second: R_pink
+  - first:
+      1: 100156
+    second: R_pink1
+  - first:
+      1: 100158
+    second: R_pink2
+  - first:
+      1: 100160
+    second: R_pink3
+  - first:
+      1: 100162
+    second: R_point1
+  - first:
+      1: 100164
+    second: R_point2
+  - first:
+      1: 100166
+    second: R_point3
+  - first:
+      1: 100168
+    second: R_ring
+  - first:
+      1: 100170
+    second: R_ring1
+  - first:
+      1: 100172
+    second: R_ring2
+  - first:
+      1: 100174
+    second: R_ring3
+  - first:
+      1: 100176
+    second: R_shoulder
+  - first:
+      1: 100178
+    second: R_thumb
+  - first:
+      1: 100180
+    second: R_thumb1
+  - first:
+      1: 100182
+    second: R_thumb2
+  - first:
+      1: 100184
+    second: R_thumb3
+  - first:
+      1: 100186
+    second: R_toes
+  - first:
+      1: 100188
+    second: R_toes_Goal
+  - first:
+      1: 100190
+    second: R_wrist
+  - first:
+      1: 100192
+    second: R_wrist_Goal
+  - first:
+      1: 100194
+    second: Rhandconstraint
+  - first:
+      1: 100196
+    second: sofie
+  - first:
+      1: 100198
+    second: //RootNode
+  - first:
+      1: 100200
+    second: spine
+  - first:
+      1: 100202
+    second: spinecontrol
+  - first:
+      1: 100204
+    second: steer
+  - first:
+      1: 100206
+    second: tip
+  - first:
+      1: 100208
+    second: wheels
+  - first:
+      4: 400000
+    second: base
+  - first:
+      4: 400002
+    second: basecontrol
+  - first:
+      4: 400004
+    second: BLwheel
+  - first:
+      4: 400006
+    second: BRwheel
+  - first:
+      4: 400008
+    second: chest
+  - first:
+      4: 400010
+    second: chestcontrol
+  - first:
+      4: 400012
+    second: CoM
+  - first:
+      4: 400014
+    second: FLwheel
+  - first:
+      4: 400016
+    second: FRwheel
+  - first:
+      4: 400018
+    second: glasses
+  - first:
+      4: 400020
+    second: head
+  - first:
+      4: 400022
+    second: headcontrol
+  - first:
+      4: 400024
+    second: hipcontrol
+  - first:
+      4: 400026
+    second: hips
+  - first:
+      4: 400028
+    second: jaw
+  - first:
+      4: 400030
+    second: Joint_3
+  - first:
+      4: 400032
+    second: Joint_3_2
+  - first:
+      4: 400034
+    second: Joint_3_3
+  - first:
+      4: 400036
+    second: Joint_3_4
+  - first:
+      4: 400038
+    second: L_ankle
+  - first:
+      4: 400040
+    second: L_ankle_Goal
+  - first:
+      4: 400042
+    second: L_arm
+  - first:
+      4: 400044
+    second: L_arm_Goal
+  - first:
+      4: 400046
+    second: L_arm_Pole
+  - first:
+      4: 400048
+    second: L_elbow
+  - first:
+      4: 400050
+    second: L_eye
+  - first:
+      4: 400052
+    second: L_FOOT
+  - first:
+      4: 400054
+    second: L_foot
+  - first:
+      4: 400056
+    second: L_foot_Goal
+  - first:
+      4: 400058
+    second: L_knee
+  - first:
+      4: 400060
+    second: L_leg
+  - first:
+      4: 400062
+    second: L_leg_Pole
+  - first:
+      4: 400064
+    second: L_middle1
+  - first:
+      4: 400066
+    second: L_middle2
+  - first:
+      4: 400068
+    second: L_middle3
+  - first:
+      4: 400070
+    second: L_pink
+  - first:
+      4: 400072
+    second: L_pink1
+  - first:
+      4: 400074
+    second: L_pink2
+  - first:
+      4: 400076
+    second: L_pink3
+  - first:
+      4: 400078
+    second: L_point1
+  - first:
+      4: 400080
+    second: L_point2
+  - first:
+      4: 400082
+    second: L_point3
+  - first:
+      4: 400084
+    second: L_ring
+  - first:
+      4: 400086
+    second: L_ring1
+  - first:
+      4: 400088
+    second: L_ring2
+  - first:
+      4: 400090
+    second: L_ring3
+  - first:
+      4: 400092
+    second: L_shoulder
+  - first:
+      4: 400094
+    second: L_thumb
+  - first:
+      4: 400096
+    second: L_thumb1
+  - first:
+      4: 400098
+    second: L_thumb2
+  - first:
+      4: 400100
+    second: L_thumb3
+  - first:
+      4: 400102
+    second: L_toes
+  - first:
+      4: 400104
+    second: L_toes_Goal
+  - first:
+      4: 400106
+    second: L_wrist
+  - first:
+      4: 400108
+    second: L_wrist_Goal
+  - first:
+      4: 400110
+    second: Lhandonstraint
+  - first:
+      4: 400112
+    second: lip
+  - first:
+      4: 400114
+    second: mesh
+  - first:
+      4: 400116
+    second: neck
+  - first:
+      4: 400118
+    second: neckcontrol
+  - first:
+      4: 400120
+    second: poke
+  - first:
+      4: 400122
+    second: R_ankle
+  - first:
+      4: 400124
+    second: R_ankle_Goal
+  - first:
+      4: 400126
+    second: R_arm
+  - first:
+      4: 400128
+    second: R_arm_Goal
+  - first:
+      4: 400130
+    second: R_arm_Pole
+  - first:
+      4: 400132
+    second: R_elbow
+  - first:
+      4: 400134
+    second: R_eye
+  - first:
+      4: 400136
+    second: R_FOOT
+  - first:
+      4: 400138
+    second: R_foot
+  - first:
+      4: 400140
+    second: R_foot_Goal
+  - first:
+      4: 400142
+    second: R_knee
+  - first:
+      4: 400144
+    second: R_leg
+  - first:
+      4: 400146
+    second: R_leg_Pole
+  - first:
+      4: 400148
+    second: R_middle1
+  - first:
+      4: 400150
+    second: R_middle2
+  - first:
+      4: 400152
+    second: R_middle3
+  - first:
+      4: 400154
+    second: R_pink
+  - first:
+      4: 400156
+    second: R_pink1
+  - first:
+      4: 400158
+    second: R_pink2
+  - first:
+      4: 400160
+    second: R_pink3
+  - first:
+      4: 400162
+    second: R_point1
+  - first:
+      4: 400164
+    second: R_point2
+  - first:
+      4: 400166
+    second: R_point3
+  - first:
+      4: 400168
+    second: R_ring
+  - first:
+      4: 400170
+    second: R_ring1
+  - first:
+      4: 400172
+    second: R_ring2
+  - first:
+      4: 400174
+    second: R_ring3
+  - first:
+      4: 400176
+    second: R_shoulder
+  - first:
+      4: 400178
+    second: R_thumb
+  - first:
+      4: 400180
+    second: R_thumb1
+  - first:
+      4: 400182
+    second: R_thumb2
+  - first:
+      4: 400184
+    second: R_thumb3
+  - first:
+      4: 400186
+    second: R_toes
+  - first:
+      4: 400188
+    second: R_toes_Goal
+  - first:
+      4: 400190
+    second: R_wrist
+  - first:
+      4: 400192
+    second: R_wrist_Goal
+  - first:
+      4: 400194
+    second: Rhandconstraint
+  - first:
+      4: 400196
+    second: sofie
+  - first:
+      4: 400198
+    second: //RootNode
+  - first:
+      4: 400200
+    second: spine
+  - first:
+      4: 400202
+    second: spinecontrol
+  - first:
+      4: 400204
+    second: steer
+  - first:
+      4: 400206
+    second: tip
+  - first:
+      4: 400208
+    second: wheels
+  - first:
+      23: 2300000
+    second: base
+  - first:
+      23: 2300002
+    second: BLwheel
+  - first:
+      23: 2300004
+    second: BRwheel
+  - first:
+      23: 2300006
+    second: FLwheel
+  - first:
+      23: 2300008
+    second: FRwheel
+  - first:
+      23: 2300010
+    second: glasses
+  - first:
+      23: 2300012
+    second: poke
+  - first:
+      23: 2300014
+    second: steer
+  - first:
+      33: 3300000
+    second: base
+  - first:
+      33: 3300002
+    second: BLwheel
+  - first:
+      33: 3300004
+    second: BRwheel
+  - first:
+      33: 3300006
+    second: FLwheel
+  - first:
+      33: 3300008
+    second: FRwheel
+  - first:
+      33: 3300010
+    second: glasses
+  - first:
+      33: 3300012
+    second: poke
+  - first:
+      33: 3300014
+    second: steer
+  - first:
+      43: 4300000
+    second: glasses
+  - first:
+      43: 4300002
+    second: mesh
+  - first:
+      43: 4300004
+    second: BLwheel
+  - first:
+      43: 4300006
+    second: BRwheel
+  - first:
+      43: 4300008
+    second: FLwheel
+  - first:
+      43: 4300010
+    second: FRwheel
+  - first:
+      43: 4300012
+    second: base
+  - first:
+      43: 4300014
+    second: poke
+  - first:
+      43: 4300016
+    second: steer
+  - first:
+      74: 7400000
+    second: sofiesteerforward
+  - first:
+      74: 7400002
+    second: sofiesteerforwardleft
+  - first:
+      74: 7400004
+    second: sofiesteerforwardright
+  - first:
+      74: 7400006
+    second: sofieshiftgear
+  - first:
+      74: 7400008
+    second: sofiesteerbackward
+  - first:
+      74: 7400010
+    second: sofiesteerbackwardleft
+  - first:
+      74: 7400012
+    second: sofiesteerbackwardright
+  - first:
+      74: 7400014
+    second: sofiedanger
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: mesh
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: caterham
+    second: {fileID: 2100000, guid: 967e2813a1e679d489e4978f1beb7682, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sofie
+    second: {fileID: 2100000, guid: 745048719603a3b40a73708e1e1b911d, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 0
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: sofiesteerforward
+      takeName: C4D Animation Take
+      internalID: 7400000
+      firstFrame: 31
+      lastFrame: 59
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base
+        weight: 1
+      - path: CoM
+        weight: 1
+      - path: Lhandonstraint
+        weight: 1
+      - path: poke
+        weight: 1
+      - path: Rhandconstraint
+        weight: 1
+      - path: sofie
+        weight: 1
+      - path: sofie/basecontrol
+        weight: 1
+      - path: sofie/basecontrol/hipcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal/L_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/neckcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal/R_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/headcontrol
+        weight: 1
+      - path: sofie/hips
+        weight: 1
+      - path: sofie/hips/L_leg
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot/L_toes
+        weight: 1
+      - path: sofie/hips/R_leg
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot/R_toes
+        weight: 1
+      - path: sofie/hips/spine
+        weight: 1
+      - path: sofie/hips/spine/chest
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3/Joint_3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3/L_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3/Joint_3_2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3/L_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3/L_thumb
+        weight: 1
+      - path: sofie/hips/spine/chest/neck
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/glasses
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw/lip
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/L_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/R_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/tip
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3/Joint_3_3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3/R_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3/Joint_3_4
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3/R_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3/R_thumb
+        weight: 1
+      - path: sofie/L_FOOT
+        weight: 1
+      - path: sofie/L_FOOT/L_ankle_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_foot_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_toes_Goal
+        weight: 1
+      - path: sofie/L_leg_Pole
+        weight: 1
+      - path: sofie/mesh
+        weight: 1
+      - path: sofie/R_FOOT
+        weight: 1
+      - path: sofie/R_FOOT/R_ankle_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_foot_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_toes_Goal
+        weight: 1
+      - path: sofie/R_leg_Pole
+        weight: 1
+      - path: steer
+        weight: 1
+      - path: steer/L_wrist_Goal
+        weight: 1
+      - path: steer/R_wrist_Goal
+        weight: 1
+      - path: wheels
+        weight: 1
+      - path: wheels/BLwheel
+        weight: 1
+      - path: wheels/BRwheel
+        weight: 1
+      - path: wheels/FLwheel
+        weight: 1
+      - path: wheels/FRwheel
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: sofiesteerforwardleft
+      takeName: C4D Animation Take
+      internalID: 7400002
+      firstFrame: 62
+      lastFrame: 89
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base
+        weight: 1
+      - path: CoM
+        weight: 1
+      - path: Lhandonstraint
+        weight: 1
+      - path: poke
+        weight: 1
+      - path: Rhandconstraint
+        weight: 1
+      - path: sofie
+        weight: 1
+      - path: sofie/basecontrol
+        weight: 1
+      - path: sofie/basecontrol/hipcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal/L_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/neckcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal/R_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/headcontrol
+        weight: 1
+      - path: sofie/hips
+        weight: 1
+      - path: sofie/hips/L_leg
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot/L_toes
+        weight: 1
+      - path: sofie/hips/R_leg
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot/R_toes
+        weight: 1
+      - path: sofie/hips/spine
+        weight: 1
+      - path: sofie/hips/spine/chest
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3/Joint_3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3/L_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3/Joint_3_2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3/L_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3/L_thumb
+        weight: 1
+      - path: sofie/hips/spine/chest/neck
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/glasses
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw/lip
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/L_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/R_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/tip
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3/Joint_3_3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3/R_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3/Joint_3_4
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3/R_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3/R_thumb
+        weight: 1
+      - path: sofie/L_FOOT
+        weight: 1
+      - path: sofie/L_FOOT/L_ankle_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_foot_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_toes_Goal
+        weight: 1
+      - path: sofie/L_leg_Pole
+        weight: 1
+      - path: sofie/mesh
+        weight: 1
+      - path: sofie/R_FOOT
+        weight: 1
+      - path: sofie/R_FOOT/R_ankle_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_foot_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_toes_Goal
+        weight: 1
+      - path: sofie/R_leg_Pole
+        weight: 1
+      - path: steer
+        weight: 1
+      - path: steer/L_wrist_Goal
+        weight: 1
+      - path: steer/R_wrist_Goal
+        weight: 1
+      - path: wheels
+        weight: 1
+      - path: wheels/BLwheel
+        weight: 1
+      - path: wheels/BRwheel
+        weight: 1
+      - path: wheels/FLwheel
+        weight: 1
+      - path: wheels/FRwheel
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: sofiesteerforwardright
+      takeName: C4D Animation Take
+      internalID: 7400004
+      firstFrame: 92
+      lastFrame: 119
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base
+        weight: 1
+      - path: CoM
+        weight: 1
+      - path: Lhandonstraint
+        weight: 1
+      - path: poke
+        weight: 1
+      - path: Rhandconstraint
+        weight: 1
+      - path: sofie
+        weight: 1
+      - path: sofie/basecontrol
+        weight: 1
+      - path: sofie/basecontrol/hipcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal/L_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/neckcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal/R_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/headcontrol
+        weight: 1
+      - path: sofie/hips
+        weight: 1
+      - path: sofie/hips/L_leg
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot/L_toes
+        weight: 1
+      - path: sofie/hips/R_leg
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot/R_toes
+        weight: 1
+      - path: sofie/hips/spine
+        weight: 1
+      - path: sofie/hips/spine/chest
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3/Joint_3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3/L_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3/Joint_3_2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3/L_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3/L_thumb
+        weight: 1
+      - path: sofie/hips/spine/chest/neck
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/glasses
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw/lip
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/L_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/R_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/tip
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3/Joint_3_3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3/R_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3/Joint_3_4
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3/R_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3/R_thumb
+        weight: 1
+      - path: sofie/L_FOOT
+        weight: 1
+      - path: sofie/L_FOOT/L_ankle_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_foot_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_toes_Goal
+        weight: 1
+      - path: sofie/L_leg_Pole
+        weight: 1
+      - path: sofie/mesh
+        weight: 1
+      - path: sofie/R_FOOT
+        weight: 1
+      - path: sofie/R_FOOT/R_ankle_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_foot_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_toes_Goal
+        weight: 1
+      - path: sofie/R_leg_Pole
+        weight: 1
+      - path: steer
+        weight: 1
+      - path: steer/L_wrist_Goal
+        weight: 1
+      - path: steer/R_wrist_Goal
+        weight: 1
+      - path: wheels
+        weight: 1
+      - path: wheels/BLwheel
+        weight: 1
+      - path: wheels/BRwheel
+        weight: 1
+      - path: wheels/FLwheel
+        weight: 1
+      - path: wheels/FRwheel
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: sofieshiftgear
+      takeName: C4D Animation Take
+      internalID: 7400006
+      firstFrame: 121
+      lastFrame: 137
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base
+        weight: 0
+      - path: CoM
+        weight: 0
+      - path: Lhandonstraint
+        weight: 0
+      - path: poke
+        weight: 0
+      - path: Rhandconstraint
+        weight: 0
+      - path: sofie
+        weight: 0
+      - path: sofie/basecontrol
+        weight: 0
+      - path: sofie/basecontrol/hipcontrol
+        weight: 0
+      - path: sofie/basecontrol/spinecontrol
+        weight: 0
+      - path: sofie/basecontrol/spinecontrol/chestcontrol
+        weight: 0
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal
+        weight: 0
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal/L_arm_Pole
+        weight: 0
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/neckcontrol
+        weight: 0
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal
+        weight: 0
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal/R_arm_Pole
+        weight: 0
+      - path: sofie/basecontrol/spinecontrol/headcontrol
+        weight: 0
+      - path: sofie/hips
+        weight: 0
+      - path: sofie/hips/L_leg
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot/L_toes
+        weight: 1
+      - path: sofie/hips/R_leg
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot/R_toes
+        weight: 1
+      - path: sofie/hips/spine
+        weight: 0
+      - path: sofie/hips/spine/chest
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3/Joint_3
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3/L_pink
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3/Joint_3_2
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3/L_ring
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3
+        weight: 0
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3/L_thumb
+        weight: 0
+      - path: sofie/hips/spine/chest/neck
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/glasses
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw/lip
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/L_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/R_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/tip
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3/Joint_3_3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3/R_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3/Joint_3_4
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3/R_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3/R_thumb
+        weight: 1
+      - path: sofie/L_FOOT
+        weight: 0
+      - path: sofie/L_FOOT/L_ankle_Goal
+        weight: 0
+      - path: sofie/L_FOOT/L_foot_Goal
+        weight: 0
+      - path: sofie/L_FOOT/L_toes_Goal
+        weight: 0
+      - path: sofie/L_leg_Pole
+        weight: 0
+      - path: sofie/mesh
+        weight: 0
+      - path: sofie/R_FOOT
+        weight: 0
+      - path: sofie/R_FOOT/R_ankle_Goal
+        weight: 0
+      - path: sofie/R_FOOT/R_foot_Goal
+        weight: 0
+      - path: sofie/R_FOOT/R_toes_Goal
+        weight: 0
+      - path: sofie/R_leg_Pole
+        weight: 0
+      - path: steer
+        weight: 0
+      - path: steer/L_wrist_Goal
+        weight: 0
+      - path: steer/R_wrist_Goal
+        weight: 0
+      - path: wheels
+        weight: 0
+      - path: wheels/BLwheel
+        weight: 0
+      - path: wheels/BRwheel
+        weight: 0
+      - path: wheels/FLwheel
+        weight: 0
+      - path: wheels/FRwheel
+        weight: 0
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: sofiesteerbackward
+      takeName: C4D Animation Take
+      internalID: 7400008
+      firstFrame: 146
+      lastFrame: 174
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base
+        weight: 1
+      - path: CoM
+        weight: 1
+      - path: Lhandonstraint
+        weight: 1
+      - path: poke
+        weight: 1
+      - path: Rhandconstraint
+        weight: 1
+      - path: sofie
+        weight: 1
+      - path: sofie/basecontrol
+        weight: 1
+      - path: sofie/basecontrol/hipcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal/L_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/neckcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal/R_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/headcontrol
+        weight: 1
+      - path: sofie/hips
+        weight: 1
+      - path: sofie/hips/L_leg
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot/L_toes
+        weight: 1
+      - path: sofie/hips/R_leg
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot/R_toes
+        weight: 1
+      - path: sofie/hips/spine
+        weight: 1
+      - path: sofie/hips/spine/chest
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3/Joint_3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3/L_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3/Joint_3_2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3/L_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3/L_thumb
+        weight: 1
+      - path: sofie/hips/spine/chest/neck
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/glasses
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw/lip
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/L_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/R_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/tip
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3/Joint_3_3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3/R_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3/Joint_3_4
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3/R_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3/R_thumb
+        weight: 1
+      - path: sofie/L_FOOT
+        weight: 1
+      - path: sofie/L_FOOT/L_ankle_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_foot_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_toes_Goal
+        weight: 1
+      - path: sofie/L_leg_Pole
+        weight: 1
+      - path: sofie/mesh
+        weight: 1
+      - path: sofie/R_FOOT
+        weight: 1
+      - path: sofie/R_FOOT/R_ankle_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_foot_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_toes_Goal
+        weight: 1
+      - path: sofie/R_leg_Pole
+        weight: 1
+      - path: steer
+        weight: 1
+      - path: steer/L_wrist_Goal
+        weight: 1
+      - path: steer/R_wrist_Goal
+        weight: 1
+      - path: wheels
+        weight: 1
+      - path: wheels/BLwheel
+        weight: 1
+      - path: wheels/BRwheel
+        weight: 1
+      - path: wheels/FLwheel
+        weight: 1
+      - path: wheels/FRwheel
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: sofiesteerbackwardleft
+      takeName: C4D Animation Take
+      internalID: 7400010
+      firstFrame: 207
+      lastFrame: 235
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base
+        weight: 1
+      - path: CoM
+        weight: 1
+      - path: Lhandonstraint
+        weight: 1
+      - path: poke
+        weight: 1
+      - path: Rhandconstraint
+        weight: 1
+      - path: sofie
+        weight: 1
+      - path: sofie/basecontrol
+        weight: 1
+      - path: sofie/basecontrol/hipcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal/L_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/neckcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal/R_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/headcontrol
+        weight: 1
+      - path: sofie/hips
+        weight: 1
+      - path: sofie/hips/L_leg
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot/L_toes
+        weight: 1
+      - path: sofie/hips/R_leg
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot/R_toes
+        weight: 1
+      - path: sofie/hips/spine
+        weight: 1
+      - path: sofie/hips/spine/chest
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3/Joint_3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3/L_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3/Joint_3_2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3/L_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3/L_thumb
+        weight: 1
+      - path: sofie/hips/spine/chest/neck
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/glasses
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw/lip
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/L_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/R_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/tip
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3/Joint_3_3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3/R_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3/Joint_3_4
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3/R_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3/R_thumb
+        weight: 1
+      - path: sofie/L_FOOT
+        weight: 1
+      - path: sofie/L_FOOT/L_ankle_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_foot_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_toes_Goal
+        weight: 1
+      - path: sofie/L_leg_Pole
+        weight: 1
+      - path: sofie/mesh
+        weight: 1
+      - path: sofie/R_FOOT
+        weight: 1
+      - path: sofie/R_FOOT/R_ankle_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_foot_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_toes_Goal
+        weight: 1
+      - path: sofie/R_leg_Pole
+        weight: 1
+      - path: steer
+        weight: 1
+      - path: steer/L_wrist_Goal
+        weight: 1
+      - path: steer/R_wrist_Goal
+        weight: 1
+      - path: wheels
+        weight: 1
+      - path: wheels/BLwheel
+        weight: 1
+      - path: wheels/BRwheel
+        weight: 1
+      - path: wheels/FLwheel
+        weight: 1
+      - path: wheels/FRwheel
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: sofiesteerbackwardright
+      takeName: C4D Animation Take
+      internalID: 7400012
+      firstFrame: 177
+      lastFrame: 204
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base
+        weight: 1
+      - path: CoM
+        weight: 1
+      - path: Lhandonstraint
+        weight: 1
+      - path: poke
+        weight: 1
+      - path: Rhandconstraint
+        weight: 1
+      - path: sofie
+        weight: 1
+      - path: sofie/basecontrol
+        weight: 1
+      - path: sofie/basecontrol/hipcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal/L_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/neckcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal/R_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/headcontrol
+        weight: 1
+      - path: sofie/hips
+        weight: 1
+      - path: sofie/hips/L_leg
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot/L_toes
+        weight: 1
+      - path: sofie/hips/R_leg
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot/R_toes
+        weight: 1
+      - path: sofie/hips/spine
+        weight: 1
+      - path: sofie/hips/spine/chest
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3/Joint_3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3/L_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3/Joint_3_2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3/L_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3/L_thumb
+        weight: 1
+      - path: sofie/hips/spine/chest/neck
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/glasses
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw/lip
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/L_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/R_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/tip
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3/Joint_3_3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3/R_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3/Joint_3_4
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3/R_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3/R_thumb
+        weight: 1
+      - path: sofie/L_FOOT
+        weight: 1
+      - path: sofie/L_FOOT/L_ankle_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_foot_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_toes_Goal
+        weight: 1
+      - path: sofie/L_leg_Pole
+        weight: 1
+      - path: sofie/mesh
+        weight: 1
+      - path: sofie/R_FOOT
+        weight: 1
+      - path: sofie/R_FOOT/R_ankle_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_foot_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_toes_Goal
+        weight: 1
+      - path: sofie/R_leg_Pole
+        weight: 1
+      - path: steer
+        weight: 1
+      - path: steer/L_wrist_Goal
+        weight: 1
+      - path: steer/R_wrist_Goal
+        weight: 1
+      - path: wheels
+        weight: 1
+      - path: wheels/BLwheel
+        weight: 1
+      - path: wheels/BRwheel
+        weight: 1
+      - path: wheels/FLwheel
+        weight: 1
+      - path: wheels/FRwheel
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: sofiedanger
+      takeName: C4D Animation Take
+      internalID: 7400014
+      firstFrame: 0
+      lastFrame: 29
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base
+        weight: 1
+      - path: CoM
+        weight: 1
+      - path: Lhandonstraint
+        weight: 1
+      - path: poke
+        weight: 1
+      - path: Rhandconstraint
+        weight: 1
+      - path: sofie
+        weight: 1
+      - path: sofie/basecontrol
+        weight: 1
+      - path: sofie/basecontrol/hipcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/L_arm_Goal/L_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/neckcontrol
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/chestcontrol/R_arm_Goal/R_arm_Pole
+        weight: 1
+      - path: sofie/basecontrol/spinecontrol/headcontrol
+        weight: 1
+      - path: sofie/hips
+        weight: 1
+      - path: sofie/hips/L_leg
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot
+        weight: 1
+      - path: sofie/hips/L_leg/L_knee/L_ankle/L_foot/L_toes
+        weight: 1
+      - path: sofie/hips/R_leg
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot
+        weight: 1
+      - path: sofie/hips/R_leg/R_knee/R_ankle/R_foot/R_toes
+        weight: 1
+      - path: sofie/hips/spine
+        weight: 1
+      - path: sofie/hips/spine/chest
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_middle1/L_middle2/L_middle3/Joint_3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_pink1/L_pink2/L_pink3/L_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_point1/L_point2/L_point3/Joint_3_2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_ring1/L_ring2/L_ring3/L_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/L_shoulder/L_arm/L_elbow/L_wrist/L_thumb1/L_thumb2/L_thumb3/L_thumb
+        weight: 1
+      - path: sofie/hips/spine/chest/neck
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/glasses
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/jaw/lip
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/L_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/R_eye
+        weight: 1
+      - path: sofie/hips/spine/chest/neck/head/tip
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/R_middle2/R_middle3/Joint_3_3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_pink1/R_pink2/R_pink3/R_pink
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_point1/R_point2/R_point3/Joint_3_4
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_ring1/R_ring2/R_ring3/R_ring
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3
+        weight: 1
+      - path: sofie/hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_thumb1/R_thumb2/R_thumb3/R_thumb
+        weight: 1
+      - path: sofie/L_FOOT
+        weight: 1
+      - path: sofie/L_FOOT/L_ankle_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_foot_Goal
+        weight: 1
+      - path: sofie/L_FOOT/L_toes_Goal
+        weight: 1
+      - path: sofie/L_leg_Pole
+        weight: 1
+      - path: sofie/mesh
+        weight: 1
+      - path: sofie/R_FOOT
+        weight: 1
+      - path: sofie/R_FOOT/R_ankle_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_foot_Goal
+        weight: 1
+      - path: sofie/R_FOOT/R_toes_Goal
+        weight: 1
+      - path: sofie/R_leg_Pole
+        weight: 1
+      - path: steer
+        weight: 1
+      - path: steer/L_wrist_Goal
+        weight: 1
+      - path: steer/R_wrist_Goal
+        weight: 1
+      - path: wheels
+        weight: 1
+      - path: wheels/BLwheel
+        weight: 1
+      - path: wheels/BRwheel
+        weight: 1
+      - path: wheels/FLwheel
+        weight: 1
+      - path: wheels/FRwheel
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

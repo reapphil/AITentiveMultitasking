@@ -5,44 +5,44 @@ using UnityEngine;
 
 public class Pawn : ChessFigure
 {
-    public override bool[,] PossibleMove(bool assingBeatingMovements = false)
+    public override bool[,] PossibleMove(bool assignBeatingMovements = false)
     {
         bool[,] possibleMoves = new bool[8, 8];
 
         if (IsWhite)
         {
             // Diagonal Left
-            AssignPawnMove(CurrentX - 1, CurrentY + 1, ref possibleMoves, assingBeatingMovements);
+            AssignPawnMove(CurrentX - 1, CurrentY + 1, ref possibleMoves, assignBeatingMovements);
 
             // Diagonal Right
-            AssignPawnMove(CurrentX + 1, CurrentY + 1, ref possibleMoves, assingBeatingMovements);
+            AssignPawnMove(CurrentX + 1, CurrentY + 1, ref possibleMoves, assignBeatingMovements);
 
             // Forward
-            AssignPawnMove(CurrentX, CurrentY + 1, ref possibleMoves, assingBeatingMovements);
+            AssignPawnMove(CurrentX, CurrentY + 1, ref possibleMoves, assignBeatingMovements);
 
             // Two Steps Forward
             if (CurrentY == 1)
             {
-                AssignPawnMove(CurrentX, CurrentY + 1, ref possibleMoves, assingBeatingMovements);
-                AssignPawnMove(CurrentX, CurrentY + 2, ref possibleMoves, assingBeatingMovements);
+                AssignPawnMove(CurrentX, CurrentY + 1, ref possibleMoves, assignBeatingMovements);
+                AssignPawnMove(CurrentX, CurrentY + 2, ref possibleMoves, assignBeatingMovements);
             }
         }
         else
         {
             // Diagonal Left
-            AssignPawnMove(CurrentX - 1, CurrentY - 1, ref possibleMoves, assingBeatingMovements);
+            AssignPawnMove(CurrentX - 1, CurrentY - 1, ref possibleMoves, assignBeatingMovements);
 
             // Diagonal Right
-            AssignPawnMove(CurrentX + 1, CurrentY - 1, ref possibleMoves, assingBeatingMovements);
+            AssignPawnMove(CurrentX + 1, CurrentY - 1, ref possibleMoves, assignBeatingMovements);
 
             // Forward
-            AssignPawnMove(CurrentX, CurrentY - 1, ref possibleMoves, assingBeatingMovements);
+            AssignPawnMove(CurrentX, CurrentY - 1, ref possibleMoves, assignBeatingMovements);
 
             // Two Steps Forward
             if (CurrentY == 6)
             {
-                AssignPawnMove(CurrentX, CurrentY - 1, ref possibleMoves, assingBeatingMovements);
-                AssignPawnMove(CurrentX, CurrentY - 2, ref possibleMoves, assingBeatingMovements);
+                AssignPawnMove(CurrentX, CurrentY - 1, ref possibleMoves, assignBeatingMovements);
+                AssignPawnMove(CurrentX, CurrentY - 2, ref possibleMoves, assignBeatingMovements);
             }
         }
 

@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
+using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.TestTools;
 
 public class PositionConverterTest
@@ -17,53 +20,191 @@ public class PositionConverterTest
     }
 
     [Test]
+    public void GetBinsInsideRectTest()
+    {
+        //Rect size:    20x10
+        //Bin size:     1x1
+        //Bins are counted row-vise from left to right and bottom to top. The outer rectangle is centered at (0,0), therefore
+        //rectCenter=Vector2(0.0f, 0.0f) and rectSize=Vector2(0.9f, 0.9f) returns 94, 95, 104, 105.
+        float rectangleWidth = 20;
+        float rectangleHeight = 10;
+        int numberOfBins = 200;
+
+        Vector2 rectCenter = new Vector2(-4.0f, -4.0f);
+        Vector2 rectSize = new Vector2(0.9f, 0.9f);
+        List<int> bins = PositionConverter.GetBinsInsideRect(rectCenter, rectSize, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.That(bins, Is.EquivalentTo(new List<int> { 50, 51, 60, 61 }));
+
+        rectCenter = new Vector2(-2f, 1.5f);
+        rectSize = new Vector2(3.9f, 2.9f);
+        bins = PositionConverter.GetBinsInsideRect(rectCenter, rectSize, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.That(bins, Is.EquivalentTo(new List<int> { 65, 66, 67, 75, 76, 77, 85, 86, 87, 95, 96, 97 }));
+    }
+
+    [Test]
     public void BinToCoordinatesCoordinatesToBinTest()
     {
         _numberOFBinsPerDirection = 15;
         _platformRadius = 5;
 
         int bin = 0;
-        Vector3 coordinates = PositionConverter.BinToCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
-        Assert.AreEqual(bin, PositionConverter.CoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
+        Vector3 coordinates = PositionConverter.BinToSquareCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
+        Assert.AreEqual(bin, PositionConverter.SquareCoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
 
         bin = 3;
-        coordinates = PositionConverter.BinToCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
-        Assert.AreEqual(bin, PositionConverter.CoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
+        coordinates = PositionConverter.BinToSquareCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
+        Assert.AreEqual(bin, PositionConverter.SquareCoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
 
         bin = 20;
-        coordinates = PositionConverter.BinToCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
-        Assert.AreEqual(bin, PositionConverter.CoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
+        coordinates = PositionConverter.BinToSquareCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
+        Assert.AreEqual(bin, PositionConverter.SquareCoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
 
         bin = 100;
-        coordinates = PositionConverter.BinToCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
-        Assert.AreEqual(bin, PositionConverter.CoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
+        coordinates = PositionConverter.BinToSquareCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
+        Assert.AreEqual(bin, PositionConverter.SquareCoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
 
         bin = 224;
-        coordinates = PositionConverter.BinToCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
-        Assert.AreEqual(bin, PositionConverter.CoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
+        coordinates = PositionConverter.BinToSquareCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
+        Assert.AreEqual(bin, PositionConverter.SquareCoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
 
         _numberOFBinsPerDirection = 19;
         _platformRadius = 23;
 
         bin = 0;
-        coordinates = PositionConverter.BinToCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
-        Assert.AreEqual(bin, PositionConverter.CoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
+        coordinates = PositionConverter.BinToSquareCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
+        Assert.AreEqual(bin, PositionConverter.SquareCoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
 
         bin = 3;
-        coordinates = PositionConverter.BinToCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
-        Assert.AreEqual(bin, PositionConverter.CoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
+        coordinates = PositionConverter.BinToSquareCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
+        Assert.AreEqual(bin, PositionConverter.SquareCoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
 
         bin = 20;
-        coordinates = PositionConverter.BinToCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
-        Assert.AreEqual(bin, PositionConverter.CoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
+        coordinates = PositionConverter.BinToSquareCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
+        Assert.AreEqual(bin, PositionConverter.SquareCoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
 
         bin = 100;
-        coordinates = PositionConverter.BinToCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
-        Assert.AreEqual(bin, PositionConverter.CoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
+        coordinates = PositionConverter.BinToSquareCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
+        Assert.AreEqual(bin, PositionConverter.SquareCoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
 
         bin = 224;
-        coordinates = PositionConverter.BinToCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
-        Assert.AreEqual(bin, PositionConverter.CoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
+        coordinates = PositionConverter.BinToSquareCoordinates(bin, _platformRadius, _numberOFBinsPerDirection, 0);
+        Assert.AreEqual(bin, PositionConverter.SquareCoordinatesToBin(coordinates, _platformRadius, _numberOFBinsPerDirection));
+    }
+
+    [Test]
+    public void BinToRectangleCoordinatesCoordinatesToBinTest()
+    {
+        int numberOfBins = 500;
+        float rectangleHeight = 5;
+        float rectangleWidth = 10;
+
+
+        int bin = 0;
+        Vector3 coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 3;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 20;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 100;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 224;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 490;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 495;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+
+        numberOfBins = 666;
+        rectangleHeight = 10;
+        rectangleWidth = 10;
+
+        bin = 0;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 3;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 20;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 100;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 224;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 649;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+
+        numberOfBins = 1000;
+        rectangleHeight = 9;
+        rectangleWidth = 17;
+
+        bin = 0;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 3;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 20;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 100;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 224;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+
+        numberOfBins = 500;
+        rectangleHeight = 500;
+        rectangleWidth = 1000;
+
+        bin = 0;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 3;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 20;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 100;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
+
+        bin = 495;
+        coordinates = PositionConverter.BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+        Assert.AreEqual(bin, PositionConverter.RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins));
     }
 
     [Test]
@@ -72,221 +213,120 @@ public class PositionConverterTest
         _numberOFBinsPerDirection = 5;
 
         //first row
-        Assert.IsTrue(PositionConverter.IsEdgeBin(0, _numberOFBinsPerDirection));
-        Assert.IsTrue(PositionConverter.IsEdgeBin(2, _numberOFBinsPerDirection));
-        Assert.IsTrue(PositionConverter.IsEdgeBin(4, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(0, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(2, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(4, _numberOFBinsPerDirection));
 
         //last row
-        Assert.IsTrue(PositionConverter.IsEdgeBin(20, _numberOFBinsPerDirection));
-        Assert.IsTrue(PositionConverter.IsEdgeBin(22, _numberOFBinsPerDirection));
-        Assert.IsTrue(PositionConverter.IsEdgeBin(24, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(20, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(22, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(24, _numberOFBinsPerDirection));
 
         //first column
-        Assert.IsTrue(PositionConverter.IsEdgeBin(5, _numberOFBinsPerDirection));
-        Assert.IsTrue(PositionConverter.IsEdgeBin(10, _numberOFBinsPerDirection));
-        Assert.IsTrue(PositionConverter.IsEdgeBin(15, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(5, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(10, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(15, _numberOFBinsPerDirection));
 
         //last column
-        Assert.IsTrue(PositionConverter.IsEdgeBin(9, _numberOFBinsPerDirection));
-        Assert.IsTrue(PositionConverter.IsEdgeBin(14, _numberOFBinsPerDirection));
-        Assert.IsTrue(PositionConverter.IsEdgeBin(19, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(9, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(14, _numberOFBinsPerDirection));
+        Assert.IsTrue(PositionConverter.IsSquareEdgeBin(19, _numberOFBinsPerDirection));
 
         //no edge columns
-        Assert.IsFalse(PositionConverter.IsEdgeBin(6, _numberOFBinsPerDirection));
-        Assert.IsFalse(PositionConverter.IsEdgeBin(12, _numberOFBinsPerDirection));
-        Assert.IsFalse(PositionConverter.IsEdgeBin(18, _numberOFBinsPerDirection));
-        Assert.IsFalse(PositionConverter.IsEdgeBin(16, _numberOFBinsPerDirection));
-        Assert.IsFalse(PositionConverter.IsEdgeBin(8, _numberOFBinsPerDirection));
-    }
-
-    //            2,5
-    //            z -->
-    //       20  21  22  23  24
-    //     x 15  16  17  18  19
-    //-2,5 | 10  11  12  13  14  2,5
-    //     v 5   6   7   8   9
-    //       0   1   2   3   4
-    //            -2,5
-    [Test]
-    public void CrossedBinsTest()
-    {
-        _numberOFBinsPerDirection = 5;
-        _platformRadius = 2.5f;
-
-        Vector3 v1 = new Vector3(2, 0, 1);
-        int bin = 1;
-
-        int[] array = PositionConverter.GetCrossedBinsList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(3, array.Length);
-        Assert.AreEqual(6, array[0]);
-        Assert.AreEqual(7, array[1]);
-        Assert.AreEqual(12, array[2]);
-
-
-        v1 = new Vector3(4, 0, 4);
-        bin = 0;
-
-        array = PositionConverter.GetCrossedBinsList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(4, array.Length);
-        Assert.AreEqual(6, array[0]);
-        Assert.AreEqual(12, array[1]);
-        Assert.AreEqual(18, array[2]);
-        Assert.AreEqual(24, array[3]);
+        Assert.IsFalse(PositionConverter.IsSquareEdgeBin(6, _numberOFBinsPerDirection));
+        Assert.IsFalse(PositionConverter.IsSquareEdgeBin(12, _numberOFBinsPerDirection));
+        Assert.IsFalse(PositionConverter.IsSquareEdgeBin(18, _numberOFBinsPerDirection));
+        Assert.IsFalse(PositionConverter.IsSquareEdgeBin(16, _numberOFBinsPerDirection));
+        Assert.IsFalse(PositionConverter.IsSquareEdgeBin(8, _numberOFBinsPerDirection));
     }
 
     [Test]
-    public void CrossedBinsNegativeVelocityTest()
+    public void IsRectangleEdgeBinTest()
     {
-        _numberOFBinsPerDirection = 5;
-        _platformRadius = 2.5f;
+        int numberOfBins = 500;
+        float rectangleHight = 500;
+        float rectangleWidth = 1000;
 
-        Vector3 v1 = new Vector3(-2, 0, -2);
-        int bin = 23;
+        //first row
+        int bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(-499.9f, 249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(-111f, 249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(0, 249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(111f, 249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(499.9f, 249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Debug.Log(bin);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
 
-        int[] array = PositionConverter.GetCrossedBinsList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(2, array.Length);
-        Assert.AreEqual(17, array[0]);
-        Assert.AreEqual(11, array[1]);
+        //last row
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(-499.9f, -249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(-111f, -249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(0, -249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(111f, -249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(499.9f, -249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
 
+        //first column
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(-499.9f, -249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(-499.9f, -100f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(-499.9f, 0f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(-499.9f, 100f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(-499.9f, 249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
 
-        v1 = new Vector3(-4, 0, 2);
-        bin = 21;
+        //last column
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(499.9f, -249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(499.9f, -100f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(499.9f, 0f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(499.9f, 100f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(499.9f, 249.9f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsTrue(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
 
-        array = PositionConverter.GetCrossedBinsList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(6, array.Length);
-        Assert.AreEqual(16, array[0]);
-        Assert.AreEqual(17, array[1]);
-        Assert.AreEqual(12, array[2]);
-        Assert.AreEqual(7, array[3]);
-        Assert.AreEqual(8, array[4]);
-        Assert.AreEqual(3, array[5]);
+        //no edge columns
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(0, 0f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsFalse(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(300, 200f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsFalse(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(-210, 100f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsFalse(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(240, 189f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsFalse(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
+        bin = PositionConverter.RectangleCoordinatesToBin(new Vector2(441, -149f), rectangleWidth, rectangleHight, numberOfBins);
+        Assert.IsFalse(PositionConverter.IsRectangleEdgeBin(bin, rectangleWidth, rectangleHight, numberOfBins));
     }
 
     [Test]
-    public void CrossedBinsOutOfAreaTest()
+    public void GetBinDimensionsTest()
     {
-        _numberOFBinsPerDirection = 5;
-        _platformRadius = 2.5f;
+        int numberOfBins = 500;
+        float rectangleHeight = 500;
+        float rectangleWidth = 1000;
 
-        Vector3 v1 = new Vector3(100, 0, 100);
-        int bin = 0;
+        (int, int) binDimensions = PositionConverter.GetBinDimensions(rectangleWidth, rectangleHeight, numberOfBins);
+        (int, int) binDimensionsNew = PositionConverter.GetBinDimensions(rectangleWidth, rectangleHeight, binDimensions.Item1 * binDimensions.Item2);
+        Assert.AreEqual(binDimensions, binDimensionsNew);
 
-        int[] array = PositionConverter.GetCrossedBinsList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(4, array.Length);
-        Assert.AreEqual(6, array[0]);
-        Assert.AreEqual(12, array[1]);
-        Assert.AreEqual(18, array[2]);
-        Assert.AreEqual(24, array[3]);
-    }
+        numberOfBins = 483;
+        rectangleHeight = 500;
+        rectangleWidth = 1000;
 
-    [Test]
-    public void CrossedBinsOutOfAreaUndiagonalTest()
-    {
-        _numberOFBinsPerDirection = 5;
-        _platformRadius = 2.5f;
-
-        Vector3 v1 = new Vector3(20, 0, 10);
-        int bin = 1;
-
-        int[] array = PositionConverter.GetCrossedBinsList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(6, array.Length);
-        Assert.AreEqual(6, array[0]);
-        Assert.AreEqual(7, array[1]);
-        Assert.AreEqual(12, array[2]);
-        Assert.AreEqual(17, array[3]);
-        Assert.AreEqual(18, array[4]);
-        Assert.AreEqual(23, array[5]);
-    }
-
-    [Test]
-    public void CrossedBinsNativeTest()
-    {
-        _numberOFBinsPerDirection = 5;
-        _platformRadius = 2.5f;
-
-        Vector3 v1 = new Vector3(2, 0, 1);
-        int bin = 1;
-
-        int[] array = PositionConverter.GetCrossedBinsNativeList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(3, array.Length);
-        Assert.AreEqual(6, array[0]);
-        Assert.AreEqual(7, array[1]);
-        Assert.AreEqual(12, array[2]);
-
-
-        v1 = new Vector3(4, 0, 4);
-        bin = 0;
-
-        array = PositionConverter.GetCrossedBinsNativeList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(4, array.Length);
-        Assert.AreEqual(6, array[0]);
-        Assert.AreEqual(12, array[1]);
-        Assert.AreEqual(18, array[2]);
-        Assert.AreEqual(24, array[3]);
-    }
-
-    [Test]
-    public void CrossedBinsNegativeVelocityNativeTest()
-    {
-        _numberOFBinsPerDirection = 5;
-        _platformRadius = 2.5f;
-
-        Vector3 v1 = new Vector3(-2, 0, -2);
-        int bin = 23;
-
-        int[] array = PositionConverter.GetCrossedBinsNativeList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(2, array.Length);
-        Assert.AreEqual(17, array[0]);
-        Assert.AreEqual(11, array[1]);
-
-
-        v1 = new Vector3(-4, 0, 2);
-        bin = 21;
-
-        array = PositionConverter.GetCrossedBinsNativeList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(6, array.Length);
-        Assert.AreEqual(16, array[0]);
-        Assert.AreEqual(17, array[1]);
-        Assert.AreEqual(12, array[2]);
-        Assert.AreEqual(7, array[3]);
-        Assert.AreEqual(8, array[4]);
-        Assert.AreEqual(3, array[5]);
-    }
-
-    [Test]
-    public void CrossedBinsOutOfAreaNativeTest()
-    {
-        _numberOFBinsPerDirection = 5;
-        _platformRadius = 2.5f;
-
-        Vector3 v1 = new Vector3(100, 0, 100);
-        int bin = 0;
-
-        int[] array = PositionConverter.GetCrossedBinsNativeList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(4, array.Length);
-        Assert.AreEqual(6, array[0]);
-        Assert.AreEqual(12, array[1]);
-        Assert.AreEqual(18, array[2]);
-        Assert.AreEqual(24, array[3]);
-    }
-
-    [Test]
-    public void CrossedBinsOutOfAreaUndiagonalNativeTest()
-    {
-        _numberOFBinsPerDirection = 5;
-        _platformRadius = 2.5f;
-
-        Vector3 v1 = new Vector3(20, 0, 10);
-        int bin = 1;
-
-        int[] array = PositionConverter.GetCrossedBinsNativeList(v1, bin, _numberOFBinsPerDirection, _platformRadius).ToArray();
-        Assert.AreEqual(6, array.Length);
-        Assert.AreEqual(6, array[0]);
-        Assert.AreEqual(7, array[1]);
-        Assert.AreEqual(12, array[2]);
-        Assert.AreEqual(17, array[3]);
-        Assert.AreEqual(18, array[4]);
-        Assert.AreEqual(23, array[5]);
+        binDimensions = PositionConverter.GetBinDimensions(rectangleWidth, rectangleHeight, numberOfBins);
+        binDimensionsNew = PositionConverter.GetBinDimensions(rectangleWidth, rectangleHeight, binDimensions.Item1 * binDimensions.Item2);
+        Assert.AreEqual(binDimensions, binDimensionsNew);
     }
 
     [Test]
@@ -313,7 +353,7 @@ public class PositionConverterTest
 
         foreach (Vector3 coordinate in coordinates)
         {
-            int bin = PositionConverter.CoordinatesToBin(coordinate, _platformRadius, _numberOFBinsPerDirection);
+            int bin = PositionConverter.SquareCoordinatesToBin(coordinate, _platformRadius, _numberOFBinsPerDirection);
 
             Assert.Less(bin, _numberOFBinsPerDirection * _numberOFBinsPerDirection);
             Assert.GreaterOrEqual(bin, 0);

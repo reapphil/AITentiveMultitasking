@@ -1,0 +1,839 @@
+Mono path[0] = 'C:/Users/hp/Workspace/da/Build/TrainingEnvironment/SupervisorML_Data/Managed'
+Mono config path = 'C:/Users/hp/Workspace/da/Build/TrainingEnvironment/MonoBleedingEdge/etc'
+[Physics::Module] Initialized MultithreadedJobDispatcher with {0} workers.
+Initialize engine version: 2021.3.40f1 (6fcab7dbbbc1)
+[Subsystems] Discovering subsystems at path C:/Users/hp/Workspace/da/Build/TrainingEnvironment/SupervisorML_Data/UnitySubsystems
+GfxDevice: creating device client; threaded=1; jobified=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA Quadro RTX 3000 (ID=0x1f36)
+    Vendor:   NVIDIA
+    VRAM:     5968 MB
+    Driver:   31.0.15.2919
+Begin MonoManager ReloadAssembly
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Assembly-CSharp.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Assembly-CSharp.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.ML-Agents.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.ML-Agents.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Purchasing.Common.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Purchasing.Common.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\ProjectSettings.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\ProjectSettings.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\RealisticCarControllerV3.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\RealisticCarControllerV3.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.WinRTCore.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.WinRTCore.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Telemetry.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Telemetry.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Networking.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Networking.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.SecurityStub.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.SecurityStub.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Advertisements.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Advertisements.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.InputSystem.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.InputSystem.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Internal.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Internal.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.SpatialTracking.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.SpatialTracking.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.UI.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.UI.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Configuration.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Configuration.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.WinRTStub.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.WinRTStub.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.AppleCore.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.AppleCore.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\LogitechSDK.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\LogitechSDK.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.ML-Agents.CommunicatorObjects.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.ML-Agents.CommunicatorObjects.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Analytics.DataPrivacy.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Analytics.DataPrivacy.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Cinemachine.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Cinemachine.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Registration.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Registration.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.Codeless.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.Codeless.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Environments.Internal.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Environments.Internal.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Threading.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Threading.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Collections.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Collections.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UI.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UI.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.AppleStub.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.AppleStub.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Barracuda.ONNX.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Barracuda.ONNX.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Barracuda.BurstBLAS.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Barracuda.BurstBLAS.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\API.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\API.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.AppleMacosStub.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.AppleMacosStub.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Barracuda.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Barracuda.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Timeline.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Timeline.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.TextMeshPro.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.TextMeshPro.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Util.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Util.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Environment.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Environment.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Mathematics.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Mathematics.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Core.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Core.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Analytics.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Analytics.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Burst.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Burst.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Postprocessing.Runtime.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Postprocessing.Runtime.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.SecurityCore.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.SecurityCore.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Measurement.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Measurement.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.XR.LegacyInputHelpers.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.XR.LegacyInputHelpers.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.InputSystem.ForUI.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.InputSystem.ForUI.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Environments.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Environments.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Scheduler.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Scheduler.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.Stores.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\UnityEngine.Purchasing.Stores.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Config.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Config.dll
+Symbol file C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Device.pdb doesn't match image C:\Users\hp\Workspace\da\Build\TrainingEnvironment\SupervisorML_Data\Managed\Unity.Services.Core.Device.dll
+- Completed reload, in  6.080 seconds
+<RI> Initializing input.
+New input system (experimental) initialized
+Using XInput
+XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.024900 ms
+Component PerformanceMeasurement has the following parameters:
+<FileNameForScores>k__BackingField = scores_experiment_kw35_final.csv
+<PlayerName>k__BackingField = player1
+<MaxNumberEpisodes>k__BackingField = 5
+<MinimumScoreForMeasurement>k__BackingField = 5
+<IsTrainingMode>k__BackingField = True
+<IsSupervised>k__BackingField = True
+<IsAbcSimulation>k__BackingField = False
+<SimulationId>k__BackingField = 0
+<MeasurePerformance>k__BackingField = False
+_supervisorAgent = Supervisor (Supervisor.SupervisorAgent)
+_tasks = 
+_ballAgent = 
+_behaviorParameters = Supervisor (Unity.MLAgents.Policies.BehaviorParameters)
+_dateTime = 23/08/2024 13:31:16
+_scores = System.Collections.Generic.List`1[Score]
+_switchingData = System.Collections.Generic.Dictionary`2[System.Tuple`2[System.Int32,System.Int32],System.Collections.Generic.List`1[SwitchingData]]
+_tasksActionReceivedFrom = System.Collections.Generic.List`1[ITask]
+_episodeCount = 0
+_pathScores = 
+_pathSwitchingData = 
+_switchingDataEntry = 
+_targetTask = 0
+_sourceTask = 0
+_switchingId = 0
+FileNameForScores = scores_experiment_kw35_final.csv
+PlayerName = player1
+MaxNumberEpisodes = 5
+MinimumScoreForMeasurement = 5
+IsTrainingMode = True
+IsSupervised = True
+IsAbcSimulation = False
+SimulationId = 0
+MeasurePerformance = False
+useGUILayout = True
+enabled = True
+isActiveAndEnabled = True
+transform = Supervisor (UnityEngine.Transform)
+gameObject = Supervisor (UnityEngine.GameObject)
+tag = Untagged
+name = Supervisor
+hideFlags = None
+Component BehaviorMeasurementBehavior has the following parameters:
+<IsAbcSimulation>k__BackingField = False
+<SampleSize>k__BackingField = 0
+<SimulationId>k__BackingField = 0
+<SaveBehavioralData>k__BackingField = False
+<UpdateExistingModelBehavior>k__BackingField = False
+<NumberOfTimeBins>k__BackingField = 0
+<MaxNumberOfActions>k__BackingField = 0
+<FileNameForBehavioralData>k__BackingField = bD202408090947.json
+<IsRawDataCollected>k__BackingField = False
+<SupervisorAgent>k__BackingField = 
+<BallAgents>k__BackingField = 
+<ProportionCollectedBehavioralData>k__BackingField = ProportionCollectedBehavioralData (UnityEngine.UI.Text)
+<Actions>k__BackingField = Actions (UnityEngine.UI.Text)
+<ProportionCollectedReactionTimes>k__BackingField = ProportionCollectedReactionTimes (UnityEngine.UI.Text)
+<MinTime>k__BackingField = 0
+<MaxTime>k__BackingField = 0
+_behaviourMeasurement = 
+IsAbcSimulation = False
+SampleSize = 0
+SimulationId = 0
+SaveBehavioralData = False
+UpdateExistingModelBehavior = False
+NumberOfTimeBins = 0
+MaxNumberOfActions = 0
+FileNameForBehavioralData = bD202408090947.json
+IsRawDataCollected = False
+SupervisorAgent = 
+BallAgents = 
+ProportionCollectedBehavioralData = ProportionCollectedBehavioralData (UnityEngine.UI.Text)
+Actions = Actions (UnityEngine.UI.Text)
+ProportionCollectedReactionTimes = ProportionCollectedReactionTimes (UnityEngine.UI.Text)
+MinTime = 0
+MaxTime = 0
+useGUILayout = True
+enabled = True
+isActiveAndEnabled = True
+transform = Supervisor (UnityEngine.Transform)
+gameObject = Supervisor (UnityEngine.GameObject)
+tag = Untagged
+name = Supervisor
+hideFlags = None
+Time between task switches: 0
+New update interval: 1.5
+Performance Measurement active: 0/0 episodes completed for model AUI_2024_NOFAST_2P and player player1!
+Component Unity.MLAgents.Policies.BehaviorParameters has the following parameters:
+m_BrainParameters = Unity.MLAgents.Policies.BrainParameters
+OnPolicyUpdated = Unity.MLAgents.Policies.BehaviorParameters+PolicyUpdated
+m_Model = AUI_2024_NOFAST_2P (Unity.Barracuda.NNModel)
+m_InferenceDevice = Default
+m_BehaviorType = Default
+m_BehaviorName = AUI
+TeamId = 0
+m_UseChildSensors = True
+m_UseChildActuators = True
+m_ObservableAttributeHandling = Ignore
+BrainParameters = Unity.MLAgents.Policies.BrainParameters
+Model = AUI_2024_NOFAST_2P (Unity.Barracuda.NNModel)
+InferenceDevice = Default
+BehaviorType = Default
+BehaviorName = AUI
+UseChildSensors = True
+UseChildActuators = True
+ObservableAttributeHandling = Ignore
+FullyQualifiedBehaviorName = AUI?team=0
+useGUILayout = True
+enabled = True
+isActiveAndEnabled = True
+transform = Supervisor (UnityEngine.Transform)
+gameObject = Supervisor (UnityEngine.GameObject)
+tag = Untagged
+name = Supervisor
+hideFlags = None
+Component Unity.MLAgents.Policies.BehaviorParameters has the following parameters:
+m_BrainParameters = Unity.MLAgents.Policies.BrainParameters
+OnPolicyUpdated = 
+m_Model = Focus (Unity.Barracuda.NNModel)
+m_InferenceDevice = Default
+m_BehaviorType = InferenceOnly
+m_BehaviorName = Focus
+TeamId = 0
+m_UseChildSensors = True
+m_UseChildActuators = True
+m_ObservableAttributeHandling = Ignore
+BrainParameters = Unity.MLAgents.Policies.BrainParameters
+Model = Focus (Unity.Barracuda.NNModel)
+InferenceDevice = Default
+BehaviorType = InferenceOnly
+BehaviorName = Focus
+UseChildSensors = True
+UseChildActuators = True
+ObservableAttributeHandling = Ignore
+FullyQualifiedBehaviorName = Focus?team=0
+useGUILayout = True
+enabled = True
+isActiveAndEnabled = False
+transform = FocusAgent (UnityEngine.Transform)
+gameObject = FocusAgent (UnityEngine.GameObject)
+tag = Untagged
+name = FocusAgent
+hideFlags = None
+Component Ball3DAgentHumanCognition has the following parameters:
+<UpdatePeriod>k__BackingField = 0.4
+<NumberOfSamples>k__BackingField = 1000
+<Sigma>k__BackingField = 0.01
+<SigmaMean>k__BackingField = 0.2
+<ObservationProbability>k__BackingField = 0.1
+<ConstantReactionTime>k__BackingField = 0
+<OldDistributionPersistenceTime>k__BackingField = 0
+<FullVision>k__BackingField = False
+<NumberOfBins>k__BackingField = 1000
+<ShowBeliefState>k__BackingField = False
+<UseFocusAgent>k__BackingField = False
+<FocusStateSpace>k__BackingField = VisualStateSpace
+_ballLocationProbabilities = System.Double[]
+_platformRadius = 6
+_numberOfBins = 1024
+s_calculateNormalDistributionForVelocityPerfMarker = Unity.Profiling.ProfilerMarker
+s_calculateTransitionProbabilitiesPerfMarker = Unity.Profiling.ProfilerMarker
+s_updateBallLocationProbabilitiesPerfMarker = Unity.Profiling.ProfilerMarker
+s_normalizationPerfMarker = Unity.Profiling.ProfilerMarker
+_beliefBallPosition = 
+_averageLine = 
+_maxProbBinLine = 
+_numberOFBinsPerDirection = 32
+_sourceBallAgent = 
+_visibilityTimer = 0
+_updateTimer = 0
+_oldDistributionPersistenceTimer = 0
+_currentSigmaMean = 0
+_estimatedVelocity = (0.00, 0.00, 0.00)
+_averageVelocity = (0.00, 0.00, 0.00)
+_rand = System.Random
+_stepCountDecisionRequester = 0
+_supervisorAgent = Supervisor (Supervisor.SupervisorAgent)
+_ballRb = Ball (UnityEngine.Rigidbody)
+_resetParams = Unity.MLAgents.EnvironmentParameters
+agentParameters = Unity.MLAgents.Agent+AgentParameters
+hasUpgradedFromAgentParameters = True
+MaxStep = 0
+DemonstrationWriters = System.Collections.Generic.HashSet`1[Unity.MLAgents.Demonstrations.DemonstrationWriter]
+sensors = System.Collections.Generic.List`1[Unity.MLAgents.Sensors.ISensor]
+collectObservationsSensor = Unity.MLAgents.Sensors.VectorSensor
+UpdatePeriod = 0.4
+NumberOfSamples = 1000
+Sigma = 0.01
+SigmaMean = 0.2
+ObservationProbability = 0.1
+ConstantReactionTime = 0
+OldDistributionPersistenceTime = 0
+FullVision = False
+NumberOfBins = 1000
+ShowBeliefState = False
+UseFocusAgent = False
+FocusStateSpace = VisualStateSpace
+IsVisible = False
+IsAutonomous = False
+IsTerminatingTask = True
+ResetPlatformToIdentity = True
+ResetSpeed = 7.5
+ForceDifficulty = 150
+BallStartingRadius = 0.05
+DecisionPeriod = 4
+Ball = Ball (UnityEngine.GameObject)
+UseNegativeDragDifficulty = False
+BallAgentDifficulty = 60
+BallAgentDifficultyDivisionFactor = 1
+GlobalDrag = 1
+IsActive = True
+TaskRewardForSupervisorAgent = System.Collections.Generic.Queue`1[System.Single]
+TaskRewardForFocusAgent = System.Collections.Generic.Queue`1[System.Single]
+StateInformation = BallStateInformation
+Performance = System.Collections.Generic.Dictionary`2[System.String,System.Double]
+StepCount = 0
+CompletedEpisodes = 0
+useGUILayout = True
+enabled = True
+isActiveAndEnabled = True
+transform = Agent (UnityEngine.Transform)
+gameObject = Agent (UnityEngine.GameObject)
+tag = Untagged
+name = Agent
+hideFlags = None
+Component BallStateInformation has the following parameters:
+<DragValue>k__BackingField = 0.2
+<PlatformAngleX>k__BackingField = 0
+<PlatformAngleY>k__BackingField = 0
+<PlatformAngleZ>k__BackingField = 0
+<BallVelocityX>k__BackingField = 0
+<BallVelocityY>k__BackingField = 0
+<BallVelocityZ>k__BackingField = 0
+<BallPositionX>k__BackingField = 0
+<BallPositionY>k__BackingField = 4.31
+<BallPositionZ>k__BackingField = 0
+<PlatformRadius>k__BackingField = 5
+<version>k__BackingField = 0
+<NumberOfDistanceBins_ballPosition>k__BackingField = 12
+<NumberOfDistanceBins_velocity>k__BackingField = 12
+<NumberOfDistanceBins_angle>k__BackingField = 12
+<NumberOfAngleBinsPerAxis>k__BackingField = 5
+<NumberOfAreaBinsPerDirection>k__BackingField = 15
+<NumberOfBallVelocityBinsPerAxis>k__BackingField = 6
+<NumberOfActionBinsPerAxis>k__BackingField = 5
+<VelocityRangeMax>k__BackingField = (4.00, 2.00, 4.00)
+<VelocityRangeMin>k__BackingField = (-4.00, -11.00, -4.00)
+<AngleRangeMax>k__BackingField = (35.00, 10.00, 35.00)
+<AngleRangeMin>k__BackingField = (-35.00, -10.00, -35.00)
+<PerformedActions>k__BackingField = 
+<ReactionTimes>k__BackingField = 
+<ActionRangeMax>k__BackingField = (1.00, 0.00, 1.00)
+<ActionRangeMin>k__BackingField = (-1.00, 0.00, -1.00)
+DragValue = 0.2
+PlatformAngleX = 0
+PlatformAngleY = 0
+PlatformAngleZ = 0
+BallVelocityX = 0
+BallVelocityY = 0
+BallVelocityZ = 0
+BallPositionX = 0
+BallPositionY = 4.31
+BallPositionZ = 0
+PlatformRadius = 5
+version = 0
+NumberOfDistanceBins_ballPosition = 12
+NumberOfDistanceBins_velocity = 12
+NumberOfDistanceBins_angle = 12
+NumberOfAngleBinsPerAxis = 5
+NumberOfAreaBinsPerDirection = 15
+NumberOfBallVelocityBinsPerAxis = 6
+NumberOfActionBinsPerAxis = 5
+VelocityRangeMax = (4.00, 2.00, 4.00)
+VelocityRangeMin = (-4.00, -11.00, -4.00)
+AngleRangeMax = (35.00, 10.00, 35.00)
+AngleRangeMin = (-35.00, -10.00, -35.00)
+BehaviorDimensions = System.Int32[]
+PerformedActions = 
+ReactionTimes = 
+ActionRangeMax = (1.00, 0.00, 1.00)
+ActionRangeMin = (-1.00, 0.00, -1.00)
+Component Unity.MLAgents.Policies.BehaviorParameters has the following parameters:
+m_BrainParameters = Unity.MLAgents.Policies.BrainParameters
+OnPolicyUpdated = Unity.MLAgents.Policies.BehaviorParameters+PolicyUpdated
+m_Model = BallAgentBall4EnvAfDP4RtAhcTfTBt (Unity.Barracuda.NNModel)
+m_InferenceDevice = Default
+m_BehaviorType = InferenceOnly
+m_BehaviorName = BallAgent
+TeamId = 0
+m_UseChildSensors = True
+m_UseChildActuators = True
+m_ObservableAttributeHandling = Ignore
+BrainParameters = Unity.MLAgents.Policies.BrainParameters
+Model = BallAgentBall4EnvAfDP4RtAhcTfTBt (Unity.Barracuda.NNModel)
+InferenceDevice = Default
+BehaviorType = InferenceOnly
+BehaviorName = BallAgent
+UseChildSensors = True
+UseChildActuators = True
+ObservableAttributeHandling = Ignore
+FullyQualifiedBehaviorName = BallAgent?team=0
+useGUILayout = True
+enabled = True
+isActiveAndEnabled = True
+transform = Agent (UnityEngine.Transform)
+gameObject = Agent (UnityEngine.GameObject)
+tag = Untagged
+name = Agent
+hideFlags = None
+Component Supervisor.SupervisorAgent has the following parameters:
+<ShowReward>k__BackingField = True
+<FocusActiveTask>k__BackingField = False
+<HideInactiveTasks>k__BackingField = False
+<AdvanceNoticeInSeconds>k__BackingField = 0.3
+<Mode>k__BackingField = Force
+<SetConstantDecisionRequestInterval>k__BackingField = True
+<DecisionRequestIntervalInSeconds>k__BackingField = 0.8
+<DifficultyIncrementInterval>k__BackingField = 100
+<DecisionPeriod>k__BackingField = 1
+<RewardFunction>k__BackingField = t_d/(1+Exp(-Exp(2)*(t_s-0.5)))
+<TimeScale>k__BackingField = -1
+<StartCountdownAt>k__BackingField = 0
+<VectorObservationSize>k__BackingField = 18
+<CumulativeRewardText>k__BackingField = CumulativeReward (UnityEngine.UI.Text)
+<CurrentRewardText>k__BackingField = CurrentReward (UnityEngine.UI.Text)
+<TextMeshProUGUI>k__BackingField = CountdownTimer (TMPro.TextMeshProUGUI)
+<EpisodeCount>k__BackingField = 0
+<FixedEpisodeDuration>k__BackingField = 0
+<UseHeuristic>k__BackingField = False
+<TaskGameObjects>k__BackingField = UnityEngine.GameObject[]
+<TaskGameObjectsProjectSettingsOrdering>k__BackingField = UnityEngine.GameObject[]
+<TimeSinceLastSwitch>k__BackingField = 0
+_activeInstanceActionLevel = 0
+_previousActiveActionLevel = 1
+_activeInstanceSwitchingLevel = 0
+_previousActiveSwitchingLevel = 0
+_pendingInstance = 0
+_isDifficultyUpdatedInCurrentInterval = False
+_fixedUpdateTimer = 0
+_advanceNoticeTimer = 0
+_wasReleased = System.Collections.Generic.Dictionary`2[UnityEngine.InputSystem.InputAction,System.Boolean]
+_switchCount = 0
+_audioSource = Supervisor (UnityEngine.AudioSource)
+_isUserInput = False
+_fixedNotificationExecutionTimer = 0
+_mainCamera = 
+_controls = SupervisorControls
+_stepCounterDecisionRequester = 0
+_taskSwitched = False
+_notificationActive = False
+_collectedReward = 0
+_lastCollectedReward = 0
+EndEpisodeEvent = System.EventHandler`1[System.Boolean]
+OnStartEpisode = Supervisor.SupervisorAgent+StartEpisodeAction
+OnTaskSwitchCompleted = Supervisor.SupervisorAgent+TaskSwitchAction
+OnTaskSwitchTo = Supervisor.SupervisorAgent+TaskSwitchToAction
+OnTaskSwitchFrom = Supervisor.SupervisorAgent+TaskSwitchToAction
+OnSetReward = 
+agentParameters = Unity.MLAgents.Agent+AgentParameters
+hasUpgradedFromAgentParameters = True
+MaxStep = 0
+DemonstrationWriters = System.Collections.Generic.HashSet`1[Unity.MLAgents.Demonstrations.DemonstrationWriter]
+sensors = System.Collections.Generic.List`1[Unity.MLAgents.Sensors.ISensor]
+collectObservationsSensor = Unity.MLAgents.Sensors.VectorSensor
+ShowReward = True
+FocusActiveTask = False
+HideInactiveTasks = False
+AdvanceNoticeInSeconds = 0.3
+Mode = Force
+SetConstantDecisionRequestInterval = True
+DecisionRequestIntervalInSeconds = 0.8
+DifficultyIncrementInterval = 100
+DecisionPeriod = 1
+RewardFunction = t_d/(1+Exp(-Exp(2)*(t_s-0.5)))
+TimeScale = -1
+StartCountdownAt = 0
+VectorObservationSize = 18
+CumulativeRewardText = CumulativeReward (UnityEngine.UI.Text)
+CurrentRewardText = CurrentReward (UnityEngine.UI.Text)
+TextMeshProUGUI = CountdownTimer (TMPro.TextMeshProUGUI)
+EpisodeCount = 0
+FixedEpisodeDuration = 0
+UseHeuristic = False
+TaskGameObjects = UnityEngine.GameObject[]
+TaskGameObjectsProjectSettingsOrdering = UnityEngine.GameObject[]
+TimeSinceLastSwitch = 0
+Tasks = ITask[]
+TasksProjectSettingsOrdering = ITask[]
+TaskNames = System.String[]
+StepCount = 0
+CompletedEpisodes = 0
+useGUILayout = True
+enabled = True
+isActiveAndEnabled = True
+transform = Supervisor (UnityEngine.Transform)
+gameObject = Supervisor (UnityEngine.GameObject)
+tag = Untagged
+name = Supervisor
+hideFlags = None
+Component FocusAgent has the following parameters:
+<RewardFunction>k__BackingField = r_0+r_1/10
+<ShowFocusedObject>k__BackingField = False
+<ScreenWidthPixel>k__BackingField = 1920
+<ScreenHightPixel>k__BackingField = 1080
+<ScreenDiagonalInch>k__BackingField = 27
+<DistanceBetweenTasksDisplays>k__BackingField = 0
+<VectorObservationSize>k__BackingField = 132
+<TaskGameObjects>k__BackingField = UnityEngine.GameObject[]
+<TaskGameObjectsProjectSettingsOrdering>k__BackingField = UnityEngine.GameObject[]
+PREPERATIONTIME = 0.135
+EXECUTIONTIMEEMMA = 0.07
+SACCADETIMEEMMA = 0.002
+<FocusableObjects>k__BackingField = 
+_supervisorAgent = 
+_encodingTimer = 
+_saccadeTimer = 0
+_encodingTime = 
+_eyeCanvases = 
+_completedTime = 
+_saccadeTime = 0
+_targetIndex = 0
+_currentFixationIndex = 0
+agentParameters = Unity.MLAgents.Agent+AgentParameters
+hasUpgradedFromAgentParameters = True
+MaxStep = 0
+DemonstrationWriters = System.Collections.Generic.HashSet`1[Unity.MLAgents.Demonstrations.DemonstrationWriter]
+sensors = 
+collectObservationsSensor = 
+RewardFunction = r_0+r_1/10
+ShowFocusedObject = False
+ScreenWidthPixel = 1920
+ScreenHightPixel = 1080
+ScreenDiagonalInch = 27
+DistanceBetweenTasksDisplays = 0
+VectorObservationSize = 132
+TaskGameObjects = UnityEngine.GameObject[]
+TaskGameObjectsProjectSettingsOrdering = UnityEngine.GameObject[]
+Tasks = ITask[]
+TasksProjectSettingsOrdering = ITask[]
+FocusableObjects = 
+StepCount = 0
+CompletedEpisodes = 0
+useGUILayout = True
+enabled = True
+isActiveAndEnabled = False
+transform = FocusAgent (UnityEngine.Transform)
+gameObject = FocusAgent (UnityEngine.GameObject)
+tag = Untagged
+name = FocusAgent
+hideFlags = None
+Start Episode 1!
+Drag: 1, ForceDifficulty: 60
+Drag: 1, ForceDifficulty: 60
+Ball is outside of the allowed area: episode ended...
+Start Episode 2!
+Drag: 1, ForceDifficulty: 60
+Drag: 1, ForceDifficulty: 60
+Unable to save timers to file C:/Users/hp/Workspace/da/Build/TrainingEnvironment/SupervisorML_Data\ML-Agents\Timers\SupervisorML_timers.json
+Memory Statistics:
+[ALLOC_TEMP_TLS] TLS Allocator
+  StackAllocators : 
+    [ALLOC_TEMP_MAIN]
+      Peak usage frame count: [1.0 KB-2.0 KB]: 41 frames, [4.0 KB-8.0 KB]: 18 frames, [2.0 MB-4.0 MB]: 1 frames
+      Initial Block Size 4.0 MB
+      Current Block Size 4.0 MB
+      Peak Allocated Bytes 2.1 MB
+      Overflow Count 0
+    [ALLOC_TEMP_Loading.AsyncRead]
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 285 B
+      Overflow Count 0
+    [ALLOC_TEMP_Loading.PreloadManager]
+      Initial Block Size 256.0 KB
+      Current Block Size 292.0 KB
+      Peak Allocated Bytes 271.4 KB
+      Overflow Count 4
+    [ALLOC_TEMP_Background Job.Worker 8]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 6]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 4.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 0]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 2.7 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 10]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 9]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 5]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 4.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 14]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 6]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 4]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 4.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 3]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 9.6 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 12]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_EnlightenWorker] x 6
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 15]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 1]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 2]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 7]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_UnityGfxDeviceWorker]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 14.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_AssetGarbageCollectorHelper] x 11
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 0 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 5]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 9]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 4.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 13]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 8]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 4.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 7]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 4.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 1]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 4.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 2]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 2.7 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 3]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 11]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 10]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 2.7 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 0]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_HIDInput]
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 10.9 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 4]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_BatchDeleteObjects]
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+[ALLOC_DEFAULT] Dual Thread Allocator
+  Peak main deferred allocation count 68
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 3.9 MB
+      Failed Allocations. Bucket layout:
+        16B: 21 Subsections = 21504 buckets. Failed count: 0
+        32B: 14 Subsections = 7168 buckets. Failed count: 9995
+        48B: 23 Subsections = 7850 buckets. Failed count: 1148
+        64B: 94 Subsections = 24064 buckets. Failed count: 952
+        80B: 23 Subsections = 4710 buckets. Failed count: 187
+        96B: 34 Subsections = 5802 buckets. Failed count: 0
+        112B: 34 Subsections = 4973 buckets. Failed count: 107
+        128B: 13 Subsections = 1664 buckets. Failed count: 2167
+    [ALLOC_DEFAULT_MAIN]
+      Peak usage frame count: [16.0 MB-32.0 MB]: 59 frames, [32.0 MB-64.0 MB]: 1 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 3
+      Peak Allocated memory 53.9 MB
+      Peak Large allocation bytes 16.1 MB
+    [ALLOC_DEFAULT_THREAD]
+      Peak usage frame count: [16.0 MB-32.0 MB]: 4 frames, [32.0 MB-64.0 MB]: 56 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 2
+      Peak Allocated memory 40.0 MB
+      Peak Large allocation bytes 16.0 MB
+[ALLOC_TEMP_JOB_1_FRAME]
+  Initial Block Size 2.0 MB
+  Used Block Count 1
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_2_FRAMES]
+  Initial Block Size 2.0 MB
+  Used Block Count 1
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_4_FRAMES (JobTemp)]
+  Initial Block Size 2.0 MB
+  Used Block Count 2
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_ASYNC (Background)]
+  Initial Block Size 1.0 MB
+  Used Block Count 3
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_GFX] Dual Thread Allocator
+  Peak main deferred allocation count 2
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 3.9 MB
+      Failed Allocations. Bucket layout:
+        16B: 21 Subsections = 21504 buckets. Failed count: 0
+        32B: 14 Subsections = 7168 buckets. Failed count: 9995
+        48B: 23 Subsections = 7850 buckets. Failed count: 1148
+        64B: 94 Subsections = 24064 buckets. Failed count: 952
+        80B: 23 Subsections = 4710 buckets. Failed count: 187
+        96B: 34 Subsections = 5802 buckets. Failed count: 0
+        112B: 34 Subsections = 4973 buckets. Failed count: 107
+        128B: 13 Subsections = 1664 buckets. Failed count: 2167
+    [ALLOC_GFX_MAIN]
+      Peak usage frame count: [64.0 KB-128.0 KB]: 59 frames, [2.0 MB-4.0 MB]: 1 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 1
+      Peak Allocated memory 2.7 MB
+      Peak Large allocation bytes 0 B
+    [ALLOC_GFX_THREAD]
+      Peak usage frame count: [0.5 MB-1.0 MB]: 3 frames, [1.0 MB-2.0 MB]: 57 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 1
+      Peak Allocated memory 1.6 MB
+      Peak Large allocation bytes 0 B
+[ALLOC_CACHEOBJECTS] Dual Thread Allocator
+  Peak main deferred allocation count 2
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 3.9 MB
+      Failed Allocations. Bucket layout:
+        16B: 21 Subsections = 21504 buckets. Failed count: 0
+        32B: 14 Subsections = 7168 buckets. Failed count: 9995
+        48B: 23 Subsections = 7850 buckets. Failed count: 1148
+        64B: 94 Subsections = 24064 buckets. Failed count: 952
+        80B: 23 Subsections = 4710 buckets. Failed count: 187
+        96B: 34 Subsections = 5802 buckets. Failed count: 0
+        112B: 34 Subsections = 4973 buckets. Failed count: 107
+        128B: 13 Subsections = 1664 buckets. Failed count: 2167
+    [ALLOC_CACHEOBJECTS_MAIN]
+      Peak usage frame count: [4.0 MB-8.0 MB]: 60 frames
+      Requested Block Size 4.0 MB
+      Peak Block count 2
+      Peak Allocated memory 6.1 MB
+      Peak Large allocation bytes 0 B
+    [ALLOC_CACHEOBJECTS_THREAD]
+      Peak usage frame count: [16.0 MB-32.0 MB]: 59 frames, [32.0 MB-64.0 MB]: 1 frames
+      Requested Block Size 4.0 MB
+      Peak Block count 7
+      Peak Allocated memory 37.0 MB
+      Peak Large allocation bytes 10.9 MB
+[ALLOC_TYPETREE] Dual Thread Allocator
+  Peak main deferred allocation count 0
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 3.9 MB
+      Failed Allocations. Bucket layout:
+        16B: 21 Subsections = 21504 buckets. Failed count: 0
+        32B: 14 Subsections = 7168 buckets. Failed count: 9995
+        48B: 23 Subsections = 7850 buckets. Failed count: 1148
+        64B: 94 Subsections = 24064 buckets. Failed count: 952
+        80B: 23 Subsections = 4710 buckets. Failed count: 187
+        96B: 34 Subsections = 5802 buckets. Failed count: 0
+        112B: 34 Subsections = 4973 buckets. Failed count: 107
+        128B: 13 Subsections = 1664 buckets. Failed count: 2167
+    [ALLOC_TYPETREE_MAIN]
+      Peak usage frame count: [16.0 KB-32.0 KB]: 60 frames
+      Requested Block Size 2.0 MB
+      Peak Block count 1
+      Peak Allocated memory 27.4 KB
+      Peak Large allocation bytes 0 B
+    [ALLOC_TYPETREE_THREAD]
+      Peak usage frame count: [16.0 KB-32.0 KB]: 60 frames
+      Requested Block Size 2.0 MB
+      Peak Block count 1
+      Peak Allocated memory 17.8 KB
+      Peak Large allocation bytes 0 B

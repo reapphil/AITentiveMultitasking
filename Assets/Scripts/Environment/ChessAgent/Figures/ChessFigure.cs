@@ -23,7 +23,7 @@ public abstract class ChessFigure : MonoBehaviour
         return new bool[8, 8];
     }
 
-    public bool AssignMove(int x, int y, ref bool[,] possibleMoves, bool assingBeatingMovements)
+    public bool AssignMove(int x, int y, ref bool[,] possibleMoves, bool assignBeatingMovements)
     {
         bool obstacleEncountered = true;
 
@@ -38,7 +38,7 @@ public abstract class ChessFigure : MonoBehaviour
             }
             else
             {
-                if (assingBeatingMovements || FigureOnTargetPosition.IsWhite != IsWhite)
+                if (assignBeatingMovements || FigureOnTargetPosition.IsWhite != IsWhite)
                 {
                     possibleMoves[x, y] = true;
                 }

@@ -1,6 +1,24 @@
 {
 	"ExperimentSettings": {
-		"mode": "GameModeSupervisor"
+		"gamemode": true,
+		"startCountDownAt": 5,
+		"aMSSupport": true
+	},
+	"hyperparameters": {
+		"version": 2,
+		"autonomous": false,
+		"supervisorModelName": "unifiedD1_ev1_session19_AOD1_DRI0.2NTTT_LOG/AUI1S5MunifiedD1_ev1_session19_AOD1_DRI0.2NTTT/AUIAUI1S5MunifiedD1_ev1_session19_AOD1_DRI0.2NTTT.asset",
+		"focusAgentModelName": "",
+		"timeScale": 1,
+		"abcSimulation": false,
+		"saveBehavioralData": false,
+		"focusActiveTask": false,
+		"hideInactiveTasks": false,
+		"useFocusAgent": false,
+		"tasks": [
+			"Ball3DAgentOptimal",
+			"Ball3DAgentOptimal"
+		]
 	},
 	"performanceMeasurementSettings": {
 		"maxNumberEpisodes": 5,
@@ -8,38 +26,29 @@
 		"fileNameForScores": "scores_experiment_kw26_final.csv",
 		"playerName": "player1"
 	},
-	"hyperparameters": {
-		"autonomous": false,
-		"decisionPeriod": 1,
-		"focusActivePlatform": false,
-		"resetPlatformToIdentity": true,
-		"agentChoice": "Ball3DAgentOptimal",
-		"trainSupervisor": false,
-		"trainBallAgent": false,
-		"supervisorModelName": "unifiedD1_ev1_session19_AOD1_DRI0.2NTTT_LOG/AUI1S5MunifiedD1_ev1_session19_AOD1_DRI0.2NTTT/AUIAUI1S5MunifiedD1_ev1_session19_AOD1_DRI0.2NTTT.asset",
-		"ballAgentModelName": "",
-		"saveBehavioralData": false,
-		"timeScale": 1,
-		"numberOfPlatforms": 2
-	},
 	"behavioralDataCollectionSettings": {
 		"measurePerformance": true
 	},
-	"supervisorSettings": {
-		"randomSupervisor": false,
-		"supervisorChoice": "SupervisorAgentV1",
+	"ball3DAgentOptimal": {
+		"autonomous": false,
+		"decisionPeriod": 1,
+		"resetPlatformToIdentity": true,
+		"ballAgentDifficulty": 170,
+		"ballAgentDifficultyDivisionFactor": 1.05,
+		"ballStartingRadius": 1.5,
+		"resetSpeed": 10,
+		"globalDrag": 0.8,
+		"useNegativeDragDifficulty": true,
+		"difficultyIncrementInterval": 5
+	},
+	"supervisorAgentV1": {
+		"rewardFunction": "t_d/(1+Exp(-Exp(2)*(t_s-0.5)))",
 		"vectorObservationSize": 18,
 		"setConstantDecisionRequestInterval": true,
 		"decisionRequestIntervalInSeconds": 0.2,
 		"decisionRequestIntervalRangeInSeconds": 0,
-		"globalDrag": 0.8,
-		"useNegativeDragDifficulty": true,
-		"difficultyIncrementInterval": 5,
-		"decisionPeriod": 5,
+		"decisionPeriod": 1,
 		"advanceNoticeInSeconds": 0.3,
-		"ballAgentDifficulty": 170,
-		"ballAgentDifficultyDivisionFactor": 1.05,
-		"ballStartingRadius": 1.5,
-		"resetSpeed": 10
+		"mode": "force"
 	}
 }

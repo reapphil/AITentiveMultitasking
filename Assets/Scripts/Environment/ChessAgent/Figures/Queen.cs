@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Queen : ChessFigure
 {
-    public override bool[,] PossibleMove(bool assingBeatingMovements = false)
+    public override bool[,] PossibleMove(bool assignBeatingMovements = false)
     {
         bool[,] possibleMoves = new bool[8, 8];
         int i, j;
@@ -17,7 +17,7 @@ public class Queen : ChessFigure
         while (true)
         {
             i--;
-            if (AssignMove(i, CurrentY, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(i, CurrentY, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         // Right
@@ -25,7 +25,7 @@ public class Queen : ChessFigure
         while (true)
         {
             i++;
-            if (AssignMove(i, CurrentY, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(i, CurrentY, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         // Forward
@@ -33,7 +33,7 @@ public class Queen : ChessFigure
         while (true)
         {
             i++;
-            if (AssignMove(CurrentX, i, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(CurrentX, i, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         // Back
@@ -41,7 +41,7 @@ public class Queen : ChessFigure
         while (true)
         {
             i--;
-            if (AssignMove(CurrentX, i, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(CurrentX, i, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         // From Bishop
@@ -53,7 +53,7 @@ public class Queen : ChessFigure
         {
             i--;
             j++;
-            if (AssignMove(i, j, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(i, j, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         // Top Right
@@ -63,7 +63,7 @@ public class Queen : ChessFigure
         {
             i++;
             j++;
-            if (AssignMove(i, j, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(i, j, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         // Bottom Left
@@ -73,7 +73,7 @@ public class Queen : ChessFigure
         {
             i--;
             j--;
-            if (AssignMove(i, j, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(i, j, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         // Bottom Right
@@ -83,7 +83,7 @@ public class Queen : ChessFigure
         {
             i++;
             j--;
-            if (AssignMove(i, j, ref possibleMoves, assingBeatingMovements)) break;
+            if (AssignMove(i, j, ref possibleMoves, assignBeatingMovements)) break;
         }
 
         return possibleMoves;

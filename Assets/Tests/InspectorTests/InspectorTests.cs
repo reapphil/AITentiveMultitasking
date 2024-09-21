@@ -13,8 +13,7 @@ public class InspectorTests
     private string _sceneBackupPath;
     private ProjectSettings _projectSettings;
     private PerformanceMeasurement _performanceMeasurement;
-    private BalancingTaskBehaviourMeasurementBehaviour _taskBehaviourMeasurement;
-    private SupervisorAgent _supervisorAgent;
+    private BehaviorMeasurementBehavior _taskBehaviourMeasurement;
 
     [SetUp]
     public void SetUp()
@@ -23,9 +22,9 @@ public class InspectorTests
         Scene scene = SceneManagement.GetScene();
 
         _projectSettings = scene.GetRootGameObjectByName("ProjectSettings").GetComponent<ProjectSettings>();
+        _projectSettings.AITentiveModels = new List<AITentiveModel>();
         _performanceMeasurement = _projectSettings.GetManagedComponentFor<PerformanceMeasurement>();
-        _taskBehaviourMeasurement = _projectSettings.GetManagedComponentFor<BalancingTaskBehaviourMeasurementBehaviour>();
-        _supervisorAgent = (SupervisorAgent)(object)_projectSettings.GetManagedComponentFor(Util.GetType("Supervisor." + _projectSettings.SupervisorChoice.ToString()));
+        _taskBehaviourMeasurement = _projectSettings.GetManagedComponentFor<BehaviorMeasurementBehavior>();
     }
 
     [TearDown]
@@ -48,7 +47,7 @@ public class InspectorTests
 
         Assert.AreEqual("Test", _performanceMeasurement.PlayerName);
         Assert.AreEqual(123, _taskBehaviourMeasurement.NumberOfTimeBins);
-        Assert.AreEqual(123, _supervisorAgent.StartCountdownAt);
+        Assert.AreEqual(123, _projectSettings.SupervisorAgent.StartCountdownAt);
     }
 
     [Test]
@@ -56,25 +55,21 @@ public class InspectorTests
     {
         List<(Component, FieldInfo)> projectAssignFields = _projectSettings.GetProjectAssignFieldsForTasks();
 
-        (Component, FieldInfo) decisionPeriod = projectAssignFields.Find(x => x.Item2.Name.Contains("DecisionPeriod"));
-        decisionPeriod.Item2.SetValue(decisionPeriod.Item1, 123);
+        projectAssignFields.FindAll(x => x.Item2.Name.Contains("IsAutonomous")).ForEach(x => x.Item2.SetValue(x.Item1, true));
+        projectAssignFields.FindAll(x => x.Item2.Name.Contains("IsTerminatingTask")).ForEach(x => x.Item2.SetValue(x.Item1, true));
         _projectSettings.UpdateSettings();
 
-        foreach (GameObject task in _supervisorAgent.TaskGameObjects)
+        foreach (GameObject task in _projectSettings.SupervisorAgent.TaskGameObjects)
         {
             ITask taskScript = task.GetComponentInChildren<ITask>();
 
             BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
-            FieldInfo field = taskScript.GetType().GetBackingFieldInHierarchy("DecisionPeriod", flags);
+            
+            FieldInfo field = taskScript.GetType().GetBackingFieldInHierarchy("IsAutonomous", flags);
+            Assert.AreEqual(true, taskScript.IsAutonomous);
 
-            if (field != null)
-            {
-                if (Attribute.IsDefined(field, typeof(ProjectAssignAttribute)))
-                {
-                    Assert.AreEqual(123, taskScript.DecisionPeriod);
-                }
-            }
-
+            field = taskScript.GetType().GetBackingFieldInHierarchy("IsTerminatingTask", flags);
+            Assert.AreEqual(true, taskScript.IsTerminatingTask);
         }
     }
 }

@@ -1,0 +1,521 @@
+fileFormatVersion: 2
+guid: edce78e67363fd64893d3acec46ecc88
+ModelImporter:
+  serializedVersion: 25
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Body
+  - first:
+      1: 100002
+    second: Exhausts
+  - first:
+      1: 100004
+    second: Front Bumper
+  - first:
+      1: 100006
+    second: Front Window
+  - first:
+      1: 100008
+    second: Hood
+  - first:
+      1: 100010
+    second: Interior
+  - first:
+      1: 100012
+    second: Left Door
+  - first:
+      1: 100014
+    second: Left Fender
+  - first:
+      1: 100016
+    second: Lights
+  - first:
+      1: 100018
+    second: //RootNode
+  - first:
+      1: 100020
+    second: Rear Bumper
+  - first:
+      1: 100022
+    second: Rear Trunk
+  - first:
+      1: 100024
+    second: Rear Window
+  - first:
+      1: 100026
+    second: Right Door
+  - first:
+      1: 100028
+    second: Right Fender
+  - first:
+      1: 100030
+    second: Steering Wheel
+  - first:
+      1: 100032
+    second: Wheel_FL
+  - first:
+      1: 100034
+    second: Wheel_FR
+  - first:
+      1: 100036
+    second: Wheel_RL
+  - first:
+      1: 100038
+    second: Wheel_RR
+  - first:
+      4: 400000
+    second: Body
+  - first:
+      4: 400002
+    second: Exhausts
+  - first:
+      4: 400004
+    second: Front Bumper
+  - first:
+      4: 400006
+    second: Front Window
+  - first:
+      4: 400008
+    second: Hood
+  - first:
+      4: 400010
+    second: Interior
+  - first:
+      4: 400012
+    second: Left Door
+  - first:
+      4: 400014
+    second: Left Fender
+  - first:
+      4: 400016
+    second: Lights
+  - first:
+      4: 400018
+    second: //RootNode
+  - first:
+      4: 400020
+    second: Rear Bumper
+  - first:
+      4: 400022
+    second: Rear Trunk
+  - first:
+      4: 400024
+    second: Rear Window
+  - first:
+      4: 400026
+    second: Right Door
+  - first:
+      4: 400028
+    second: Right Fender
+  - first:
+      4: 400030
+    second: Steering Wheel
+  - first:
+      4: 400032
+    second: Wheel_FL
+  - first:
+      4: 400034
+    second: Wheel_FR
+  - first:
+      4: 400036
+    second: Wheel_RL
+  - first:
+      4: 400038
+    second: Wheel_RR
+  - first:
+      21: 2100000
+    second: Body
+  - first:
+      21: 2100002
+    second: Fender Inside
+  - first:
+      21: 2100004
+    second: Chrome
+  - first:
+      21: 2100006
+    second: Badge
+  - first:
+      21: 2100008
+    second: Grill
+  - first:
+      21: 2100010
+    second: Lights Inside
+  - first:
+      21: 2100012
+    second: Mirrors
+  - first:
+      21: 2100014
+    second: Exhaust
+  - first:
+      21: 2100016
+    second: Glass
+  - first:
+      21: 2100018
+    second: Plate1
+  - first:
+      21: 2100020
+    second: Plate2
+  - first:
+      21: 2100022
+    second: Fod Lights
+  - first:
+      21: 2100024
+    second: Interior
+  - first:
+      21: 2100026
+    second: Brake Lights
+  - first:
+      21: 2100028
+    second: Head Lights
+  - first:
+      21: 2100030
+    second: Rims
+  - first:
+      21: 2100032
+    second: Tire
+  - first:
+      23: 2300000
+    second: Body
+  - first:
+      23: 2300002
+    second: Exhausts
+  - first:
+      23: 2300004
+    second: Front Bumper
+  - first:
+      23: 2300006
+    second: Front Window
+  - first:
+      23: 2300008
+    second: Hood
+  - first:
+      23: 2300010
+    second: Interior
+  - first:
+      23: 2300012
+    second: Left Door
+  - first:
+      23: 2300014
+    second: Left Fender
+  - first:
+      23: 2300016
+    second: Lights
+  - first:
+      23: 2300018
+    second: Rear Bumper
+  - first:
+      23: 2300020
+    second: Rear Trunk
+  - first:
+      23: 2300022
+    second: Rear Window
+  - first:
+      23: 2300024
+    second: Right Door
+  - first:
+      23: 2300026
+    second: Right Fender
+  - first:
+      23: 2300028
+    second: Steering Wheel
+  - first:
+      23: 2300030
+    second: Wheel_FL
+  - first:
+      23: 2300032
+    second: Wheel_FR
+  - first:
+      23: 2300034
+    second: Wheel_RL
+  - first:
+      23: 2300036
+    second: Wheel_RR
+  - first:
+      33: 3300000
+    second: Body
+  - first:
+      33: 3300002
+    second: Exhausts
+  - first:
+      33: 3300004
+    second: Front Bumper
+  - first:
+      33: 3300006
+    second: Front Window
+  - first:
+      33: 3300008
+    second: Hood
+  - first:
+      33: 3300010
+    second: Interior
+  - first:
+      33: 3300012
+    second: Left Door
+  - first:
+      33: 3300014
+    second: Left Fender
+  - first:
+      33: 3300016
+    second: Lights
+  - first:
+      33: 3300018
+    second: Rear Bumper
+  - first:
+      33: 3300020
+    second: Rear Trunk
+  - first:
+      33: 3300022
+    second: Rear Window
+  - first:
+      33: 3300024
+    second: Right Door
+  - first:
+      33: 3300026
+    second: Right Fender
+  - first:
+      33: 3300028
+    second: Steering Wheel
+  - first:
+      33: 3300030
+    second: Wheel_FL
+  - first:
+      33: 3300032
+    second: Wheel_FR
+  - first:
+      33: 3300034
+    second: Wheel_RL
+  - first:
+      33: 3300036
+    second: Wheel_RR
+  - first:
+      43: 4300000
+    second: Body
+  - first:
+      43: 4300002
+    second: Exhausts
+  - first:
+      43: 4300004
+    second: Front Bumper
+  - first:
+      43: 4300006
+    second: Front Window
+  - first:
+      43: 4300008
+    second: Hood
+  - first:
+      43: 4300010
+    second: Interior
+  - first:
+      43: 4300012
+    second: Left Door
+  - first:
+      43: 4300014
+    second: Left Fender
+  - first:
+      43: 4300016
+    second: Lights
+  - first:
+      43: 4300018
+    second: Rear Bumper
+  - first:
+      43: 4300020
+    second: Rear Trunk
+  - first:
+      43: 4300022
+    second: Rear Window
+  - first:
+      43: 4300024
+    second: Right Door
+  - first:
+      43: 4300026
+    second: Right Fender
+  - first:
+      43: 4300028
+    second: Steering Wheel
+  - first:
+      43: 4300030
+    second: Wheel_FL
+  - first:
+      43: 4300032
+    second: Wheel_RL
+  - first:
+      43: 4300034
+    second: Wheel_RR
+  - first:
+      43: 4300036
+    second: Wheel_FR
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Badge
+    second: {fileID: 2100000, guid: 4482ad8c5065a8041a71f59eddce0b08, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body
+    second: {fileID: 2100000, guid: 75ac4fbe40bbdf448938845803d89da8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brake Lights
+    second: {fileID: 2100000, guid: 63b06696dc0a57340a2a48050ab3c318, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chrome
+    second: {fileID: 2100000, guid: b726d68f0acde1c4dab29398fd1d81c9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Exhaust
+    second: {fileID: 2100000, guid: 59e161090bc690441adc2fad12492e4a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fender Inside
+    second: {fileID: 2100000, guid: 44ab6395c487bce41b0f089d69b96f75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fod Lights
+    second: {fileID: 2100000, guid: f298fce561c787b489b11e6f28246737, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: d30311b41123dee41bf30e6465299834, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grill
+    second: {fileID: 2100000, guid: 40ea6be72d28ecc46a9e3b3ee441b5ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Head Lights
+    second: {fileID: 2100000, guid: d61e2fd6ffb69344aa109178771b6b19, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Interior
+    second: {fileID: 2100000, guid: cb901bd684fa86e4db57fc42acd5f524, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lights Inside
+    second: {fileID: 2100000, guid: a566ea9ceb3fcf04698e094c54cd9dfe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mirrors
+    second: {fileID: 2100000, guid: 7a176f9a9a69eea48bd7d9a4004422e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plate1
+    second: {fileID: 2100000, guid: 1be04fbf1a2d3cf44a01ec297050082c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plate2
+    second: {fileID: 2100000, guid: 738abf7f04c41a940b723b8c6db1d908, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rims
+    second: {fileID: 2100000, guid: 2dc4152649e4052429af21017bf2c6ee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tire
+    second: {fileID: 2100000, guid: 32ee3876e6b89e14e999b9f49f9cf891, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.3
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 0.3
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

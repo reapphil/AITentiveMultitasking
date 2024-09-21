@@ -44,9 +44,9 @@ namespace Supervisor
             //_timeSinceLastSwitch = 0; <-- diff
         }
 
-        protected override float GetReward()
+        protected override float DequeueReward()
         {
-            float reward = (float)((DecisionRequestIntervalInSeconds / (1 + Math.Exp(-(Math.Exp(2) * (_timeSinceLastSwitch - 0.5))))));
+            float reward = (float)((DecisionRequestIntervalInSeconds / (1 + Math.Exp(-(Math.Exp(2) * (TimeSinceLastSwitch - 0.5))))));
 
             return reward;
         }
@@ -65,9 +65,9 @@ namespace Supervisor
 
         protected override void SwitchingAction(int activeInstance)
         {
-            _activeInstance = activeInstance;
+            _activeInstanceActionLevel = activeInstance;
 
-            if (_previousActive != _activeInstance)
+            if (_previousActiveActionLevel != _activeInstanceActionLevel)
             {
                 if (!(GetComponent<Unity.MLAgents.Policies.BehaviorParameters>().BehaviorType == Unity.MLAgents.Policies.BehaviorType.HeuristicOnly))
                 {
@@ -80,23 +80,23 @@ namespace Supervisor
                 if (AdvanceNoticeInSeconds > 0)
                 {
                     _advanceNoticeTimer = AdvanceNoticeInSeconds;
-                    StartCoroutine(DelayedAgentSwitchTo(AdvanceNoticeInSeconds, _activeInstance));
+                    StartCoroutine(DelayedAgentSwitchTo(AdvanceNoticeInSeconds, _activeInstanceActionLevel));
                 }
                 else
                 {
-                    SwitchAgentTo(_activeInstance);
+                    SwitchAgentTo(_activeInstanceActionLevel);
                 }
 
                 _switchCount += 1; //<-- diff
                 SetTimeBetweenSwitches(); //<-- diff
             }
 
-            _previousActive = activeInstance;
+            _previousActiveActionLevel = activeInstance;
         }
 
         protected override void NotificationAction(int targetInstance)
         {
-            if (_previousActive != targetInstance)
+            if (_previousActiveActionLevel != targetInstance)
             {
                 if (!_isUserInput)
                 {
@@ -117,8 +117,8 @@ namespace Supervisor
                 {
                     _isUserInput = false;
                     GetComponent<Unity.MLAgents.Policies.BehaviorParameters>().BehaviorType = Unity.MLAgents.Policies.BehaviorType.InferenceOnly;
-                    _activeInstance = _previousActive = targetInstance;
-                    SwitchAgentTo(_activeInstance);
+                    _activeInstanceActionLevel = _previousActiveActionLevel = targetInstance;
+                    SwitchAgentTo(_activeInstanceActionLevel);
                     SetTimeBetweenSwitches(); //<-- diff
                 }
             }
@@ -129,7 +129,7 @@ namespace Supervisor
         {
             DateTime now = DateTime.Now;
             _agentSwitchTime = now;
-            _timeSinceLastSwitch = 0;
+            TimeSinceLastSwitch = 0;
         }
     }
 }

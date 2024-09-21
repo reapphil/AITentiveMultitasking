@@ -9,7 +9,8 @@
         "Environment",
         "Unity.ML-Agents",
         "Util",
-        "Editor"
+        "Editor",
+        "ProjectSettings"
     ],
     "includePlatforms": [
         "Editor"

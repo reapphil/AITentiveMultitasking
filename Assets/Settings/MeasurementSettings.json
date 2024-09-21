@@ -1,0 +1,39 @@
+{
+  "BallStateInformation, Environment, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null": {
+    "DragValue": 0.0,
+    "PlatformAngleX": 0.0,
+    "PlatformAngleY": 0.0,
+    "PlatformAngleZ": 0.0,
+    "BallVelocityX": 0.0,
+    "BallVelocityY": 0.0,
+    "BallVelocityZ": 0.0,
+    "BallPositionX": 0.0,
+    "BallPositionY": 0.0,
+    "BallPositionZ": 0.0,
+    "version": 0,
+    "NumberOfDistanceBins_ballPosition": 12,
+    "NumberOfDistanceBins_velocity": 12,
+    "NumberOfDistanceBins_angle": 12,
+    "NumberOfAngleBinsPerAxis": 5,
+    "NumberOfAreaBinsPerDirection": 15,
+    "NumberOfBallVelocityBinsPerAxis": 6,
+    "NumberOfActionBinsPerAxis": 5,
+    "BehaviorDimensions": [
+      225,
+      125,
+      216
+    ],
+    "PerformedActions": null,
+    "ReactionTimes": null,
+    "ActionRangeMax": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "ActionRangeMin": {
+      "x": -1.0,
+      "y": 0.0,
+      "z": -1.0
+    }
+  }
+}

@@ -1,76 +1,19 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
-
-
-public static class SettingsLoader
-{
-    public static Dictionary<Type, ISettings> LoadSettings(string path)
-    {
-        StreamReader reader = new StreamReader(path);
-        string json = reader.ReadToEnd();
-
-        var settingsDict = JsonConvert.DeserializeObject<Dictionary<string, JObject>>(json);
-        var resultDict = new Dictionary<Type, ISettings>(new TypeEqualityComparer());
-
-        foreach (var kvp in settingsDict)
-        {
-            Type type = Type.GetType(kvp.Key.FirstCharToUpper());
-
-            foreach (ISettings setting in ConfigVersioning.UnifySettings(kvp.Value.ToString(), type))
-            {
-                if(resultDict.ContainsKey(setting.GetType()))
-                {
-                    resultDict[setting.GetType()] = MergeSettings(resultDict[setting.GetType()], setting);
-                }
-                else
-                {
-                    resultDict.Add(setting.GetType(), setting);
-                }
-            }
-        }
-
-        return resultDict;
-    }
-
-
-    private static ISettings MergeSettings(ISettings setting1, ISettings settings2)
-    {
-        Type type = setting1.GetType();
-
-        const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
-        MemberInfo[] members = type.GetMemberInfos(bindingFlags);
-
-        foreach (MemberInfo memberInfo in members)
-        {
-            object value = memberInfo.GetValue(settings2);
-
-            if (value != null && !value.Equals(Util.GetDefault(value.GetType())))
-            {
-                memberInfo.SetValue(setting1, value);
-            }
-        }
-
-        return setting1;
-    }
-}
 
 
 [Serializable]
 public class HyperparametersBase : ISettings
 {
     public int version { get; set; }
-    public bool autonomous;
-    public string supervisorModelName;
-    public float timeScale;
-    public bool abcSimulation;
+    public bool? autonomous;
+    public string? supervisorModelName;
+    public float? timeScale;
+    public bool? abcSimulation;
     public string focusAgentModelName;
-    public bool saveBehavioralData;
+    public bool? saveBehavioralData;
 
     public HyperparametersBase(HyperparametersBase hyperparametersBase)
     {
@@ -91,14 +34,14 @@ public class HyperparametersBase : ISettings
 [Serializable]
 public class HyperparametersV0 : HyperparametersBase
 {
-    public int decisionPeriod;
-    public bool focusActivePlatform;
-    public bool hideInactivePlatform;
-    public bool resetPlatformToIdentity;
-    public int numberOfPlatforms;
+    public int? decisionPeriod;
+    public bool? focusActivePlatform;
+    public bool? hideInactivePlatform;
+    public bool? resetPlatformToIdentity;
+    public int? numberOfPlatforms;
     public string agentChoice;
-    public bool trainBallAgent;
-    public bool trainSupervisor;
+    public bool? trainBallAgent;
+    public bool? trainSupervisor;
     public string ballAgentModelName;
 
     public HyperparametersV0() { }
@@ -111,9 +54,9 @@ public class HyperparametersV0 : HyperparametersBase
 [Serializable]
 public class Hyperparameters : HyperparametersBase
 {
-    public bool focusActiveTask;
-    public bool hideInactiveTasks;
-    public bool useFocusAgent;
+    public bool? focusActiveTask;
+    public bool? hideInactiveTasks;
+    public bool? useFocusAgent;
     public string[] tasks;
     public Dictionary<string, string> taskModels;
 
@@ -122,25 +65,57 @@ public class Hyperparameters : HyperparametersBase
     public Hyperparameters(HyperparametersBase source) : base(source) { }
 }
 
-
-
+/// <summary>
+/// Contains settings that should only be allowed when loaded in the editor but not for evaluation or training.
+/// </summary>
 [Serializable]
 public class ExperimentSettings : ISettings
 {
     public int version { get; set; }
-    public string mode;
+    public bool? gameMode;
+    public bool? aMSSupport;
+    public int? startCountdownAt;
 
     public ExperimentSettings() { }
 }
 
+
+[Serializable]
+public class JsonSettings : ISettings
+{
+    public int version { get; set; }
+    public Type type;
+    public Dictionary<string, string> members;
+
+    public JsonSettings(int version, Type type, Dictionary<string, string> fields)
+    {
+        this.version = version;
+        this.type = type;
+        this.members = fields;
+    }
+}
+
+
+[Serializable]
+public class JsonAgentSettings : JsonSettings, IAgentSettings
+{
+    public int? decisionPeriod { get; set; }
+    public string baseClassName { get; set; }
+
+    public JsonAgentSettings(int version, Type type, Dictionary<string, string> fields, int? decisionPeriod) : base(version, type, fields)
+    {
+        this.decisionPeriod = decisionPeriod;
+        this.baseClassName = type.Name;
+    }
+}
 
 
 [Serializable]
 public class PerformanceMeasurementSettings : ISettings
 {
     public int version { get; set; }
-    public int maxNumberEpisodes;
-    public int minimumScoreForMeasurement;
+    public int? maxNumberEpisodes;
+    public int? minimumScoreForMeasurement;
     public string fileNameForScores;
     public string playerName;
 
@@ -149,23 +124,27 @@ public class PerformanceMeasurementSettings : ISettings
 
 
 
-public class SupervisorSettingsBase : ISettings
+public class SupervisorSettingsBase : IAgentSettings
 {
     public int version { get; set; }
-    public bool randomSupervisor;
+    public string mode;
+    public bool? randomSupervisor;
     public string supervisorChoice;
-    public int vectorObservationSize;
-    public bool setConstantDecisionRequestInterval;
-    public float decisionRequestIntervalInSeconds;
-    public float decisionRequestIntervalRangeInSeconds;
-    public int difficultyIncrementInterval;
-    public int decisionPeriod;
-    public float advanceNoticeInSeconds;
+    public int? vectorObservationSize;
+    public bool? setConstantDecisionRequestInterval;
+    public float? decisionRequestIntervalInSeconds;
+    public float? decisionRequestIntervalRangeInSeconds;
+    public int? difficultyIncrementInterval;
+    public int? decisionPeriod { get; set; }
+    public string baseClassName { get; set; }
+
+    public float? advanceNoticeInSeconds;
 
     public SupervisorSettingsBase() { }
 
     public SupervisorSettingsBase(SupervisorSettingsBase supervisorSettingsBase)
     {
+        this.mode = supervisorSettingsBase.mode;
         this.randomSupervisor = supervisorSettingsBase.randomSupervisor;
         this.supervisorChoice = supervisorSettingsBase.supervisorChoice;
         this.vectorObservationSize = supervisorSettingsBase.vectorObservationSize;
@@ -175,6 +154,7 @@ public class SupervisorSettingsBase : ISettings
         this.difficultyIncrementInterval = supervisorSettingsBase.difficultyIncrementInterval;
         this.decisionPeriod = supervisorSettingsBase.decisionPeriod;
         this.advanceNoticeInSeconds = supervisorSettingsBase.advanceNoticeInSeconds;
+        this.baseClassName = "SupervisorAgent";
     }
 
     public SupervisorSettingsBase(bool randomSupervisor, bool setConstantDecisionRequestInterval, float decisionRequestIntervalInSeconds, float decisionRequestIntervalRangeInSeconds, int difficultyIncrementInterval, int decisionPeriod, float advanceNoticeInSeconds, string supervisorChoice = null)
@@ -187,6 +167,7 @@ public class SupervisorSettingsBase : ISettings
         this.difficultyIncrementInterval = difficultyIncrementInterval;
         this.decisionPeriod = decisionPeriod;
         this.advanceNoticeInSeconds = advanceNoticeInSeconds;
+        this.baseClassName = "SupervisorAgent";
     }
 }
 
@@ -195,12 +176,12 @@ public class SupervisorSettingsBase : ISettings
 [Serializable]
 public class SupervisorSettingsV0 : SupervisorSettingsBase
 {
-    public float globalDrag;
-    public bool useNegativeDragDifficulty;
-    public int ballAgentDifficulty;
-    public double ballAgentDifficultyDivisionFactor;
-    public float ballStartingRadius;
-    public float resetSpeed;
+    public float? globalDrag;
+    public bool? useNegativeDragDifficulty;
+    public int? ballAgentDifficulty;
+    public double? ballAgentDifficultyDivisionFactor;
+    public float? ballStartingRadius;
+    public float? resetSpeed;
 
     public SupervisorSettingsV0() { }
 
@@ -227,28 +208,29 @@ public class SupervisorSettingsV0 : SupervisorSettingsBase
 
 
 [Serializable]
-public class SupervisorSettings : SupervisorSettingsBase 
+public class SupervisorSettings : SupervisorSettingsBase
 {
     public SupervisorSettings() { }
 
     public SupervisorSettings(SupervisorSettingsBase source) : base(source) { }
 
-    public SupervisorSettings(bool randomSupervisor, bool setConstantDecisionRequestInterval, float decisionRequestIntervalInSeconds, float decisionRequestIntervalRangeInSeconds, int difficultyIncrementInterval, int decisionPeriod, float advanceNoticeInSeconds, string supervisorChoice = null) : base(randomSupervisor, setConstantDecisionRequestInterval, decisionRequestIntervalInSeconds, decisionRequestIntervalRangeInSeconds, difficultyIncrementInterval, decisionPeriod, advanceNoticeInSeconds, supervisorChoice){    }
+    public SupervisorSettings(bool randomSupervisor, bool setConstantDecisionRequestInterval, float decisionRequestIntervalInSeconds, float decisionRequestIntervalRangeInSeconds, int difficultyIncrementInterval, int decisionPeriod, float advanceNoticeInSeconds, string supervisorChoice = null) : base(randomSupervisor, setConstantDecisionRequestInterval, decisionRequestIntervalInSeconds, decisionRequestIntervalRangeInSeconds, difficultyIncrementInterval, decisionPeriod, advanceNoticeInSeconds, supervisorChoice) { }
 }
 
 
 
-public class BalancingTaskSettings : ISettings, ITaskSettings
+public class BalancingTaskSettings : IAgentSettings
 {
     public int version { get; set; }
-    public float globalDrag;
-    public bool useNegativeDragDifficulty;
-    public int ballAgentDifficulty;
-    public double ballAgentDifficultyDivisionFactor;
-    public float ballStartingRadius;
-    public float resetSpeed;
-    public bool resetPlatformToIdentity;
-    public int decisionPeriod { get; set; }
+    public float? globalDrag;
+    public bool? useNegativeDragDifficulty;
+    public int? ballAgentDifficulty;
+    public double? ballAgentDifficultyDivisionFactor;
+    public float? ballStartingRadius;
+    public float? resetSpeed;
+    public bool? resetPlatformToIdentity;
+    public bool? isTerminatingTask;
+    public int? decisionPeriod { get; set; }
 
     public string baseClassName { get; set; } = "BallAgent";
 
@@ -286,16 +268,16 @@ public class BalancingTaskSettings : ISettings, ITaskSettings
 public class Ball3DAgentHumanCognitionSettings : ISettings
 {
     public int version { get; set; }
-    public int numberOfBins;
-    public bool showBeliefState;
-    public int numberOfSamples;
-    public double sigma;
-    public double sigmaMean;
-    public float updatePeriode;
-    public double observationProbability;
-    public double constantReactionTime;
-    public float oldDistributionPersistenceTime;
-    public bool fullVision;
+    public int? numberOfBins;
+    public bool? showBeliefState;
+    public int? numberOfSamples;
+    public double? sigma;
+    public double? sigmaMean;
+    public float? updatePeriode;
+    public double? observationProbability;
+    public double? constantReactionTime;
+    public float? oldDistributionPersistenceTime;
+    public bool? fullVision;
 
     public Ball3DAgentHumanCognitionSettings() { }
 
@@ -319,7 +301,7 @@ public class Ball3DAgentHumanCognitionSettings : ISettings
 
 public class Ball3DAgentHumanCognitionSettingsV0 : Ball3DAgentHumanCognitionSettings
 {
-    public bool useFocusAgent;
+    public bool? useFocusAgent;
 
     public Ball3DAgentHumanCognitionSettingsV0() { }
 
@@ -332,21 +314,22 @@ public class Ball3DAgentHumanCognitionSettingsV0 : Ball3DAgentHumanCognitionSett
 public class BehavioralDataCollectionSettings : ISettings
 {
     public int version { get; set; }
-    public bool measurePerformance;
-    public bool collectDataForComparison;
-    public bool updateExistingModelBehavior;
-    public bool isRawDataCollected;
+    public bool? measurePerformance;
+    public bool? collectDataForComparison;
+    public bool? updateExistingModelBehavior;
+    public bool? isRawDataCollected;
     public string comparisonFileName;
-    public int comparisonTimeLimit;
-    public int maxNumberOfActions;
+    public int? comparisonTimeLimit;
+    public int? maxNumberOfActions;
     public string fileNameForBehavioralData;
-    public int numberOfAreaBins_BehavioralData;
-    public int numberOfBallVelocityBinsPerAxis_BehavioralData;
-    public int numberOfAngleBinsPerAxis;
-    public int numberOfDistanceBins;
-    public int numberOfDistanceBins_velocity;
-    public int numberOfActionBinsPerAxis;
-    public int numberOfTimeBins;  //is ignored if supervisor is not random agent
+    public int? numberOfAreaBins_BehavioralData;
+    public int? numberOfBallVelocityBinsPerAxis_BehavioralData;
+    public int? numberOfAngleBinsPerAxis;
+    public int? numberOfDistanceBins;
+    public int? numberOfDistanceBins_velocity;
+    public int? numberOfDistanceBins_angle;
+    public int? numberOfActionBinsPerAxis;
+    public int? numberOfTimeBins;  //is ignored if supervisor is not random agent
 
     public BehavioralDataCollectionSettings() { }
 }

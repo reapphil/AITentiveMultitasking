@@ -6,12 +6,17 @@ using System;
 using Random = UnityEngine.Random;
 using UnityEngine.Assertions;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITask
 {
-    [field: SerializeField, Tooltip("If autonomous is True than there is no supervised control. The agent continuously control the platform and does not give control to the " +
-    "supervisor."), ProjectAssign(Header = "Balancing Task")]
+    [field: SerializeField, Tooltip("If autonomous is True than there is no supervised control. The agent continuously control the platform and does " +
+        "not give control to the supervisor."), ProjectAssign(Header = "Balancing Task")]
     virtual public bool IsAutonomous { get; set; } = false;
+
+    [field: SerializeField, Tooltip("Determines if the supervisor should end its episode if the episode of the task ends"), ProjectAssign]
+    public bool IsTerminatingTask { get; set; } = false;
 
     [field: SerializeField, Tooltip("Resets rotation of platform to its identity."), ProjectAssign]
     public bool ResetPlatformToIdentity { get; set; }
@@ -25,24 +30,26 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
     [field: SerializeField, Tooltip("Radius of the random starting ball position."), ProjectAssign]
     public float BallStartingRadius { get; set; } = 1f;
 
-    [field: SerializeField, Tooltip("The frequency with which the agent requests a decision. A DecisionPeriod of 5 means that the Agent will request a decision every 5 Academy steps."), ProjectAssign]
+    [field: SerializeField, Tooltip("The frequency with which the agent requests a decision. A DecisionPeriod of 5 means that the Agent will request" +
+        " a decision every 5 Academy steps."), ProjectAssign]
     public int DecisionPeriod { get; set; } = 5;
 
     [field: SerializeField, Header("Specific to Ball3D")]
     public GameObject Ball { get; set; }
 
-    [field: SerializeField, Tooltip("If true the drag will get negative and therefore the velocity of the Ball is accelerated. Harder _dragDifficulty compared to only " +
-    "positive drag value."), ProjectAssign]
+    [field: SerializeField, Tooltip("If true the drag will get negative and therefore the velocity of the Ball is accelerated. Harder _dragDifficulty" +
+        " compared to only positive drag value."), ProjectAssign]
     public bool UseNegativeDragDifficulty { get; set; }
 
     [field: SerializeField, Tooltip("Starting value of force added to ball if it fell below a certain threshold."), ProjectAssign]
     public int BallAgentDifficulty { get; set; } = 170;
 
-    [field: SerializeField, Tooltip("Division factor of force during difficulty update. _dragDifficulty should be divided such that the incrementation of the drag is considered."), ProjectAssign]
+    [field: SerializeField, Tooltip("Division factor of force during difficulty update. _dragDifficulty should be divided such that the " +
+        "incrementation of the drag is considered."), ProjectAssign]
     public double BallAgentDifficultyDivisionFactor { get; set; } = 1.05;
 
-    [field: SerializeField, Tooltip("Initial drag value of the Ball, a high value means a easy _dragDifficulty. Drag can be used to slow down an object. The higher the drag " +
-    "the more the object slows down."), ProjectAssign]
+    [field: SerializeField, Tooltip("Initial drag value of the Ball, a high value means a easy _dragDifficulty. Drag can be used to slow down an " +
+        "object. The higher the drag the more the object slows down."), ProjectAssign]
     public float GlobalDrag { get; set; }
 
     public static Vector3 BallStartingPosition { get; protected set; }
@@ -51,14 +58,52 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
 
     virtual public bool IsActive { get; set; }
 
+    public Queue<float> TaskRewardForSupervisorAgent { get; private set; }
+
+    public Queue<float> TaskRewardForFocusAgent { get; private set; }
+
+    public IStateInformation StateInformation { 
+        get 
+        {
+            _ballStateInformation ??= new BallStateInformation();
+
+            _ballStateInformation.DragValue = GetBallDrag();
+            _ballStateInformation.PlatformAngleX = GetPlatformAngle().x;
+            _ballStateInformation.PlatformAngleY = GetPlatformAngle().y;
+            _ballStateInformation.PlatformAngleZ = GetPlatformAngle().z;
+            _ballStateInformation.BallVelocityX = GetBallVelocity().x;
+            _ballStateInformation.BallVelocityY = GetBallVelocity().y;
+            _ballStateInformation.BallVelocityZ = GetBallVelocity().z;
+            _ballStateInformation.BallPositionX = GetBallLocalPosition().x;
+            _ballStateInformation.BallPositionY = GetBallLocalPosition().y;
+            _ballStateInformation.BallPositionZ = GetBallLocalPosition().z;
+                
+
+            return _ballStateInformation;
+        }
+        set
+        {
+            _ballStateInformation = value as BallStateInformation;
+        }
+    }
+
+    public Dictionary<string, double> Performance {
+        get 
+        {
+            return new Dictionary<string, double>
+            {
+                { "AverageDistanceToCenter", _countBallCenterDistance.Item2 / _countBallCenterDistance.Item1 }
+            };
+        }
+    
+    }
+
 
     protected Supervisor.ISupervisorAgent _supervisorAgent;
 
     protected Rigidbody _ballRb;
 
     protected EnvironmentParameters _resetParams;
-
-    protected double _timeSinceLastSwitch;
 
 
     private bool _isFocused;
@@ -69,13 +114,21 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
 
     private MeshRenderer _cubeMeshRenderer;
 
+    private (int, float) _countBallCenterDistance;
 
-    public delegate void OnActionReceivedAction(ActionBuffers actionBuffers, BallAgent ballAgent, double timeSinceLastSwitch=-1);
-    public static event OnActionReceivedAction OnAction;
+    private BallStateInformation _ballStateInformation;
+
+    private Vector2 _currentInput;
+
 
     public delegate void OnCollectObservations(VectorSensor sensor, BallAgent ballAgent);
     public static event OnCollectObservations OnCollectObservationsAction;
 
+
+    public void OnMove(InputValue value)
+    {
+        _currentInput = value.Get<Vector2>();
+    }
 
     //Initializes the Ball object based on the default values set in SetBall()
     public override void Initialize()
@@ -87,6 +140,11 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
 
         _resetParams = Academy.Instance.EnvironmentParameters;
         _supervisorAgent = gameObject.transform.root.GetComponent<Supervisor.SupervisorAgent>();
+
+        BallStateInformation.PlatformRadius = GetScale() / 2f;
+
+        TaskRewardForSupervisorAgent = new();
+        TaskRewardForFocusAgent = new();
 
         SetResetParameters();
     }
@@ -102,14 +160,14 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
             gameObject.transform.Rotate(new Vector3(1, 0, 0), Random.Range(-10f, 10f));
             gameObject.transform.Rotate(new Vector3(0, 0, 1), Random.Range(-10f, 10f));
             _ballRb.velocity = new Vector3(0f, 0f, 0f);
-            Ball.transform.position = BallStartingPosition;
+            Ball.transform.localPosition = BallStartingPosition;
         }
     }
 
     //must be called in inherited classes. Actual functionality must be implemented in inherited classes.
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        OnAction?.Invoke(actionBuffers, this, _timeSinceLastSwitch);
+        ITask.InvokeOnAction(actionBuffers, this);
         //Debug.Log(string.Format("actionBuffers.ContinuousActions[0]: {0}\t actionBuffers.ContinuousActions[1]: {1}", actionBuffers.ContinuousActions[0], actionBuffers.ContinuousActions[1]));
     }
 
@@ -117,13 +175,15 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
     public override void CollectObservations(VectorSensor sensor)
     {
         OnCollectObservationsAction?.Invoke(sensor, this);
+        CollectBallDistanceToCenter();
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continuousActionsOut = actionsOut.ContinuousActions;
-        continuousActionsOut[0] = -Input.GetAxis("Horizontal");
-        continuousActionsOut[1] = Input.GetAxis("Vertical");
+
+        continuousActionsOut[0] = -_currentInput.x;
+        continuousActionsOut[1] = _currentInput.y;
     }
 
     public GameObject GetGameObject()
@@ -168,17 +228,17 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
 
     public Vector3 GetBallVelocity()
     {
-        return _ballRb.velocity;
+        return _ballRb != null ? _ballRb.velocity : default;
     }
 
     public Vector3 GetAngularVelocity()
     {
-        return _ballRb.angularVelocity;
+        return _ballRb != null ? _ballRb.angularVelocity : default;
     }
 
     public float GetBallDrag()
     {
-        return _ballRb.drag;
+        return _ballRb != null ? _ballRb.drag : default;
     }
 
     public Vector3 GetObservedBallPosition()
@@ -201,14 +261,12 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
 
     public float GetMass()
     {
-        return _ballRb.mass;
+        return _ballRb != null ? _ballRb.mass : default;
     }
 
     public float GetBallDistanceToCenter()
     {
-        var curDist = Vector3.Distance(Ball.transform.localPosition, gameObject.transform.localPosition);
-        //divided by the radius of the platform (which is 5)
-        return curDist / (GetScale()/2);
+        return Vector3.Distance(GetBallGlobalPosition(), GetPlatformGlobalPosition());
     }
 
     public Vector3 GetBallDistanceToCenterVector3()
@@ -218,12 +276,7 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
 
     public float GetAngularDrag()
     {
-        return _ballRb.angularDrag;
-    }
-
-    public float GetDrag()
-    {
-        return _ballRb.drag;
+        return _ballRb != null ? _ballRb.angularDrag : default;
     }
 
     public void UpdateDifficultyLevel()
@@ -251,17 +304,23 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
         }
     }
 
-    public void AddObservationsToSensor(VectorSensor sensor)
+    public void AddTrueObservationsToSensor(VectorSensor sensor)
     {
         sensor.AddObservation(GetPlatformAngle().z);
         sensor.AddObservation(GetPlatformAngle().x);
         sensor.AddObservation(GetBallDistanceToCenterVector3());
         sensor.AddObservation(GetBallVelocity());
+        sensor.AddObservation(_ballRb.drag);
     }
 
-    public virtual void AddPerceivedObservationsToSensor(VectorSensor sensor)
+    public virtual void AddBeliefObservationsToSensor(VectorSensor sensor)
     {
-        AddObservationsToSensor(sensor);
+        AddTrueObservationsToSensor(sensor);
+    }
+
+    public void ResetPerformance()
+    {
+        _countBallCenterDistance = (0, 0f);
     }
 
 
@@ -308,18 +367,6 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
         }
     }
 
-    protected void UpdateTimeSinceLastSwitch()
-    {
-        if (IsActive)
-        {
-            _timeSinceLastSwitch += Time.fixedDeltaTime;
-        }
-        else
-        {
-            _timeSinceLastSwitch = 0;
-        }
-    }
-
     //Returns true in case the Ball is outside of the in the if-condition defined area
     protected bool HasLost()
     {
@@ -341,7 +388,14 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
     {
         if (HasLost())
         {
-            ITask.InvokeTaskCompletion();
+            if (IsTerminatingTask)
+            {
+                ITask.InvokeTermination();
+            }
+            else
+            {
+                EndEpisode();
+            }
         }
     }
 
@@ -355,8 +409,6 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
 
         _ballRb.velocity = new Vector3(0f, 0f, 0f);
         _ballRb.drag = GlobalDrag;
-
-        _timeSinceLastSwitch = 0;
 
         ForceDifficulty = BallAgentDifficulty;
     }
@@ -376,14 +428,9 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
     private void FixedUpdate()
     {
         AddForceToBall();
-        UpdateTimeSinceLastSwitch();
         PropagateTaskCompletion();
 
-        if (IsAutonomous)
-        {
-            RequestSimpleDecision();
-        }
-        else if (IsActive)
+        if (IsAutonomous || IsActive)
         {
             RequestSimpleDecision();
         }
@@ -440,5 +487,13 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
     private void CatchEndEpisode(object sender, bool aborted)
     {
         EndEpisode();
+    }
+
+    /// <summary>
+    /// Writes (Counter, Distance to Center) to CountBallCenterDistance. This information is used to calculate the average distance of the Ball to the center of the platform.
+    /// </summary>
+    private void CollectBallDistanceToCenter()
+    {
+        _countBallCenterDistance = (_countBallCenterDistance.Item1 + 1, _countBallCenterDistance.Item2 + GetBallDistanceToCenter());
     }
 }

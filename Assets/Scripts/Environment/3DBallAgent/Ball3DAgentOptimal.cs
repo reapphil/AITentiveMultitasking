@@ -33,6 +33,10 @@ public class Ball3DAgentOptimal : BallAgent
 
         var curDist = Vector3.Distance(Ball.transform.localPosition, gameObject.transform.localPosition);
         //divided by the radius of the platform (which is 5)
-        SetReward(1 - curDist / 5);
+        float reward = 1 - curDist / 5;
+
+        TaskRewardForFocusAgent.Enqueue(reward);
+        TaskRewardForSupervisorAgent.Enqueue(reward);
+        SetReward(reward);
     }
 }

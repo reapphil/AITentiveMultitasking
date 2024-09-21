@@ -9,6 +9,10 @@ using System.Reflection;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using Parlot.Fluent;
+using static PlasticGui.LaunchDiffParameters;
+using static UnityEditor.Sprites.Packer;
+using Utils;
 
 public class BuildScript
 {
@@ -37,7 +41,7 @@ public class BuildScript
             settings[typeof(BehavioralDataCollectionSettings)] = new BehavioralDataCollectionSettings();
             ((BehavioralDataCollectionSettings)settings[typeof(BehavioralDataCollectionSettings)]).collectDataForComparison = false;
         }
-        
+
         //a value of -1 does not change the timeScale value via editor so that the timeScale value of ml-agents is used
         ((Hyperparameters)settings[typeof(Hyperparameters)]).timeScale = -1;
 
@@ -59,10 +63,16 @@ public class BuildScript
         ((Hyperparameters)settings[typeof(Hyperparameters)]).timeScale = 20;
         ((Hyperparameters)settings[typeof(Hyperparameters)]).abcSimulation = true;
         ((Hyperparameters)settings[typeof(Hyperparameters)]).saveBehavioralData = true;
-
+        ((Ball3DAgentHumanCognitionSettings)settings[typeof(Ball3DAgentHumanCognitionSettings)]).fullVision = false;
+        ((BehavioralDataCollectionSettings)settings[typeof(BehavioralDataCollectionSettings)]).collectDataForComparison = false;
+        ((BehavioralDataCollectionSettings)settings[typeof(BehavioralDataCollectionSettings)]).updateExistingModelBehavior = false;
+        ((BehavioralDataCollectionSettings)settings[typeof(BehavioralDataCollectionSettings)]).maxNumberOfActions = 0;
+        
+        //bypasses checking the appropriate DecisionPeriod for the model during the build. This is necessary because the DecisionPeriod is only
+        //passed during execution using a command line argument.
+        ((BalancingTaskSettings)settings[typeof(BalancingTaskSettings)]).decisionPeriod = 0;
         BuildEnvironment(settings, buildPath, Validator.ValidateAbc);
     }
-
     public static void BuildEvaluationEnvironment()
     {
         List<string> args = APIHelper.GetArgs();
@@ -72,16 +82,12 @@ public class BuildScript
         string evalConfFile = args[3]; ;
         string comparisonFileName = args.Count >= 5 ? args[4] : "";
         bool overwriteOldEvaluation = args.Contains("-o") ? true : false;
-
         string[] parts = confFile.Split('.');
         Assert.AreEqual("json", parts[parts.Length - 1]);
-
         parts = ballAgentModelName.Split('.');
         Assert.AreEqual("asset", parts[parts.Length - 1]);
-
         parts = comparisonFileName.Split('.');
         bool comparisonFileGiven = false;
-
         if ("json" == parts[parts.Length - 1])
         {
             comparisonFileGiven = true;
@@ -116,7 +122,7 @@ public class BuildScript
 
         //The following naming convention leads to too long paths: hyperparametersBase.behavioralDataCollectionSettings.fileNameForBehavioralData = Path.GetFileNameWithoutExtension(confFile) + ".json";
         ((BehavioralDataCollectionSettings)settings[typeof(BehavioralDataCollectionSettings)]).fileNameForBehavioralData = string.Format("eval{0}.json", DateTime.Now.ToString("yyyyMMddHHmm"));
-        //higher time scale result in an imprecise time measurements
+        //higher time scale result in an unprecise time measurements
         ((Hyperparameters)settings[typeof(Hyperparameters)]).timeScale = 20;
         BehavioralDataCollectionSettings behavioralDataCollectionSettings = evaluationSettings[typeof(BehavioralDataCollectionSettings)] as BehavioralDataCollectionSettings;
 
@@ -132,7 +138,7 @@ public class BuildScript
 
         ((BehavioralDataCollectionSettings)settings[typeof(BehavioralDataCollectionSettings)]).updateExistingModelBehavior = true;
 
-        if (!((SupervisorSettings)settings[typeof(SupervisorSettings)]).randomSupervisor)
+        if (!((SupervisorSettings)settings[typeof(SupervisorSettings)]).randomSupervisor.GetValueOrDefault())
         {
             parts = ((Hyperparameters)settings[typeof(Hyperparameters)]).supervisorModelName.Split('.');
             Assert.AreEqual("asset", parts[parts.Length - 1]);
@@ -140,17 +146,7 @@ public class BuildScript
 
         ((Hyperparameters)settings[typeof(Hyperparameters)]).taskModels["BallAgent"] = ballAgentModelName;
 
-        (string, string, string) paths = Util.BuildPathsForBehavioralDataFileName(comparisonFileName, behavioralDataCollectionSettings, ((SupervisorSettings)settings[typeof(SupervisorSettings)]), ((BalancingTaskSettings)settings[typeof(BalancingTaskSettings)]));
-
         BuildEnvironment(settings, buildPath, Validator.ValidateEvaluation);
-
-        if (comparisonFileGiven)
-        {
-            //Copies the comparison files to the evaluation environment as well
-            File.Copy(paths.Item1, Path.Combine(workingDirectory, buildPath, "SupervisorML_Data", "Scores", Util.GetScoreString((SupervisorSettings)settings[typeof(SupervisorSettings)], (BalancingTaskSettings)settings[typeof(BalancingTaskSettings)]), comparisonFileName), true);
-            File.Copy(paths.Item2, Path.Combine(workingDirectory, buildPath, "SupervisorML_Data", "Scores", Util.GetScoreString((SupervisorSettings)settings[typeof(SupervisorSettings)], (BalancingTaskSettings)settings[typeof(BalancingTaskSettings)]), Path.GetFileName(paths.Item2)), true);
-            File.Copy(paths.Item3, Path.Combine(workingDirectory, buildPath, "SupervisorML_Data", "Scores", Util.GetScoreString((SupervisorSettings)settings[typeof(SupervisorSettings)], (BalancingTaskSettings)settings[typeof(BalancingTaskSettings)]), Path.GetFileName(paths.Item3)), true);
-        }
     }
 
     private static BuildPlayerOptions CreateBuildPlayerOptions(bool cleanBuild = true)
@@ -201,7 +197,7 @@ public class BuildScript
 
         BuildSummary summary = BuildPlayer(buildPath, true);
 
-        Directory.CreateDirectory(Path.Combine(workingDirectory, buildPath, "SupervisorML_Data", "Scores", Util.GetScoreString((SupervisorSettings)settings[typeof(SupervisorSettings)], (BalancingTaskSettings)settings[typeof(BalancingTaskSettings)])));
+        Directory.CreateDirectory(Path.Combine(workingDirectory, buildPath, "SupervisorML_Data", "Scores", Util.GetScoreString(settings.ContainsKey(typeof(SupervisorSettings)) ? (SupervisorSettings)settings[typeof(SupervisorSettings)] : new(), (Hyperparameters)settings[typeof(Hyperparameters)])));
         Directory.CreateDirectory(Path.Combine(workingDirectory, buildPath, "SupervisorML_Data", "Logs"));
 
         LogResult(summary);

@@ -22,6 +22,11 @@ The results of the user study can be found in the following Jupyter notebook:
 Scores/Result_experimentKW26.ipynb
 ```
 
+The measured task-switching behavior can be found in the following Jupyter notebook:
+```
+Scores/Task-switching_Analysis.ipynb
+```
+
 
 ### Monotask Study
 To be able to compare the dual-task performance (i.e., playing on both and switching between the two platforms) with a monotask version of the game, we conducted a small follow-up experiment. In the monotask version, only one platform was active and participants had to balance the ball until the game was over (i.e, the ball fell off the platform). Since we made the game increasingly difficult over time (see section 3.1 in the main paper) the monotask version would end sooner or later. All game properties (i.e., ball speeds, user input, etc.) were exactly the same as in the dual-task study. 

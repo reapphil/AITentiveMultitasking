@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Barracuda;
 using UnityEngine;
 
+
 [CreateAssetMenu(fileName = "AITentiveModel", menuName = "ScriptableObjects/AITentiveModel")]
 public class AITentiveModel : ScriptableObject
 {

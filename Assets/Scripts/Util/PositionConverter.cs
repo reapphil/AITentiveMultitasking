@@ -107,11 +107,11 @@ public static class PositionConverter
 
         // Calculate bin sizes along both axes
         float binSizeX = rectangleWidth / numberOFBinsPerWidth;
-        float binSizeZ = rectangleHeight / numberOFBinsPerHeight;
+        float binSizeY = rectangleHeight / numberOFBinsPerHeight;
 
         // Convert coordinates to bin row and column
         int column = Mathf.FloorToInt((coordinates.x + (rectangleWidth / 2)) / binSizeX);
-        int row = Mathf.FloorToInt((coordinates.y + (rectangleHeight / 2)) / binSizeZ);
+        int row = Mathf.FloorToInt((coordinates.y + (rectangleHeight / 2)) / binSizeY);
 
         // Clamp column and row to avoid out-of-bound indices
         column = Mathf.Clamp(column, 0, numberOFBinsPerWidth - 1);
@@ -124,6 +124,12 @@ public static class PositionConverter
         return Mathf.Clamp(binIndex, 0, numberOfBins - 1);
     }
 
+    public static Vector2 RectangleCoordinatesToBinCenter(Vector2 coordinates, float rectangleWidth, float rectangleHeight, int numberOfBins)
+    {
+        int bin = RectangleCoordinatesToBin(coordinates, rectangleWidth, rectangleHeight, numberOfBins);
+
+        return BinToRectangleCoordinates(bin, rectangleWidth, rectangleHeight, numberOfBins);
+    }
 
     public static bool IsSquareEdgeBin(int bin, int numberOFBinsPerDirection)
     {

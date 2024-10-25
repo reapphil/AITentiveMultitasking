@@ -11,6 +11,9 @@ using Unity.MLAgents.Policies;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 
 [Serializable, JsonObject]
@@ -29,10 +32,10 @@ public class TypingAgent : Agent, ITask
     public string QuizName { get; set; } = "quiz1.csv";
 
     [field: SerializeField, Tooltip("Used to determine the ppi of the screen needed to accurately calculate the distances of the finger movement."), ProjectAssign]
-    public float ScreenWidthPixel { get; set; } = 0;
+    public int ScreenWidthPixel { get; set; } = 0;
 
     [field: SerializeField, Tooltip("Used to determine the ppi of the screen needed to accurately calculate the distances of the finger movement."), ProjectAssign]
-    public float ScreenHightPixel { get; set; } = 0;
+    public int ScreenHightPixel { get; set; } = 0;
 
     [field: SerializeField, Tooltip("Used to determine the ppi of the screen needed to accurately calculate the distances of the finger movement."), ProjectAssign]
     public float ScreenDiagonalInch { get; set; } = 0;
@@ -74,6 +77,10 @@ public class TypingAgent : Agent, ITask
 
     protected string _previousAnswer;
 
+    protected int _startingButton;
+    
+    protected float _timeOfEpisode;
+
 
     private List<QnA> _qnAs;
 
@@ -85,6 +92,8 @@ public class TypingAgent : Agent, ITask
 
     private TypingStateInformation _typingStateInformation;
 
+    
+
 
     /// <summary>
     /// Will not be called in heuristic mode
@@ -92,9 +101,13 @@ public class TypingAgent : Agent, ITask
     /// <param name="actionBuffers"></param>
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        ITask.InvokeOnAction(actionBuffers, this);
+        List<dynamic> actions = new();
+        var discreteActionsOut = actionBuffers.DiscreteActions;
 
         int index = actionBuffers.DiscreteActions[0];
+        actions.Add(index);
+
+        ITask.InvokeOnAction(actions, this);
 
         if (IsActive || IsAutonomous)
         {
@@ -137,28 +150,13 @@ public class TypingAgent : Agent, ITask
     //reward b
     public void Enter()
     {
-        float reward;
-
-        //reward = (_currentQnA.Answer.Length - LevenshteinDistance.Calculate(_currentQnA.Answer.ToLower(), AnswerText.text.ToLower())) * 2;
-
-        //reward is only given if the answer is correct
-        if (_currentQnA.Answer.ToLower() == AnswerText.text.ToLower())
-        {
-            reward = _currentQnA.Answer.Length;
-        }
-        else
-        {
-            reward = -_currentQnA.Answer.Length;
-
-            if (AnswerText.text.Length == 0)
-            {
-                reward = -_currentQnA.Answer.Length + -100;
-            }
-        }
-
+        float reward = GetFinalReward();
+        
         SetReward(reward);
         TaskRewardForFocusAgent.Enqueue(reward);
         TaskRewardForSupervisorAgent.Enqueue(reward);
+
+        Debug.Log($" Finale Reward: {reward}, Total reward of episode: {GetCumulativeReward()}.");
 
         if (IsTerminatingTask)
         {
@@ -170,6 +168,21 @@ public class TypingAgent : Agent, ITask
         }
 
         Debug.Log("End Episode: Enter button was pressed.");
+    }
+
+    public float GetFinalReward()
+    {
+        float reward;
+
+        float levenshteinDistance = TextDistance.CalculateLevenshtein(_currentQnA.Answer.ToLower(), AnswerText.text.ToLower());
+        float frequencyDistance = TextDistance.CalculateLetterFrequencyDistance(AnswerText.text.ToLower(), _currentQnA.Answer.ToLower());
+
+        reward = _currentQnA.Answer.Length - levenshteinDistance/2 - frequencyDistance;
+        //distance to answer length reward dependent on time
+        reward *= reward < 0 ? MaximizeAtC(AnswerText.text.Length, 0, 3f, 0.1f) : MaximizeAtC(AnswerText.text.Length, _currentQnA.Answer.Length, _currentQnA.Answer.Length/_timeOfEpisode, 0.02f) * GetNumberOfCorrectLetters(AnswerText.text);
+        reward = _currentQnA.Answer.ToLower() == AnswerText.text.ToLower() ? reward * 2 : reward;
+
+        return reward;
     }
 
     public override void OnEpisodeBegin()
@@ -184,8 +197,28 @@ public class TypingAgent : Agent, ITask
         _previousAnswer = "";
         AnswerText.text = "";
         QuestionText.text = _currentQnA.Question;
+        _timeOfEpisode = 0;
     }
 
+
+    protected int GetNumberOfCorrectLetters(string writtenAnswer)
+    {
+        int correctLetters = 0;
+
+        for (int i = 0; i < writtenAnswer.Length && i < _currentQnA.Answer.Length; i++)
+        {
+            if (writtenAnswer.ToLower()[i] == _currentQnA.Answer.ToLower()[i])
+            {
+                correctLetters += 1;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return correctLetters;
+    }
 
     protected override void OnEnable()
     {
@@ -193,6 +226,7 @@ public class TypingAgent : Agent, ITask
         Supervisor.SupervisorAgent.EndEpisodeEvent += CatchEndEpisode;
         TaskRewardForFocusAgent = new();
         TaskRewardForSupervisorAgent = new();
+        _startingButton = GetComponent<BehaviorParameters>().BehaviorType == BehaviorType.HeuristicOnly ? 30 : 14;
     }
 
     protected override void OnDisable()
@@ -305,6 +339,8 @@ public class TypingAgent : Agent, ITask
         {
             RequestSimpleDecision();
         }
+
+        _timeOfEpisode += Time.fixedDeltaTime;
     }
 
     private void RequestSimpleDecision()
@@ -313,6 +349,19 @@ public class TypingAgent : Agent, ITask
         {
             RequestDecision();
         }
+    }
+
+    protected GameObject GetButton(char button)
+    {
+        foreach (GameObject gameObject in FingerPositionStateSpace.VisualElements)
+        {
+            if (GetButtonCharValue(gameObject) == Char.ToLower(button))
+            {
+                return gameObject;
+            }
+        }
+
+        return null;
     }
 
     protected string GetButtonStringValue(GameObject gameObject)
@@ -344,12 +393,25 @@ public class TypingAgent : Agent, ITask
         _qnAs = Util.ReadDatafromCSV<QnA>(Path.Combine(Application.streamingAssetsPath, QuizName));
         _correctImageAnimation = transform.GetChildInHierarchyByName("Correct").GetComponent<FadeImageAnimation>();
         _wrongImageAnimation = transform.GetChildInHierarchyByName("Wrong").GetComponent<FadeImageAnimation>();
-        FingerPositionStateSpace.ActivateElement(30); //Enter button
+        FingerPositionStateSpace.ActivateElement(_startingButton);
     }
 
     private void CatchEndEpisode(object sender, bool aborted)
     {
         EndEpisode();
+    }
+
+    /// <summary>
+    /// Function to maximize a function at a certain point c
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="c">Point of maximum</param>
+    /// <param name="C">Maximum value of c</param>
+    /// <param name="k">Slope</param>
+    /// <returns>The computed function value, which is a maximum at 'c' and converges to 0 as x moves away from 'c'.</returns>
+    private float MaximizeAtC(float x, float c, float C, float k)
+    {
+        return C / (1 + k * (float)Math.Pow(x - c, 2));
     }
 }
 

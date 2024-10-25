@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class TypingStateInformation : IStateInformation
 {
-    public Array PerformedActions { get; set; }
-    public Dictionary<Type, Array> ReactionTimes { get; set; }
+    public Array AveragePerformedActionsDiscretizedSpace { get; set; }
+    public Dictionary<Type, Array> AverageReactionTimesDiscretizedSpace { get; set; }
 
     public Vector3 ActionRangeMax => throw new NotImplementedException();
 
@@ -15,6 +15,13 @@ public class TypingStateInformation : IStateInformation
     public int NumberOfActionBinsPerAxis => throw new NotImplementedException();
 
     public int[] BehaviorDimensions => throw new NotImplementedException();
+
+    public List<dynamic> PerformedActions => throw new NotImplementedException();
+
+    public bool ActionIsInUsualRange(List<dynamic> actionsPerformedSoFar, List<dynamic> performedAction)
+    {
+        throw new NotImplementedException();
+    }
 
     //TODO: Add properties for typing state information
     public IStateInformation GetCopyOfCurrentState()

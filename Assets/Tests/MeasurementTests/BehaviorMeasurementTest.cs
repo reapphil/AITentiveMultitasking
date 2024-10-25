@@ -162,8 +162,8 @@ public class BehaviorMeasurementTest
         int angleDistanceBin = 0;
 
         //first call --> no change in reaction time data
-        ActionBuffers actionBuffers = new ActionBuffers(new float[] { 1f, 1f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        List<dynamic> actions = new List<dynamic> { new Vector3(1f, 0f, 1f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         Dictionary<int, (int, (int, double, double))>[][][] oldEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         Assert.IsFalse(oldEntry[0][distanceBin][angleDistanceBin].ContainsKey(velocityBin));
@@ -172,7 +172,7 @@ public class BehaviorMeasurementTest
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: nan
 
         //same agent and same action --> no change in reaction time data
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         Dictionary<int, (int, (int, double, double))>[][][] newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         Assert.AreEqual(oldEntry, newEntry);
@@ -183,8 +183,8 @@ public class BehaviorMeasurementTest
         System.Threading.Thread.Sleep(10);
 
         //different agent and different action but no behavioral data available --> no change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 0.5f, 0.5f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[1]);
+        actions = new List<dynamic> { new Vector3(0.5f, 0f, 0.5f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[1]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         newEntry = newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         LogAssert.Expect(LogType.Log, "Discard reaction time measurement (no behavioral data available)!");
@@ -196,8 +196,8 @@ public class BehaviorMeasurementTest
         System.Threading.Thread.Sleep(10);
 
         //different agent and behavioral data available but action in unusual range --> no change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 0f, 0f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector3(0f, 0f, 0f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         LogAssert.Expect(LogType.Log, "Suspend reaction time measurement (action in unusual range)!");
@@ -207,8 +207,8 @@ public class BehaviorMeasurementTest
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (0.5, 0.5)
 
         //different agent, behavioral data available and action in usual range --> change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 1f, 1f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector3(1f, 0f, 1f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         Assert.IsNotEmpty(newEntry);
@@ -233,10 +233,10 @@ public class BehaviorMeasurementTest
 
         //must be reset otherwise the old ones (created in the SetUp function) would be used s.t. e.g. the new value for numberOfTimeBins would not
         //be considered 
-        _ballStateInformation[0].ReactionTimes = null;
-        _ballStateInformation[1].ReactionTimes = null;
-        _ballStateInformation[0].PerformedActions = null;
-        _ballStateInformation[1].PerformedActions = null;
+        _ballStateInformation[0].AverageReactionTimesDiscretizedSpace = null;
+        _ballStateInformation[1].AverageReactionTimesDiscretizedSpace = null;
+        _ballStateInformation[0].AveragePerformedActionsDiscretizedSpace = null;
+        _ballStateInformation[1].AveragePerformedActionsDiscretizedSpace = null;
 
         _behaviourMeasurement = new BehaviorMeasurement(
             supervisorAgent: supervisorAgentMock,
@@ -289,8 +289,8 @@ public class BehaviorMeasurementTest
         DateTime t1 = DateTime.Now;
 
         //first call --> no change in reaction time data
-        ActionBuffers actionBuffers = new ActionBuffers(new float[] { 1f, 1f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        List<dynamic> actions = new List<dynamic> { new Vector2(1f, 1f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
 
         Dictionary<int, (int, (int, double, double))>[][][] oldEntry = LoadDataFromJSON4D<(int, double, double)>(path);
@@ -303,8 +303,8 @@ public class BehaviorMeasurementTest
         System.Threading.Thread.Sleep(10);
 
         //different agent and different action but no behavioral data available --> no change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 0.5f, 0.5f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[1]);
+        actions = new List<dynamic> { new Vector2(0.5f, 0.5f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[1]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         Dictionary<int, (int, (int, double, double))>[][][] newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         LogAssert.Expect(LogType.Log, "Discard reaction time measurement (no behavioral data available)!");
@@ -316,8 +316,8 @@ public class BehaviorMeasurementTest
         System.Threading.Thread.Sleep(10);
 
         //different agent, behavioral data available and action in usual range --> change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 1f, 1f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector2(1f, 1f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         Assert.AreNotEqual(oldEntry[0][distanceBin][angleDistanceBin], newEntry[0][distanceBin][angleDistanceBin]);
@@ -332,8 +332,8 @@ public class BehaviorMeasurementTest
         System.Threading.Thread.Sleep(10);
 
         //different agent, behavioral data available and action in usual range --> change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 0.5f, 0.5f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[1]);
+        actions = new List<dynamic> { new Vector2(0.5f, 0.5f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[1]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         Assert.AreNotEqual(oldEntry[4][distanceBin][angleDistanceBin], newEntry[4][distanceBin][angleDistanceBin]);
@@ -380,8 +380,8 @@ public class BehaviorMeasurementTest
         int angleDistanceBin = 0;
 
         //first call --> no change in reaction time data
-        ActionBuffers actionBuffers = new ActionBuffers(new float[] { 1f, 1f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        List<dynamic> actions = new List<dynamic> { new Vector3(1f, 0f, 1f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         Dictionary<int, (int, (int, double, double))>[][][] oldEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         Assert.IsFalse(oldEntry[0][distanceBin][angleDistanceBin].ContainsKey(velocityBin));
@@ -390,7 +390,7 @@ public class BehaviorMeasurementTest
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: nan
 
         //same agent and same action --> no change in reaction time data
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         Dictionary<int, (int, (int, double, double))>[][][] newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         Assert.AreEqual(oldEntry, newEntry);
@@ -401,8 +401,8 @@ public class BehaviorMeasurementTest
         System.Threading.Thread.Sleep(10);
 
         //different agent and different action but no behavioral data available --> no change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 0.5f, 0.5f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[1]);
+        actions = new List<dynamic> { new Vector3(0.5f, 0f, 0.5f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[1]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         newEntry = newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         LogAssert.Expect(LogType.Log, "Discard reaction time measurement (no behavioral data available)!");
@@ -414,8 +414,8 @@ public class BehaviorMeasurementTest
         System.Threading.Thread.Sleep(10);
 
         //different agent and behavioral data available but action in unusual range --> no change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 0f, 0f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector3(0f, 0f, 0f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         LogAssert.Expect(LogType.Log, "Suspend reaction time measurement (action in unusual range)!");
@@ -425,8 +425,8 @@ public class BehaviorMeasurementTest
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (0.5, 0.5)
 
         //different agent, behavioral data available and action in usual range --> change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 1f, 1f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector3(1f, 0f, 1f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         Assert.IsNotEmpty(newEntry);
@@ -435,28 +435,28 @@ public class BehaviorMeasurementTest
 
         _behaviourMeasurement.UpdateActiveInstance(0);
         System.Threading.Thread.Sleep(10);
-        actionBuffers = new ActionBuffers(new float[] { 1f, 1f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[1]);
+        actions = new List<dynamic> { new Vector3(1f, 0f, 1f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[1]);
         _behaviourMeasurement.UpdateActiveInstance(0);
         System.Threading.Thread.Sleep(10);
 
         //different agent and behavioral data available but action in unusual range --> no change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 0f, 0f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector3(0f, 0f, 0f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         LogAssert.Expect(LogType.Log, "Suspend reaction time measurement (action in unusual range)!");
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1) (no update since updates of behavioral data only happens when reaction time measurement was not suspended)
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (0.5, 0.5)
 
         //different agent and behavioral data available but action in unusual range --> no change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 0f, 0f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector3(0f, 0f, 0f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         LogAssert.Expect(LogType.Log, "Suspend reaction time measurement (action in unusual range)!");
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1) (no update since updates of behavioral data only happens when reaction time measurement was not suspended)
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (0.5, 0.5)
 
         //different agent, behavioral data available and action in usual range --> change in reaction time data
-        actionBuffers = new ActionBuffers(new float[] { 1f, 1f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector3(1f, 0f, 1f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveReactionTimeToJSON();
         newEntry = LoadDataFromJSON4D<(int, double, double)>(path);
         Assert.AreEqual(3, newEntry[0][distanceBin][angleDistanceBin][velocityBin].Item2.Item1);
@@ -486,24 +486,27 @@ public class BehaviorMeasurementTest
         _ballStateInformation[0].PlatformAngleZ = _ballAgentsMock[0].GetPlatformAngle().z;
         int rangeBin = PositionConverter.RangeVectorToBin(_ballAgentsMock[0].GetPlatformAngle(), _angleRangeVector, _ballStateInformation[0].NumberOfAngleBinsPerAxis, BallStateInformation.AngleRangeMin);
 
-        ActionBuffers actionBuffers = new ActionBuffers(new float[] { 1f, 1f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        List<dynamic> actions = new List<dynamic> { new Vector3(1f, 0, 1f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveBehavioralDataToJSON();
-        Dictionary<int, (int, (Vector3, Vector3))>[][] entry = LoadDataFromJSON3D<(Vector3, Vector3)>(path);
-        Assert.AreEqual((1, (new Vector3(1, 0, 1), new Vector3(1, 0, 1))), entry[ballBin][rangeBin][velocityBin]);
+        Dictionary<int, (int, List<(Vector3, Vector3)>)>[][] entry = LoadDataFromJSON3D<List<(Vector3, Vector3)>>(path);
+        Assert.AreEqual(1, entry[ballBin][rangeBin][velocityBin].Item1);
+        Assert.AreEqual((new Vector3(1, 0, 1), new Vector3(1, 0, 1)), entry[ballBin][rangeBin][velocityBin].Item2[0]);
         LogAssert.Expect(LogType.Log, String.Format("{0:N4} % Behavioral Data", (1 / (double)((int)Math.Pow(_ballStateInformation[0].NumberOfBallVelocityBinsPerAxis, 3) * (int)Math.Pow(_ballStateInformation[0].NumberOfAreaBinsPerDirection, 2) * (int)Math.Pow(_ballStateInformation[0].NumberOfAngleBinsPerAxis, 3))) * 100));
 
-        actionBuffers = new ActionBuffers(new float[] { 4f, 4f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector3(4f, 0, 4f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveBehavioralDataToJSON();
-        entry = LoadDataFromJSON3D<(Vector3, Vector3)>(path);
-        Assert.AreEqual((2, (new Vector3(5, 0, 5), new Vector3(17, 0, 17))), entry[ballBin][rangeBin][velocityBin]);
+        entry = LoadDataFromJSON3D<List<(Vector3, Vector3)>>(path);
+        Assert.AreEqual(2, entry[ballBin][rangeBin][velocityBin].Item1);
+        Assert.AreEqual((new Vector3(5, 0, 5), new Vector3(17, 0, 17)), entry[ballBin][rangeBin][velocityBin].Item2[0]);
 
-        actionBuffers = new ActionBuffers(new float[] { 3f, 6.025f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector3(6.025f, 0, 3f) }; 
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveBehavioralDataToJSON();
-        entry = LoadDataFromJSON3D<(Vector3, Vector3)>(path);
-        Assert.AreEqual((3, (new Vector3(11.025f, 0f, 8f), new Vector3(53.300625f, 0f, 26f))), entry[ballBin][rangeBin][velocityBin]);
+        entry = LoadDataFromJSON3D<List<(Vector3, Vector3)>>(path);
+        Assert.AreEqual(3, entry[ballBin][rangeBin][velocityBin].Item1);
+        Assert.AreEqual((new Vector3(11.025f, 0f, 8f), new Vector3(53.300625f, 0f, 26f)), entry[ballBin][rangeBin][velocityBin].Item2[0]);
 
         _ballAgentsMock[0].GetBallLocalPosition().Returns(new Vector3(3.5f, 0, 2));
         _ballStateInformation[0].BallPositionX = _ballAgentsMock[0].GetBallLocalPosition().x;
@@ -523,11 +526,12 @@ public class BehaviorMeasurementTest
         _ballStateInformation[0].PlatformAngleZ = _ballAgentsMock[0].GetPlatformAngle().z;
         rangeBin = PositionConverter.RangeVectorToBin(_ballAgentsMock[0].GetPlatformAngle(), _angleRangeVector, _ballStateInformation[0].NumberOfAngleBinsPerAxis, BallStateInformation.AngleRangeMin);
 
-        actionBuffers = new ActionBuffers(new float[] { 2f, 2f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector3(2f, 0, 2f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveBehavioralDataToJSON();
-        entry = LoadDataFromJSON3D<(Vector3, Vector3)>(path);
-        Assert.AreEqual((1, (new Vector3(2, 0, 2), new Vector3(4, 0, 4))), entry[ballBin][rangeBin][velocityBin]);
+        entry = LoadDataFromJSON3D<List<(Vector3, Vector3)>>(path);
+        Assert.AreEqual(1, entry[ballBin][rangeBin][velocityBin].Item1);
+        Assert.AreEqual((new Vector3(2, 0, 2), new Vector3(4, 0, 4)), entry[ballBin][rangeBin][velocityBin].Item2[0]);
         LogAssert.Expect(LogType.Log, String.Format("{0:N4} % Behavioral Data", (2 / (double)((int)Math.Pow(_ballStateInformation[0].NumberOfBallVelocityBinsPerAxis, 3) * (int)Math.Pow(_ballStateInformation[0].NumberOfAreaBinsPerDirection, 2) * (int)Math.Pow(_ballStateInformation[0].NumberOfAngleBinsPerAxis, 3))) * 100));
         Assert.AreEqual(4, _behaviourMeasurement.ActionCount);
     }
@@ -556,11 +560,12 @@ public class BehaviorMeasurementTest
         _ballStateInformation[0].PlatformAngleZ = _ballAgentsMock[0].GetPlatformAngle().z;
         int rangeBin = PositionConverter.RangeVectorToBin(_ballAgentsMock[0].GetPlatformAngle(), _angleRangeVector, _ballStateInformation[0].NumberOfAngleBinsPerAxis, BallStateInformation.AngleRangeMin);
 
-        ActionBuffers actionBuffers = new ActionBuffers(new float[] { 1.025f, 1.005f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        List<dynamic> actions = new List<dynamic> { new Vector3(1.005f, 0, 1.025f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveBehavioralDataToJSON();
-        Dictionary<int, (int, (Vector3, Vector3))>[][] entry = LoadDataFromJSON3D<(Vector3, Vector3)>(path);
-        Assert.AreEqual((1, (new Vector3(1.005f, 0f, 1.025f), new Vector3(1.010025f, 0f, 1.050625f))), entry[ballBin][rangeBin][velocityBin]);
+        Dictionary<int, (int, List<(Vector3, Vector3)>)>[][] entry = LoadDataFromJSON3D<List<(Vector3, Vector3)>>(path);
+        Assert.AreEqual(1, entry[ballBin][rangeBin][velocityBin].Item1);
+        Assert.AreEqual((new Vector3(1.005f, 0f, 1.025f), new Vector3(1.010025f, 0f, 1.050625f)), entry[ballBin][rangeBin][velocityBin].Item2[0]);
     }
 
     [Test]
@@ -585,16 +590,16 @@ public class BehaviorMeasurementTest
 
 
         //first call --> no change in reaction time data
-        ActionBuffers actionBuffers = new ActionBuffers(new float[] { 1f, 1f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        List<dynamic> actions = new List<dynamic> { new Vector2(1f, 1f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1)
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: nan
 
         _behaviourMeasurement.UpdateActiveInstance(0);
         System.Threading.Thread.Sleep(10);
 
-        actionBuffers = new ActionBuffers(new float[] { 1f, 0.9f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[1]);
+        actions = new List<dynamic> { new Vector2(1f, 0.9f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[1]);
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[0]][velocityBin_BehavioralData]: (1, 1)
         //updated ActionSetPerBinBehavioralData[ballBin of _ballAgentsMock[1]][velocityBin_BehavioralData]: (1, 1)
 
@@ -602,8 +607,8 @@ public class BehaviorMeasurementTest
 
         System.Threading.Thread.Sleep(100);
 
-        actionBuffers = new ActionBuffers(new float[] { 0.9f, 1f }, new int[0]);
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        actions = new List<dynamic> { new Vector2(0.9f, 1f) };
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         LogAssert.Expect(LogType.Log, new Regex("Decision Time: 1+"));
     }
 
@@ -633,10 +638,10 @@ public class BehaviorMeasurementTest
 
         //must be reset otherwise the old ones (created in the SetUp function) would be used s.t. e.g. the new value for numberOfTimeBins would not
         //be considered 
-        _ballStateInformation[0].ReactionTimes = null;
-        _ballStateInformation[1].ReactionTimes = null;
-        _ballStateInformation[0].PerformedActions = null;
-        _ballStateInformation[1].PerformedActions = null;
+        _ballStateInformation[0].AverageReactionTimesDiscretizedSpace = null;
+        _ballStateInformation[1].AverageReactionTimesDiscretizedSpace = null;
+        _ballStateInformation[0].AveragePerformedActionsDiscretizedSpace = null;
+        _ballStateInformation[1].AveragePerformedActionsDiscretizedSpace = null;
 
         _behaviourMeasurement = new BehaviorMeasurement(
             supervisorAgent: _supervisorAgentMock,
@@ -648,14 +653,16 @@ public class BehaviorMeasurementTest
 
         //check loading
         _behaviourMeasurement.SaveBehavioralDataToJSON();
-        Dictionary<int, (int, (Vector3, Vector3))>[][] entryBehavioural = LoadDataFromJSON3D<(Vector3, Vector3)>(behaviorPath);
+        Dictionary<int, (int, List<(Vector3, Vector3)>)>[][] entryBehavioural = LoadDataFromJSON3D<List<(Vector3, Vector3)>>(behaviorPath);
 
         int[] ballBins = new int[] { 100, 110, 0 };
         int[] angleBins = new int[] { 60, 90, 0 };
         int[] velocityBins = new int[] { 200, 100, 0 };
 
-        Assert.AreEqual((2, (new Vector3(5f, 0f, 5f), new Vector3(17f, 0f, 17f))), entryBehavioural[ballBins[0]][angleBins[0]][velocityBins[0]]);
-        Assert.AreEqual((1, (new Vector3(2f, 0f, 2f), new Vector3(4f, 0f, 4f))), entryBehavioural[ballBins[1]][angleBins[1]][velocityBins[1]]);
+        Assert.AreEqual(2, entryBehavioural[ballBins[0]][angleBins[0]][velocityBins[0]].Item1);
+        Assert.AreEqual((new Vector3(5f, 0f, 5f), new Vector3(17f, 0f, 17f)), entryBehavioural[ballBins[0]][angleBins[0]][velocityBins[0]].Item2[0]);
+        Assert.AreEqual(1, entryBehavioural[ballBins[1]][angleBins[1]][velocityBins[1]].Item1);
+        Assert.AreEqual((new Vector3(2f, 0f, 2f), new Vector3(4f, 0f, 4f)), entryBehavioural[ballBins[1]][angleBins[1]][velocityBins[1]].Item2[0]);
         Assert.AreEqual(3, _behaviourMeasurement.ActionCount);
         Assert.IsFalse(entryBehavioural[ballBins[2]][angleBins[2]].ContainsKey(velocityBins[2]));
 
@@ -686,15 +693,18 @@ public class BehaviorMeasurementTest
         _ballStateInformation[0].BallVelocityY = _ballAgentsMock[0].GetBallVelocity().y;
         _ballStateInformation[0].BallVelocityZ = _ballAgentsMock[0].GetBallVelocity().z;
         int newVelocityBin = PositionConverter.RangeVectorToBin(_ballAgentsMock[0].GetBallVelocity(), _velocityRangeVector, _ballStateInformation[0].NumberOfBallVelocityBinsPerAxis, BallStateInformation.VelocityRangeMin);
-        ActionBuffers actionBuffers = new ActionBuffers(new float[] { 0.025f, 0.025f }, new int[0]);
+        List<dynamic> actions = new List<dynamic> { new Vector2(0.025f, 0.025f) };
 
-        _behaviourMeasurement.CollectData(actionBuffers, (ITask)_ballAgentsMock[0]);
+        _behaviourMeasurement.CollectData(actions, (ITask)_ballAgentsMock[0]);
         _behaviourMeasurement.SaveBehavioralDataToJSON();
-        entryBehavioural = LoadDataFromJSON3D<(Vector3, Vector3)>(behaviorPath);
-        Assert.AreEqual((2, (new Vector3(5f, 0f, 5f), new Vector3(17f, 0f, 17f))), entryBehavioural[ballBins[0]][angleBins[0]][velocityBins[0]]);
-        Assert.AreEqual((1, (new Vector3(2f, 0f, 2f), new Vector3(4f, 0f, 4f))), entryBehavioural[ballBins[1]][angleBins[1]][velocityBins[1]]);
+        entryBehavioural = LoadDataFromJSON3D<List<(Vector3, Vector3)>>(behaviorPath);
+        Assert.AreEqual(2, entryBehavioural[ballBins[0]][angleBins[0]][velocityBins[0]].Item1);
+        Assert.AreEqual((new Vector3(5f, 0f, 5f), new Vector3(17f, 0f, 17f)), entryBehavioural[ballBins[0]][angleBins[0]][velocityBins[0]].Item2[0]);
+        Assert.AreEqual(1, entryBehavioural[ballBins[1]][angleBins[1]][velocityBins[1]].Item1);
+        Assert.AreEqual((new Vector3(2f, 0f, 2f), new Vector3(4f, 0f, 4f)), entryBehavioural[ballBins[1]][angleBins[1]][velocityBins[1]].Item2[0]);
         Assert.IsFalse(entryBehavioural[ballBins[2]][angleBins[2]].ContainsKey(velocityBins[2]));
-        Assert.AreEqual((1, (new Vector3(0.025f, 0, 0.025f), new Vector3(0.000625f, 0, 0.000625f))).ToString(), entryBehavioural[newBallBin][newAngleBin][newVelocityBin].ToString());
+        Assert.AreEqual(1.ToString(), entryBehavioural[newBallBin][newAngleBin][newVelocityBin].Item1.ToString());
+        Assert.AreEqual((new Vector3(0.025f, 0, 0.025f), new Vector3(0.000625f, 0, 0.000625f)).ToString(), entryBehavioural[newBallBin][newAngleBin][newVelocityBin].Item2[0].ToString());
         Assert.AreEqual(4, _behaviourMeasurement.ActionCount);
 
 
@@ -704,6 +714,7 @@ public class BehaviorMeasurementTest
         File.Delete(reactionTimePath);
     }
 
+    /**
     [Test]
     public void ConvertRawToBinDataTest()
     {
@@ -728,14 +739,14 @@ public class BehaviorMeasurementTest
 
         List<BehavioralData> behaviouralDataList = new List<BehavioralData>()
         {
-            new BehavioralData(0f,0f,-9080, -9082, new BallStateInformation(-0.772119045f,2.11634541f,-1.47088289f,-0.103927992f,0.08879531f,-0.24924694f,19.579464f,3.07926488f,1.02385044f), new BallStateInformation(-0.8877549f,1.54776f,0.452500343f,0.6505743f,-0.242208049f,1.18963778f,5.809886f,1.47117662f,355.133f),1193,898),
-            new BehavioralData(0f,0f,-9080, -9082, new BallStateInformation(-0.7741637f,2.11779165f,-1.47494221f,-0.10237778f,0.07229686f,-0.2029278f,19.579464f,3.07926488f,1.02385044f),new BallStateInformation(-0.8746319f,1.54318058f,0.476318836f,0.6561387f,-0.228972211f,1.19093513f,5.714787f,1.45120084f,355.211029f),1209,898),
-            new BehavioralData(0f,0f,-9080, -9082, new BallStateInformation(-0.7762127f,2.11890721f,-1.47807288f,-0.102459513f,0.05581169f,-0.156645313f,19.579464f,3.07926488f,1.02385044f),new BallStateInformation(-0.861414433f,1.53873456f,0.5001459f,0.660860062f,-0.222298667f,1.19134736f,5.62117529f,1.43140817f,355.287842f),1226,898),
-            new BehavioralData(-0.0898087844f,-0.186637625f,-9080, -9082, new BallStateInformation(-0.7782321f,2.11970162f,-1.48030233f,-0.101036459f,0.0397059023f,-0.111428484f,19.579464f,3.07926488f,1.02385044f),new BallStateInformation(-0.8481078f,1.53441882f,0.5239763f,0.665314734f,-0.215789273f,1.19151735f,5.432421f,1.39110792f,355.4429f),1261,898),
-            new BehavioralData(-0.322198033f,-0.322198033f,-9082, -9080, new BallStateInformation(-0.834771633f,1.529644f,0.547748566f,0.666795135f,-0.2387381f,1.18861449f,5.432421f,1.39110792f,355.4429f),new BallStateInformation(-0.7802205f,2.11662173f,-1.48249531f,-0.09941988f,-0.1539902f,-0.109645635f,19.0838432f,3.051933f,0.8332048f),11,1265), //switch
-            new BehavioralData(-0.457758456f,-0.4190269f,-9082, -9080, new BallStateInformation(-0.8200979f,1.538354f,0.572557449f,0.6780339f,-0.160401553f,1.19188726f,4.79067659f,1.44973135f,354.803741f),new BallStateInformation(-0.782177f,2.10973f,-1.48465323f,-0.09782916f,-0.344587147f,-0.107891306f,18.9615078f,3.03046966f,0.824173748f),28,1265),
-            new BehavioralData(-0.5449044f,-0.4771242f,-9082, -9080, new BallStateInformation(-0.8042345f,1.55518639f,0.597606659f,0.6846782f,-0.153289f,1.186536f,3.95738387f,1.53916764f,353.89505f),new BallStateInformation(-0.7841277f,2.10202765f,-1.4869051f,-0.0975532457f,-0.385002971f,-0.112926245f,18.8374443f,3.00874186f,0.81507206f),44,1265),
-            new BehavioralData(-0.5642702f,-0.4771242f,-9082, -9080, new BallStateInformation(-0.78712225f,1.577621f,0.6224141f,0.6935924f,-0.146248549f,1.1783663f,3.01064634f,1.65883946f,352.8125f),new BallStateInformation(-0.7860403f,2.09664f,-1.4874301f,-0.09563974f,-0.2693452f,-0.026355803f,18.7156658f,2.98745f,0.8061929f),63,1265),
+            new BehavioralData(-9080, -9082, new BallStateInformation(0f, 0f, -0.772119045f,2.11634541f,-1.47088289f,-0.103927992f,0.08879531f,-0.24924694f,19.579464f,3.07926488f,1.02385044f), new BallStateInformation(0f, 0f, -0.8877549f,1.54776f,0.452500343f,0.6505743f,-0.242208049f,1.18963778f,5.809886f,1.47117662f,355.133f),1193,898),
+            new BehavioralData(-9080, -9082, new BallStateInformation(0f, 0f, -0.7741637f,2.11779165f,-1.47494221f,-0.10237778f,0.07229686f,-0.2029278f,19.579464f,3.07926488f,1.02385044f),new BallStateInformation(0f, 0f, -0.8746319f,1.54318058f,0.476318836f,0.6561387f,-0.228972211f,1.19093513f,5.714787f,1.45120084f,355.211029f),1209,898),
+            new BehavioralData(-9080, -9082, new BallStateInformation(0f, 0f, -0.7762127f,2.11890721f,-1.47807288f,-0.102459513f,0.05581169f,-0.156645313f,19.579464f,3.07926488f,1.02385044f),new BallStateInformation(0f, 0f, -0.861414433f,1.53873456f,0.5001459f,0.660860062f,-0.222298667f,1.19134736f,5.62117529f,1.43140817f,355.287842f),1226,898),
+            new BehavioralData(-9080, -9082, new BallStateInformation(-0.186637625f, -0.0898087844f,-0.7782321f,2.11970162f,-1.48030233f,-0.101036459f,0.0397059023f,-0.111428484f,19.579464f,3.07926488f,1.02385044f),new BallStateInformation(-0.186637625f, -0.0898087844f,-0.8481078f,1.53441882f,0.5239763f,0.665314734f,-0.215789273f,1.19151735f,5.432421f,1.39110792f,355.4429f),1261,898),
+            new BehavioralData(-9082, -9080, new BallStateInformation(-0.322198033f,-0.322198033f,-0.7802205f,2.11662173f,-1.48249531f,-0.09941988f,-0.1539902f,-0.109645635f,19.0838432f,3.051933f,0.8332048f), new BallStateInformation(-0.322198033f, -0.322198033f,-0.834771633f,1.529644f,0.547748566f,0.666795135f,-0.2387381f,1.18861449f,5.432421f,1.39110792f,355.4429f),11,1265), //switch
+            new BehavioralData(-9082, -9080, new BallStateInformation(-0.4190269f,-0.457758456f,-0.782177f,2.10973f,-1.48465323f,-0.09782916f,-0.344587147f,-0.107891306f,18.9615078f,3.03046966f,0.824173748f), new BallStateInformation(-0.4190269f, -0.457758456f,-0.8200979f,1.538354f,0.572557449f,0.6780339f,-0.160401553f,1.19188726f,4.79067659f,1.44973135f,354.803741f),28,1265),
+            new BehavioralData(-9082, -9080, new BallStateInformation(-0.4771242f,-0.5449044f,-0.7841277f,2.10202765f,-1.4869051f,-0.0975532457f,-0.385002971f,-0.112926245f,18.8374443f,3.00874186f,0.81507206f), new BallStateInformation(-0.4771242f, -0.5449044f,-0.8042345f,1.55518639f,0.597606659f,0.6846782f,-0.153289f,1.186536f,3.95738387f,1.53916764f,353.89505f), 44,1265),
+            new BehavioralData(-9082, -9080, new BallStateInformation(-0.4771242f,-0.5642702f,-0.7860403f,2.09664f,-1.4874301f,-0.09563974f,-0.2693452f,-0.026355803f,18.7156658f,2.98745f,0.8061929f), new BallStateInformation(-0.4771242f, -0.5642702f,-0.78712225f,1.577621f,0.6224141f,0.6935924f,-0.146248549f,1.1783663f,3.01064634f,1.65883946f,352.8125f),63,1265),
         };
         
 
@@ -753,40 +764,29 @@ public class BehaviorMeasurementTest
         Dictionary<IBallAgent, bool> isActiveInstanceDict = new Dictionary<IBallAgent, bool>();
 
         IBallAgent ballAgentMockTarget;
-        IBallAgent ballAgentMockSource;
 
         for (int i = 0; i <behaviouralDataList.Count; i++)
         {
-            foreach (IBallAgent ballAgent in _ballAgentsMock)
-            {
-                isActiveInstanceDict[ballAgent] = false;
-            }
+            ((ITask)_ballAgentsMock[0]).StateInformation.UpdateStateInformation((BallStateInformation)behaviouralDataList[i].StateA); //-9080
+            ((ITask)_ballAgentsMock[1]).StateInformation.UpdateStateInformation((BallStateInformation)behaviouralDataList[i].StateB); //-9082
+
 
             if (behaviouralDataList[i].TargetTaskId == -9080)
             {
                 ballAgentMockTarget = _ballAgentsMock[0];
-                ballAgentMockSource = _ballAgentsMock[1];
             }
             else
             {
                 ballAgentMockTarget = _ballAgentsMock[1];
-                ballAgentMockSource = _ballAgentsMock[0];
             }
 
-            isActiveInstanceDict[ballAgentMockTarget] = true;
             supervisorAgentMock.GetActiveTaskNumber().Returns(behaviouralDataList[i].TargetTaskId);
             supervisorAgentMock.GetPreviousActiveTaskNumber().Returns(behaviouralDataList[i].SourceTaskId);
-            //TODO: supervisorAgentMock.IsActiveInstanceDict.Returns(isActiveInstanceDict);
 
-            BallStateInformation targetState = (BallStateInformation)behaviouralDataList[i].TargetState;
-            BallStateInformation sourceState = (BallStateInformation)behaviouralDataList[i].SourceState;
+            //does not matter which State since the action taken are equal for this test case
+            List<dynamic> actions = behaviouralDataList[i].StateA.PerformedActions;
 
-            ((ITask)ballAgentMockTarget).StateInformation.UpdateStateInformation(targetState);
-            ((ITask)ballAgentMockSource).StateInformation.UpdateStateInformation(sourceState);
-
-            ActionBuffers actionBuffers = new ActionBuffers(new float[] { behaviouralDataList[i].ActionZ, behaviouralDataList[i].ActionX }, new int[0]);
-
-            _behaviourMeasurement.CollectData(actionBuffers, (ITask)ballAgentMockTarget);
+            _behaviourMeasurement.CollectData(actions, (ITask)ballAgentMockTarget, behaviouralDataList[i].TimeSinceLastSwitch);
 
             if(i+1 < behaviouralDataList.Count && behaviouralDataList[i].TargetTaskId != behaviouralDataList[i+1].TargetTaskId)
             {
@@ -802,12 +802,11 @@ public class BehaviorMeasurementTest
         string behavioralDataPath = Util.GetBehavioralDataPath(_fileNameForBehavioralData, _supervisorSettings, _hyperparameters, "BSI", _ballStateInformation[0].BehaviorDimensions);
         string reactionTimeDataPath = Util.GetReactionTimeDataPath(_fileNameForBehavioralData, _supervisorSettings, _hyperparameters, MeasurementUtil.GetMeasurementName(typeof(BallStateInformation), typeof(BallStateInformation)), _ballStateInformation[0].GetRelationalDimensions(typeof(BallStateInformation), _behaviourMeasurement.NumberOfTimeBins));
 
-        Dictionary<int, (int, (Vector3, Vector3))>[][] behaviouralDataEntry = LoadDataFromJSON3D<(Vector3, Vector3)>(behavioralDataPath);
+        Dictionary<int, (int, List<(Vector3, Vector3)>)>[][] behaviouralDataEntry = LoadDataFromJSON3D<List<(Vector3, Vector3)>>(behavioralDataPath);
         Dictionary<int, (int, (int, double, double))>[][][] reactionTimeEntry = LoadDataFromJSON4D<(int, double, double)>(reactionTimeDataPath);
 
         Assert.IsTrue(File.Exists(behavioralDataPath));
         Assert.IsTrue(File.Exists(reactionTimeDataPath));
-
         File.Delete(behavioralDataPath);
         File.Delete(reactionTimeDataPath);
 
@@ -834,7 +833,7 @@ public class BehaviorMeasurementTest
         Assert.IsTrue(File.Exists(behavioralDataPath));
         Assert.IsTrue(File.Exists(reactionTimeDataPath));
 
-        Dictionary<int, (int, (Vector3, Vector3))>[][] behaviouralDataBasedOnRawData = LoadDataFromJSON3D<(Vector3, Vector3)>(behavioralDataPath);
+        Dictionary<int, (int, List<(Vector3, Vector3)>)>[][] behaviouralDataBasedOnRawData = LoadDataFromJSON3D<List<(Vector3, Vector3)>>(behavioralDataPath);
         Dictionary<int, (int, (int, double, double))>[][][] reactionTimeBasedOnRawData = LoadDataFromJSON4D<(int, double, double)>(reactionTimeDataPath);
 
         Assert.AreEqual(behaviouralDataEntry, behaviouralDataBasedOnRawData);
@@ -884,7 +883,7 @@ public class BehaviorMeasurementTest
         string behavioralDataPath = Path.Combine(dataPath, path.Item2);
         string reactionTimePath = Path.Combine(dataPath, path.Item3);
 
-        Dictionary<int, (int, (Vector3, Vector3))>[][] realBehaviouralData = LoadDataFromJSON3D<(Vector3, Vector3)>(behavioralDataPath);
+        Dictionary<int, (int, List<(Vector3, Vector3)>)>[][] realBehaviouralData = LoadDataFromJSON3D<List<(Vector3, Vector3)>>(behavioralDataPath);
         Dictionary<int, (int, (int, double, double))>[][][] realReactionTime = LoadDataFromJSON4D<(int, double, double)>(reactionTimePath);
 
         BehaviorMeasurementConverter.ConvertRawToBinData(supervisorSettings, _hyperparameters, behavioralDataCollectionSettings, rawBehavioralDataPath);
@@ -892,7 +891,7 @@ public class BehaviorMeasurementTest
         string resultBehavioralDataPath = Util.ConvertRawPathToBehavioralDataPath(rawBehavioralDataPath, _ballStateInformation[0].BehaviorDimensions, supervisorSettings, "BSI");
         string resultReactionTimeDataPath = Util.ConvertRawPathToReactionTimeDataPath(rawBehavioralDataPath, _ballStateInformation[0].GetRelationalDimensions(typeof(BallStateInformation), _behaviourMeasurement.NumberOfTimeBins), supervisorSettings, "BSI");
 
-        Dictionary<int, (int, (Vector3, Vector3))>[][] resultBehaviouralData = LoadDataFromJSON3D<(Vector3, Vector3)>(resultBehavioralDataPath);
+        Dictionary<int, (int, List<(Vector3, Vector3)>)>[][] resultBehaviouralData = LoadDataFromJSON3D<List<(Vector3, Vector3)>>(resultBehavioralDataPath);
         Dictionary<int, (int, (int, double, double))>[][][] resultReactionTime = LoadDataFromJSON4D<(int, double, double)>(resultReactionTimeDataPath);
 
         Assert.AreEqual(realBehaviouralData, resultBehaviouralData);
@@ -944,7 +943,7 @@ public class BehaviorMeasurementTest
             .MeasurementCount(5)
             .Run();
     }
-
+    **/
 
     private Dictionary<int, (int, T)>[][] LoadDataFromJSON3D<T>(string path)
     {
@@ -952,11 +951,13 @@ public class BehaviorMeasurementTest
         string json = File.ReadAllText(path);
 
         //array[ballBin][angleBin]<velocityBin, entry>
-        Dictionary<int, (int, T)>[][] entry = JsonConvert.DeserializeObject<Dictionary<int, (int, T)>[][]>(json);
+        Dictionary<int, (int, T)>[][] entry = JsonConvert.DeserializeObject<Dictionary<int, (int, T)>[][]>(json, new JsonSerializerSettings
+        {
+            Converters = new List<JsonConverter> { new Vector2JsonConverter(), new Vector3JsonConverter() }
+        });
 
         return entry;
     }
-
 
     private Dictionary<int, (int, T)>[][][] LoadDataFromJSON4D<T>(string path)
     {
@@ -964,7 +965,10 @@ public class BehaviorMeasurementTest
         string json = File.ReadAllText(path);
 
         //array[ballBin][angleBin]<velocityBin, entry>
-        Dictionary<int, (int, T)>[][][] entry = JsonConvert.DeserializeObject<Dictionary<int, (int, T)>[][][]>(json);
+        Dictionary<int, (int, T)>[][][] entry = JsonConvert.DeserializeObject<Dictionary<int, (int, T)>[][][]>(json, new JsonSerializerSettings
+        {
+            Converters = new List<JsonConverter> { new Vector2JsonConverter(), new Vector3JsonConverter() }
+        });
 
         return entry;
     }

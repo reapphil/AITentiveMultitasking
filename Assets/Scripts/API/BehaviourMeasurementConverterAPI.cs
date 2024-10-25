@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
+/**
 public class BehaviourMeasurementConverterAPI
 {
     public static void ConvertRawToBinData(string settingsPath, string behavioralDataCollectionSettingsPath, string rawDataPath)
@@ -18,3 +19,4 @@ public class BehaviourMeasurementConverterAPI
         BehaviorMeasurementConverter.ConvertRawToBinData(supervisorSettings, hyperparameters, behavioralDataCollectionSettings, rawDataPath);
     }
 }
+**/

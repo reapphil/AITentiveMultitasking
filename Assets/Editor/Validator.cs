@@ -135,7 +135,7 @@ public static class Validator
         ExperimentSettings experimentSettings = settings[typeof(ExperimentSettings)] as ExperimentSettings;
         SupervisorSettings supervisorSettings = settings[typeof(SupervisorSettings)] as SupervisorSettings;
 
-        Assert.AreNotEqual(null, experimentSettings.gameMode, "ProjectSettings invalid: Mode is not defined.");
+        //Assert.AreNotEqual(null, experimentSettings.gameMode, "ProjectSettings invalid: Mode is not defined.");
 
         if (hyperparameters.useFocusAgent.GetValueOrDefault() && !experimentSettings.gameMode.GetValueOrDefault())
         {

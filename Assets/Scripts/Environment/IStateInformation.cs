@@ -11,9 +11,11 @@ public interface IStateInformation
     [Measure]
     public string Name { get => this.GetType().Name; }
 
-    public Array PerformedActions { get; set; }
+    public Array AveragePerformedActionsDiscretizedSpace { get; set; }
 
-    public Dictionary<Type, Array> ReactionTimes { get; set; }
+    List<dynamic> PerformedActions { get; }
+
+    public Dictionary<Type, Array> AverageReactionTimesDiscretizedSpace { get; set; }
 
     /// <summary>
     /// The maximum value of the possible actions.
@@ -42,6 +44,8 @@ public interface IStateInformation
     /// <param name="stateInformation"></param>
     /// <returns>The number of bins per dimension</returns>
     public int[] GetRelationalDimensions(Type type, int numberOfTimeBins = 1);
+
+    public bool ActionIsInUsualRange(List<dynamic> actionsPerformedSoFar, List<dynamic> performedAction);
 
     /// <summary>
     /// Returns discretized state information of the task in relation to the source task and is used to analyze the reaction time. For instance, if

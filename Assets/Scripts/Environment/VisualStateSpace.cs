@@ -113,12 +113,34 @@ public class VisualStateSpace
             return null;
         }
 
-        return GetScreenPosition(Camera, GetFirstActiveElement().transform.position);
+        return GetScreenPositionForWorldPosition(Camera, GetFirstActiveElement().transform.position);
     }
 
     public Vector3 GetScreenCoordinatesForGameObjectIndex(int index)
     {
-        return GetScreenPosition(Camera, VisualElements[index].transform.position);
+        return GetScreenPositionForWorldPosition(Camera, VisualElements[index].transform.position);
+    }
+
+    public Vector3 GetScreenCoordinatesForGameObjectName(string name)
+    {
+        return GetScreenPositionForWorldPosition(Camera, VisualElements.Find(a => a.name == name).transform.position);
+    }
+
+    public Vector3 GetScreenCoordinatesForGameObject(GameObject gameObject)
+    {
+        return GetScreenPositionForWorldPosition(Camera, gameObject.transform.position);
+    }
+
+    public GameObject GetGameObjectForName(string name)
+    {
+        GameObject gameObject = VisualElements.Find(a => a.name == name);
+
+        if (gameObject == null)
+        {
+            Debug.LogError("GameObject with name " + name + " not found in VisualStateSpace.");
+        }
+
+        return gameObject;
     }
 
     public GameObject GetGameObjectForScreenCoordinates(Vector2 screenCoordinates)
@@ -274,26 +296,13 @@ public class VisualStateSpace
     }
 
 
-    public static Vector3 GetScreenPosition(Camera cam, Vector3 worldPosition)
+    public static Vector3 GetScreenPositionForWorldPosition(Camera cam, Vector3 worldPosition)
     {
-        // Step 1: Convert world position to viewport point
-        Vector3 viewportPos = cam.WorldToViewportPoint(worldPosition);
+        Vector2 position = RectTransformUtility.WorldToScreenPoint(
+            cam,
+            worldPosition
+        );
 
-        // If the object is behind the camera, WorldToViewportPoint will return a negative z value
-        if (viewportPos.z < 0)
-        {
-            viewportPos.z = 0;
-        }
-
-        // Step 2: Get the camera's rect (which defines the portion of the screen it renders to)
-        Rect camRect = cam.rect;
-
-        // Step 3: Calculate the actual screen position by scaling the viewport point with the camera's rect
-        float screenX = (viewportPos.x * camRect.width + camRect.x) * Screen.width;
-        float screenY = (viewportPos.y * camRect.height + camRect.y) * Screen.height;
-
-        //Debug.Log("Screen.width: " + Screen.width + "; Screen.height: " + Screen.height);
-
-        return new Vector3(screenX, screenY, viewportPos.z);
+        return position;
     }
 }

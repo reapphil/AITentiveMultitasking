@@ -1,8 +1,8 @@
 using UnityEngine;
-using Unity.Burst;
 using Unity.Jobs;
 using Unity.Collections;
-using System.Collections.Generic;
+using Unity.Burst;
+
 
 /// <summary>
 /// Job to calculate the object location probabilities in parallel. index defines the bin for which the probability is calculated. The visitor bins
@@ -29,6 +29,8 @@ public struct ObjectIn2DRectangleLocationProbabilitiesUpdateJob : IJobParallelFo
 
     public Vector2? ObjectPosition;
 
+    public bool ConsiderEdgeBins;
+
 
     public void Execute(int index)
     {
@@ -40,7 +42,7 @@ public struct ObjectIn2DRectangleLocationProbabilitiesUpdateJob : IJobParallelFo
 
             foreach (Vector2 velocity in NormalDistributionForVelocity)
             {
-                if (PositionConverter.IsRectangleEdgeBin(index, RectangleWidth, RectangleHight, NumberOFBins))
+                if (ConsiderEdgeBins && PositionConverter.IsRectangleEdgeBin(index, RectangleWidth, RectangleHight, NumberOFBins))
                 {
                     NativeList<int> crossedBins = PositionConverter.GetRectangleCrossedBins(velocity, index, RectangleWidth, RectangleHight, NumberOFBins);
 
@@ -52,9 +54,10 @@ public struct ObjectIn2DRectangleLocationProbabilitiesUpdateJob : IJobParallelFo
                 else
                 {
                     Vector2 visitor = position - velocity;
+
                     int visitorBin = PositionConverter.RectangleCoordinatesToBin(visitor, RectangleWidth, RectangleHight, NumberOFBins);
 
-                    if(visitorBin != -1)
+                    if (visitorBin != -1)
                     {
                         ObjectLocationProbabilities[index] = ObjectLocationProbabilities[index] + CurrentObjectLocationProbabilities[visitorBin] * (1 / (double)NormalDistributionForVelocity.Length);
                     }
@@ -62,11 +65,19 @@ public struct ObjectIn2DRectangleLocationProbabilitiesUpdateJob : IJobParallelFo
             }
 
             //if the current instance is active b`(s_) = O(s_,a,o) SUM(s_e_S){ T(s,a,s_)*b(s)} otherwise b`(s_) = SUM(s_e_S){ T(s,a,s_)*b(s)}
-            if (IsVisibleInstance && ObjectLocationProbabilities[index] != 0 && ObjectPosition != null)
+            if (IsVisibleInstance && ObjectPosition != null)
             {
                 if (index == PositionConverter.RectangleCoordinatesToBin(ObjectPosition.Value, RectangleWidth, RectangleHight, NumberOFBins))
                 {
-                    ObjectLocationProbabilities[index] = ObjectLocationProbabilities[index] * ObservationProbability;
+                    if (ObjectLocationProbabilities[index] == 0)
+                    {
+                        Debug.Log("Object location probability for true finger position is 0.");
+                        ObjectLocationProbabilities[index] = (1 - ObservationProbability) / (NumberOFBins - 1);
+                    }
+                    else
+                    {
+                        ObjectLocationProbabilities[index] = ObjectLocationProbabilities[index] * ObservationProbability;
+                    }
                 }
                 else
                 {

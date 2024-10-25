@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+/**
 public class API
 {
     public static void ConvertRawToBinData()
@@ -16,3 +17,4 @@ public class API
         SceneManagement.RestoreScene(oldScenePath);
     }
 }
+**/

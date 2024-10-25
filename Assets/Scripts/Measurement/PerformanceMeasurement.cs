@@ -242,7 +242,7 @@ public class PerformanceMeasurement : MonoBehaviour
         _switchingId += 1;
     }
 
-    private void ValidateSwitchingData(ActionBuffers actionBuffers, ITask task, double timeSinceLastSwitch = -1)
+    private void ValidateSwitchingData(List<dynamic> performedActions, ITask task, double timeSinceLastSwitch = -1)
     {
         if(!_tasksActionReceivedFrom.Contains(task))
         {
@@ -264,7 +264,7 @@ public class PerformanceMeasurement : MonoBehaviour
         return true;
     }
 
-    private void AddSwitchingData(ActionBuffers actionBuffers, ITask task, double timeSinceLastSwitch = -1)
+    private void AddSwitchingData(List<dynamic> performedActions, ITask task, double timeSinceLastSwitch = -1)
     {
         if (_sourceTask == _targetTask)
         {
@@ -274,10 +274,6 @@ public class PerformanceMeasurement : MonoBehaviour
         _switchingDataEntry.EpisodeId = _supervisorAgent.EpisodeCount;
         _switchingDataEntry.JoystickAxisX = GetCurrentJoystickAxis().x;
         _switchingDataEntry.JoystickAxisY = GetCurrentJoystickAxis().y;
-        _switchingDataEntry.ContinuousActionZ = actionBuffers.ContinuousActions.Length > 1 ? actionBuffers.ContinuousActions[0] : 0;
-        _switchingDataEntry.ContinuousActionX = actionBuffers.ContinuousActions.Length > 2 ? actionBuffers.ContinuousActions[1] : 0;
-        _switchingDataEntry.DiscreteActionX = actionBuffers.DiscreteActions.Length > 1 ? actionBuffers.DiscreteActions[0] : 0;
-        _switchingDataEntry.DiscreteActionX = actionBuffers.DiscreteActions.Length > 2 ? actionBuffers.DiscreteActions[1] : 0;
         _switchingDataEntry.ReactionTime = _supervisorAgent.TimeSinceLastSwitch;
 
         Tuple<int, int> tuple = MeasurementUtil.GetTuple(_sourceTask, _targetTask);
@@ -439,10 +435,6 @@ public class SwitchingData
         TimeOnPreviousTask = switchingData.TimeOnPreviousTask;
         JoystickAxisX = switchingData.JoystickAxisX;
         JoystickAxisY = switchingData.JoystickAxisY;
-        ContinuousActionZ = switchingData.ContinuousActionZ;
-        ContinuousActionX = switchingData.ContinuousActionX;
-        DiscreteActionX = switchingData.DiscreteActionX;
-        DiscreteActionY = switchingData.DiscreteActionY;
         StateA = switchingData.StateA;
         StateB = switchingData.StateB;
         Supervisor = switchingData.Supervisor;
@@ -459,10 +451,6 @@ public class SwitchingData
     public double TimeOnPreviousTask { get; set; }
     public float JoystickAxisX { get; set; }
     public float JoystickAxisY { get; set; }
-    public float ContinuousActionZ { get; set; }
-    public float ContinuousActionX { get; set; }
-    public float DiscreteActionX { get; set; }
-    public float DiscreteActionY { get; set; }
     public bool Supervisor { get; set; }
     public string ModelName { get; set; }
     public IStateInformation StateA { get; set; }

@@ -1,11 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.MLAgents.Actuators;
 using UnityEngine;
 
 [Serializable]
 public class BallStateInformation : IStateInformation, ISettings
 {
+    [Measure]
+    public float ContinuousActionsX { get; set; }
+    [Measure]
+    public float ContinuousActionsY { get; set; }
     [Measure]
     public float DragValue { get; set; }
     [Measure]
@@ -64,23 +69,31 @@ public class BallStateInformation : IStateInformation, ISettings
 
     public int[] BehaviorDimensions { get => new int[] { (int)Math.Pow(NumberOfAreaBinsPerDirection, 2), (int)Math.Pow(NumberOfAngleBinsPerAxis, 3), (int)Math.Pow(NumberOfBallVelocityBinsPerAxis, 3)}; }
     
-    public Array PerformedActions { get; set; }
+    public Array AveragePerformedActionsDiscretizedSpace { get; set; }
 
-    public Dictionary<Type, Array> ReactionTimes { get; set; }
+    public Dictionary<Type, Array> AverageReactionTimesDiscretizedSpace { get; set; }
 
     //action range is between 1 and -1
     public Vector3 ActionRangeMax { private set; get; } = new Vector3(1, 0, 1);
 
     public Vector3 ActionRangeMin { private set; get; } = new Vector3(-1, 0, -1);
-    
+
+    public List<dynamic> PerformedActions { 
+        get 
+        {
+            return new List<dynamic> { new Vector3(ContinuousActionsX, 0, ContinuousActionsY) };
+        } 
+    }
 
     public BallStateInformation()
     {
 
     }
 
-    public BallStateInformation(float ballPositionX, float ballPositionY, float ballPositionZ, float ballVelocityX, float ballVelocityY, float ballVelocityZ, float platformAngleX, float platformAngleY, float platformAngleZ)
+    public BallStateInformation(float continuousActionsX, float continuousActionsY, float ballPositionX, float ballPositionY, float ballPositionZ, float ballVelocityX, float ballVelocityY, float ballVelocityZ, float platformAngleX, float platformAngleY, float platformAngleZ)
     {
+        ContinuousActionsX = continuousActionsX;
+        ContinuousActionsY = continuousActionsY;
         BallPositionX = ballPositionX;
         BallPositionY = ballPositionY;
         BallPositionZ = ballPositionZ;
@@ -137,6 +150,8 @@ public class BallStateInformation : IStateInformation, ISettings
 
         if (ballStateInformation != null)
         {
+            ContinuousActionsX = ballStateInformation.ContinuousActionsX;
+            ContinuousActionsY = ballStateInformation.ContinuousActionsY;
             BallPositionX = ballStateInformation.BallPositionX;
             BallPositionY = ballStateInformation.BallPositionY;
             BallPositionZ = ballStateInformation.BallPositionZ;
@@ -189,5 +204,17 @@ public class BallStateInformation : IStateInformation, ISettings
                                                                       NumberOfDistanceBins_angle);
 
         return new int[] { timeBin, distanceBin, angleBinDistance, velocityBin };
+    }
+
+    public bool ActionIsInUsualRange(List<dynamic> currentAverageActionBehavioralData, List<dynamic> performedAction)
+    {
+        Vector3 actionRangeVector = new Vector3(Math.Abs(ActionRangeMax.x - ActionRangeMin.x),
+                  Math.Abs(ActionRangeMax.y - ActionRangeMin.y),
+                  Math.Abs(ActionRangeMax.z - ActionRangeMin.z));
+
+        int averageActionBinBehavioralData = PositionConverter.RangeVectorToBin(currentAverageActionBehavioralData[0], actionRangeVector, NumberOfActionBinsPerAxis, ActionRangeMin);
+        int currentActionBinBehavioralData = PositionConverter.RangeVectorToBin(performedAction[0], actionRangeVector, NumberOfActionBinsPerAxis, ActionRangeMin);
+
+        return averageActionBinBehavioralData == currentActionBinBehavioralData;
     }
 }

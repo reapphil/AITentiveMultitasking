@@ -65,6 +65,7 @@ public class Hyperparameters : HyperparametersBase
     public Hyperparameters(HyperparametersBase source) : base(source) { }
 }
 
+
 /// <summary>
 /// Contains settings that should only be allowed when loaded in the editor but not for evaluation or training.
 /// </summary>

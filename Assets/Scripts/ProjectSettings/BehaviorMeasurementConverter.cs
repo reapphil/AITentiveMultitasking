@@ -16,7 +16,7 @@ using Debug = UnityEngine.Debug;
 * for different tasks. Currently the implementation only works for two equal balancing tasks (e.g. because of the problematic BehavioralData format).
 * Nevertheless, the behavior measurement class saves the raw data, s.t. after implementing the reading of the IStateInformation, the conversion of 
 * the raw data to the discrete data can be performed. Try to resolve the "ConvertRawToBinDataTest" function to fix this issue.
-**/
+**
 public static class BehaviorMeasurementConverter
 {
     private static readonly ProfilerMarker s_convertRawToBinDataPerfMarker = new ProfilerMarker("BalancingTaskBehaviourMeasurementConverter.ConvertRawToBinData");
@@ -73,26 +73,26 @@ public static class BehaviorMeasurementConverter
 
             if (count % 100 == 0) Debug.Log(string.Format("{0:F1}% Steps", (float)count / behaviouralDataList.Count * 100));
 
-            targetTask = hashCodeDict[behaviouralData.TargetTaskId];
-
             s_initActiveBallAgentPerfMarker.Begin();
+            targetTask = hashCodeDict[behaviouralData.TargetTaskId];
             targetTask.ClearReceivedCalls(); //the performance drops drastically after a certain number of call if not performed
-            targetTask.StateInformation.UpdateStateInformation(behaviouralData.TargetState);
+            targetTask.StateInformation.UpdateStateInformation(Array.IndexOf(taskMock, targetTask) == 0 ? behaviouralData.StateA : behaviouralData.StateB);
             s_initActiveBallAgentPerfMarker.End();
+
+            //Debug.Log("targetTask: " + hashCodeDict[behaviouralData.TargetTaskId] + " \t Array.Index: " + Array.IndexOf(taskMock, targetTask) + " \t targetTask.StateInformation: " + ((BallStateInformation)targetTask.StateInformation).PlatformAngleX);
 
             if (behaviouralData.TimeSinceLastSwitch != 0) //TimeSinceLastSwitch is only 0 before the first task switch occurs, therefore sourceBallAgent should not be null in any other scenario s.t. a NullReferenceException would indicate a bug
             {
                 s_initSourceBallAgentPerfMarker.Begin();
                 sourceTask = hashCodeDict[behaviouralData.SourceTaskId];
                 sourceTask.ClearReceivedCalls();
-                sourceTask.StateInformation.UpdateStateInformation(behaviouralData.SourceState);
+                sourceTask.StateInformation.UpdateStateInformation(Array.IndexOf(taskMock, sourceTask) == 0 ? behaviouralData.StateA : behaviouralData.StateB);
                 s_initSourceBallAgentPerfMarker.End();
             }
 
             if (behaviouralData.TargetTaskId != PreviousActiveAgentHashCode && behaviouralData.TimeBetweenSwitches != 0)
             {
                 s_updateActiveInstancePerfMarker.Begin();
-
                 behaviourMeasurement.UpdateActiveInstance(behaviouralData.TimeBetweenSwitches);
                 s_updateActiveInstancePerfMarker.End();
             }
@@ -104,10 +104,9 @@ public static class BehaviorMeasurementConverter
                 s_resetMeasurementPerfMarker.End();
             }
 
-            ActionBuffers actionBuffers = new ActionBuffers(new float[] { behaviouralData.ActionZ, behaviouralData.ActionX }, new int[0]);
 
             s_collectDataPerfMarker.Begin();
-            behaviourMeasurement.CollectData(actionBuffers, (ITask)targetTask, behaviouralData.TimeSinceLastSwitch);
+            behaviourMeasurement.CollectData(Array.IndexOf(taskMock, targetTask) == 0 ? behaviouralData.StateA.PerformedActions : behaviouralData.StateB.PerformedActions, (ITask)targetTask, behaviouralData.TimeSinceLastSwitch);
             s_collectDataPerfMarker.End();
 
             PreviousActiveAgentHashCode = behaviouralData.TargetTaskId;
@@ -129,6 +128,7 @@ public static class BehaviorMeasurementConverter
     private static (BehaviorMeasurement, ISupervisorAgent) CreateBehaviourMeasurment(SupervisorSettings supervisorSettings, Hyperparameters hyperparameters, BehavioralDataCollectionSettings behavioralDataCollectionSettings, ITask[] tasksMock)
     {
         ISupervisorAgent supervisorAgentMock = Substitute.For<Supervisor.ISupervisorAgent>();
+        supervisorAgentMock.Tasks.Returns(tasksMock);
         supervisorAgentMock.DecisionRequestIntervalInSeconds.Returns(supervisorSettings.decisionRequestIntervalInSeconds.GetValueOrDefault());
         ISupervisorAgentRandom supervisorAgentRandomMock = Substitute.For<Supervisor.ISupervisorAgentRandom>();
         supervisorAgentRandomMock.DecisionRequestIntervalInSeconds.Returns(supervisorSettings.decisionRequestIntervalInSeconds.GetValueOrDefault());
@@ -153,8 +153,10 @@ public static class BehaviorMeasurementConverter
 
     private static Dictionary<int, ITask> CreateHashCodeDict(ITask[] taskMocks, List<BehavioralData> behaviouralDataList)
     {
-        Dictionary<int, ITask> hashCodeDict = new Dictionary<int, ITask>();
-        hashCodeDict.Add(behaviouralDataList[0].TargetTaskId, taskMocks[0]);
+        Dictionary<int, ITask> hashCodeDict = new()
+        {
+            { behaviouralDataList[0].TargetTaskId, taskMocks[0] }
+        };
 
         int ballAgentId = 1;
 
@@ -176,3 +178,4 @@ public static class BehaviorMeasurementConverter
         return hashCodeDict;
     }
 }
+**/

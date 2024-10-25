@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Util",
-        "Unity.Collections"
+        "Unity.Collections",
+        "Environment"
     ],
     "includePlatforms": [
         "Editor"

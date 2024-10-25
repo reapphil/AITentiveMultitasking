@@ -193,20 +193,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7898478386137548364, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
       propertyPath: m_Name
-      value: TypingAgentHumanCognition
+      value: TypingAgentHumanCognitionSimple
       objectReference: {fileID: 0}
     - target: {fileID: 7992963825295905019, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3491519740899032249}
+      objectReference: {fileID: 8705847724232955315}
     - target: {fileID: 7992963825295905019, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Enter
       objectReference: {fileID: 0}
+    - target: {fileID: 7992963825295905019, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TypingAgentHumanCognition, Environment
+      objectReference: {fileID: 0}
     - target: {fileID: 7992963825974977472, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3491519740899032249}
+      objectReference: {fileID: 0}
     - target: {fileID: 7992963825974977472, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Enter
@@ -241,7 +245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8662843542844068174, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 262
+      value: 62
       objectReference: {fileID: 0}
     - target: {fileID: 8662843542844068174, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
       propertyPath: m_BrainParameters.VectorActionSize.Array.size
@@ -249,15 +253,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8662843542844068174, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
       propertyPath: m_BrainParameters.NumStackedVectorObservations
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8662843542844068174, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8662843542844068174, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
       propertyPath: m_BrainParameters.m_ActionSpec.m_NumContinuousActions
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8662843542844068174, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
       propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8662843542844068174, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[1]
+      value: 32
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8383928907578556659, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
@@ -476,7 +488,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5773518825124237452, guid: 72b7827ad7205454b9dbb8997dd76c96, type: 3}
   m_PrefabInstance: {fileID: 7954961352497700721}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3491519740899032249
+--- !u!114 &8705847724232955315
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -485,7 +497,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4501941545617428477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34a5bbde03fe82143a5d64ef4e249092, type: 3}
+  m_Script: {fileID: 11500000, guid: 723eb770f5614fe4da82dc209ba15c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:

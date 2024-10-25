@@ -19,11 +19,11 @@ public class MeasurementSettings : MonoBehaviour
     public static Dictionary<Type, ISettings> Data {
         get
         {
-            string settingsPath = Path.Combine(GetSubPath(Application.dataPath, "AITentiveMultitasking"), "Assets", "Settings", SETTINGSFILE);
+            string settingsPath = Path.Combine(Application.dataPath, "Settings", SETTINGSFILE);
 
             if (_data == null)
             {
-                _data = LoadSettingsFromDisk(settingsPath);
+                _data = LoadSettingsFromDisk(settingsPath);                
             }
 
             return _data;
@@ -41,14 +41,14 @@ public class MeasurementSettings : MonoBehaviour
 
     public void WriteSettingsToDisk()
     {
-        string settingsPath = Path.Combine(GetSubPath(Application.dataPath, "AITentiveMultitasking"), "Assets", "Settings", SETTINGSFILE);
+        string settingsPath = Path.Combine(Application.dataPath, "Settings", SETTINGSFILE);
         SettingsLoader.SaveSettings(_data, settingsPath);
     }
 
 
     private void OnEnable()
     {
-        string settingsPath = Path.Combine(GetSubPath(Application.dataPath, "AITentiveMultitasking"), "Assets", "Settings", SETTINGSFILE);
+        string settingsPath = Path.Combine(Application.dataPath, "Settings", SETTINGSFILE);
 
         _data = LoadSettingsFromDisk(settingsPath);
         AssignSettingsToStateinformations();
@@ -74,7 +74,18 @@ public class MeasurementSettings : MonoBehaviour
 
     private static Dictionary<Type, ISettings> LoadSettingsFromDisk(string path)
     {
-        Dictionary<Type, ISettings> data = SettingsLoader.LoadSettings(path);
+        Dictionary<Type, ISettings> data = null;
+
+        try
+        {
+             data = SettingsLoader.LoadSettings(path);
+        }
+        catch (DirectoryNotFoundException e)
+        {
+            path = Path.Combine(GetSubPath(path, "Build"), "..", "Assets", "Settings", SETTINGSFILE);
+
+            data = SettingsLoader.LoadSettings(path);
+        }
 
         return data ?? new();
     }

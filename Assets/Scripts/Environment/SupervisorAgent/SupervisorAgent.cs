@@ -62,8 +62,9 @@ namespace Supervisor
 
         [field: SerializeField, Tooltip("Defines the reward function of the supervisor agent. \"r_{number}\" is interpreted as the values returned by " +
             "the \"TaskRewardForSupervisorAgent\" queue of the specific tasks. {number} start with 0 and enumerates the tasks displayed from left to " +
-            "right. All function of the Math library can be used (without Math. prefix). Furthermore, the following variables can be used: t_s: time " +
-            "since last switch; t_d: decision request interval in seconds"), ProjectAssign]
+            "right. All function of the Math library can be used (without Math. prefix). Furthermore, the following variables can be used: \"t_s:\" " +
+            "time since last switch; \"t_d\": decision request interval in seconds; \"r_s{number}\": accumulated reward since last switch " +
+            "\"r_n{number}\": number of rewards since last switch."), ProjectAssign]
         public string RewardFunction { get; set; } = "r_0";
 
         [field: SerializeField, ProjectAssign]
@@ -171,6 +172,8 @@ namespace Supervisor
 
         private float _lastCollectedReward;
 
+        private (int, float)[] _rewardsSinceLastSwitch;
+
 
         public static event EventHandler<bool> EndEpisodeEvent;
 
@@ -262,6 +265,8 @@ namespace Supervisor
             _switchCount = 1;
             TimeSinceLastSwitch = 0;
 
+            ResetRewardSinceLastSwitch();
+
             RunCountDown();
         }
 
@@ -272,15 +277,16 @@ namespace Supervisor
             UseHeuristic = GetComponent<Unity.MLAgents.Policies.BehaviorParameters>().BehaviorType.Equals(Unity.MLAgents.Policies.BehaviorType.HeuristicOnly);
             _wasReleased = new Dictionary<InputAction, bool>();
 
-            foreach (ITask task in Tasks)
+            for (int i = 0; i < Tasks.Length; i++) 
             {
-                task.IsActive = false;
+                Tasks[i].IsActive = false;
             }
 
             _activeInstanceActionLevel = 0;
             _previousActiveActionLevel = 1;
 
             Tasks[_activeInstanceActionLevel].IsActive = true;
+            _rewardsSinceLastSwitch = new (int, float)[Tasks.Length];
 
             InitMode();
         }
@@ -338,15 +344,13 @@ namespace Supervisor
 
             for (int i = 0; i < Tasks.Length; i++)
             {
-                parameters.Add($"r_{i}", TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.IsNullOrEmpty() ? 0 : TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.ElementAt(TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.Count-1));
+                float taskReward = TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.IsNullOrEmpty() ? 0 : TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.ElementAt(TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.Count - 1);
+                parameters.Add($"r_{i}", taskReward);
+                parameters.Add($"r_n{i}", _rewardsSinceLastSwitch[i].Item1);
+                parameters.Add($"r_s{i}", _rewardsSinceLastSwitch[i].Item2);
             }
 
-            parameters.Add("t_s", TimeSinceLastSwitch);
-            parameters.Add("t_d", DecisionRequestIntervalInSeconds);
-
-            float reward = (float)FunctionInterpreter.Interpret(RewardFunction, parameters);
-
-            return reward;
+            return CalculateReward(parameters);
         }
 
         protected virtual float DequeueReward()
@@ -355,9 +359,18 @@ namespace Supervisor
 
             for (int i = 0; i < Tasks.Length; i++)
             {
-                parameters.Add($"r_{i}", TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.IsNullOrEmpty() ? 0 : TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.DequeueAll().Sum());
+                float taskReward = TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.IsNullOrEmpty() ? 0 : TasksProjectSettingsOrdering[i].TaskRewardForSupervisorAgent.DequeueAll().Sum();
+                parameters.Add($"r_{i}", taskReward);
+                _rewardsSinceLastSwitch[i] = (_rewardsSinceLastSwitch[i].Item1 + 1, _rewardsSinceLastSwitch[i].Item2 + taskReward);
+                parameters.Add($"r_n{i}", _rewardsSinceLastSwitch[i].Item1);
+                parameters.Add($"r_s{i}", _rewardsSinceLastSwitch[i].Item2);
             }
 
+            return CalculateReward(parameters);
+        }
+
+        private float CalculateReward(Dictionary<string, object> parameters)
+        {
             parameters.Add("t_s", TimeSinceLastSwitch);
             parameters.Add("t_d", DecisionRequestIntervalInSeconds);
 
@@ -369,6 +382,7 @@ namespace Supervisor
         protected virtual void SwitchAgentTo(int activeInstance)
         {
             UpdateAgentsActiveStatus(activeInstance);
+            ResetRewardSinceLastSwitch();
             
             if(_switchCount != 0)
             {
@@ -646,6 +660,7 @@ namespace Supervisor
             camera.clearFlags = CameraClearFlags.Skybox;
         }
 
+
         private void InitMode()
         {
             switch (Mode) 
@@ -681,7 +696,6 @@ namespace Supervisor
             }
         }
 
-
         //_dragDifficulty is updated every 30 seconds. RequestDecision is handled manually here since DecisionRequestIntervalInSeconds is used (agent 
         //does not use Decision Requester script).
         private void FixedUpdate()
@@ -700,6 +714,14 @@ namespace Supervisor
         {
             PostProcessLayer postProcessLayer = task.GetGameObject().transform.parent.GetChildByName("Camera").GetComponent<PostProcessLayer>();
             postProcessLayer.volumeLayer = task.IsActive ? (1 << 0) : (1 << 3);
+        }
+
+        private void ResetRewardSinceLastSwitch()
+        {
+            for (int i = 0; i < Tasks.Length; i++)
+            {
+                _rewardsSinceLastSwitch[i] = (0, 0);
+            }
         }
 
         private void VisualizeSuggestionStatusOfTasks(ITask task)
@@ -737,7 +759,6 @@ namespace Supervisor
                 LogToFile.LogPropertiesFieldsOfObject(task.StateInformation);
                 LogToFile.LogPropertiesFieldsOfObject(agent.GetComponent<BehaviorParameters>());
             });
-
 
             LogToFile.LogPropertiesFieldsOfObject(this);
             LogToFile.LogPropertiesFieldsOfObject(transform.GetChildByName("FocusAgent").GetComponent<FocusAgent>());

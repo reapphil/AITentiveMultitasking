@@ -4866,8 +4866,8 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 8573068765027650166}
-  m_PlaneDistance: 1
-  m_PixelPerfect: 0
+  m_PlaneDistance: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -4889,7 +4889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
@@ -26465,6 +26465,34 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7656762395458807130, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
+      propertyPath: m_HDR
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7656762395458807130, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
+      propertyPath: m_AllowMSAA
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7656762395458807130, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7656762395458807130, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
+      propertyPath: far clip plane
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7656762395458807130, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
+      propertyPath: m_RenderingPath
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7656762395458807130, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
+      propertyPath: near clip plane
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7656762395458807130, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
+      propertyPath: orthographic size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8153459764463413600, guid: c560f1517963e7245aea87bdcacfb59e, type: 3}
       propertyPath: m_Name
       value: TypingAgent
@@ -26543,11 +26571,11 @@ MonoBehaviour:
   MaxStep: 0
   <IsTerminatingTask>k__BackingField: 0
   <IsAutonomous>k__BackingField: 0
-  <ShowFingerPosition>k__BackingField: 0
+  <ShowFingerPosition>k__BackingField: 1
   <QuizName>k__BackingField: quiz1.csv
-  <ScreenWidthPixel>k__BackingField: 0
-  <ScreenHightPixel>k__BackingField: 0
-  <ScreenDiagonalInch>k__BackingField: 0
+  <ScreenWidthPixel>k__BackingField: 1920
+  <ScreenHightPixel>k__BackingField: 1080
+  <ScreenDiagonalInch>k__BackingField: 15
   QuestionText: {fileID: 6230957262470853697}
   AnswerText: {fileID: 6925151231017503823}
   FingerPositionStateSpace:
@@ -26599,7 +26627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 256
+    VectorObservationSize: 132
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0

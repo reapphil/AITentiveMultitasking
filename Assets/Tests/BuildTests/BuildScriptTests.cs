@@ -371,11 +371,11 @@ public class BuildScriptTests
 
         Debug.Log(text);
 
+        AssertHasException(text);
+
         Assert.IsTrue(text.Contains("IsTerminatingTask = True"));
         Assert.IsTrue(text.Contains("Performance will be collected..."));
         Assert.IsTrue(text.Contains("MaxNumberEpisodes already reached, quit application."));
-
-        AssertHasException(text);
     }
 
     [Test]

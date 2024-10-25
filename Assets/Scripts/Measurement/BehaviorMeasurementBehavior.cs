@@ -14,6 +14,8 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using System.ArrayExtensions;
 using static UnityEngine.EventSystems.EventTrigger;
+using System.Collections;
+using Microsoft.CSharp.RuntimeBinder;
 
 //Core functions are separated for testing purpose. MonoBehaviours cannot be created without a gameObject. Therefore, testing those classes is hard.
 //The Humble Object pattern separates the core functionality into an own class which can be created with the help of the new keyword and therefore
@@ -167,7 +169,7 @@ public class BehaviorMeasurement
 
     private int _totalDistanceCount;
 
-    private float[] _lastCallsContinuousActions;
+    private List<dynamic> _lastCallsPerformedActions;
 
     private ITask _previousActiveAgent;
 
@@ -261,9 +263,9 @@ public class BehaviorMeasurement
     /// See CollectResponseTimeAtSwitch and CollectBehavioralData for a description how data is collected. Is called every time an action is requested
     /// (fixed update circle e.g. 0.02s).
     /// </summary>
-    /// <param name="actionBuffers"></param>
+    /// <param name="performedActions"></param>
     /// <param name="ballAgent"></param>
-    public void CollectData(ActionBuffers actionBuffers, ITask targetTask, double timeSinceLastSwitch = -1)
+    public void CollectData(List<dynamic> performedActions, ITask targetTask, double timeSinceLastSwitch = -1)
     {
         _activeAgent = targetTask;
 
@@ -279,11 +281,11 @@ public class BehaviorMeasurement
 
         if (IsRawDataCollected && !IsSimulation)
         {
-            CollectRawData(actionBuffers, _activeAgent, timeSinceLastSwitch);
+            CollectRawData(performedActions, _activeAgent, timeSinceLastSwitch);
         }
 
-        CollectResponseTimeAtSwitch(actionBuffers, _activeAgent, timeSinceLastSwitch);
-        CollectBehavioralData(actionBuffers, _activeAgent);
+        CollectResponseTimeAtSwitch(performedActions, _activeAgent, timeSinceLastSwitch);
+        CollectBehavioralData(performedActions, _activeAgent);
     }
 
     public void SaveReactionTimeToJSON(string scorePath = null, bool isAbcSimulation=false)
@@ -292,7 +294,7 @@ public class BehaviorMeasurement
 
         foreach (ITask task in SupervisorAgent.Tasks)
         {
-            foreach(KeyValuePair<Type, Array> entry in task.StateInformation.ReactionTimes)
+            foreach(KeyValuePair<Type, Array> entry in task.StateInformation.AverageReactionTimesDiscretizedSpace)
             {
                 if (!alreadySaved.Contains(entry.Value))
                 {
@@ -331,9 +333,10 @@ public class BehaviorMeasurement
                 }
             }
 
-            File.WriteAllText(path, JsonConvert.SerializeObject(task.StateInformation.PerformedActions, new JsonSerializerSettings
+            File.WriteAllText(path, JsonConvert.SerializeObject(task.StateInformation.AveragePerformedActionsDiscretizedSpace, new JsonSerializerSettings
             {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Converters = new List<JsonConverter> { new Vector2JsonConverter(), new Vector3JsonConverter() }
             }));
 
             Debug.Log(String.Format("Write behavioral data to new file {0}", path));
@@ -454,7 +457,7 @@ public class BehaviorMeasurement
         ActionCount = 0;
         _uniqueActionsCount = 0;
         _distanceBinCount = 0;
-        _lastCallsContinuousActions = new float[2] { 0f, 0f };
+        _lastCallsPerformedActions = null;
         _isReactionTimeMeasurementActive = false;
         _suspendedReactionTimeCount = 0;
     }
@@ -465,11 +468,11 @@ public class BehaviorMeasurement
         {
             ITask[] tasksOfSameType = tasks.Where(x => x.StateInformation.GetType() == t).ToArray();
             IStateInformation state = tasksOfSameType[0].StateInformation;
-            Array performedActions = Array.CreateInstance(typeof(Dictionary<int, (int, (Vector3, Vector3))>), state.BehaviorDimensions[..^1]);
+            Array performedActions = Array.CreateInstance(typeof(Dictionary<int, (int, List<(dynamic, dynamic)>)>), state.BehaviorDimensions[..^1]);
 
             foreach (int[] binCombi in Util.GetIndicesForDimentions(state.BehaviorDimensions[..^1]))
             {
-                performedActions.SetValue(new Dictionary<int, (int, (Vector3, Vector3))>(), binCombi);
+                performedActions.SetValue(new Dictionary<int, (int, List<(dynamic, dynamic)>)>(), binCombi);
             }
 
             foreach (ITask taskOfSameType in tasksOfSameType)
@@ -477,7 +480,7 @@ public class BehaviorMeasurement
                 state = taskOfSameType.StateInformation;
 
                 //same PerformedActions object for all tasks with the same type
-                state.PerformedActions ??= performedActions;
+                state.AveragePerformedActionsDiscretizedSpace ??= performedActions;
             }
         }
     }
@@ -486,28 +489,28 @@ public class BehaviorMeasurement
     {
         foreach (IStateInformation s1 in tasks.Select(x => x.StateInformation))
         {
-            s1.ReactionTimes ??= new Dictionary<Type, Array>();
+            s1.AverageReactionTimesDiscretizedSpace ??= new Dictionary<Type, Array>();
 
             foreach (IStateInformation s2 in tasks.Select(x => x.StateInformation))
             {
                 if(s1 != s2)
                 {
-                    s2.ReactionTimes ??= new Dictionary<Type, Array>();
+                    s2.AverageReactionTimesDiscretizedSpace ??= new Dictionary<Type, Array>();
 
                     //Only if both tasks have the same type it does not matter which is the source and which is the target task when a switch is performed
-                    if (s2.ReactionTimes.ContainsKey(s1.GetType()) && s1.GetType() == s2.GetType())
+                    if (s2.AverageReactionTimesDiscretizedSpace.ContainsKey(s1.GetType()) && s1.GetType() == s2.GetType())
                     {
-                        s1.ReactionTimes[s2.GetType()] = s2.ReactionTimes[s2.GetType()];
+                        s1.AverageReactionTimesDiscretizedSpace[s2.GetType()] = s2.AverageReactionTimesDiscretizedSpace[s2.GetType()];
                     }
                     else
                     {
-                        if (!s1.ReactionTimes.ContainsKey(s2.GetType()))
+                        if (!s1.AverageReactionTimesDiscretizedSpace.ContainsKey(s2.GetType()))
                         {
-                            s1.ReactionTimes[s2.GetType()] = Array.CreateInstance(typeof(Dictionary<int, (int, (int, double, double))>), s1.GetRelationalDimensions(s2.GetType(), NumberOfTimeBins)[..^1]);
+                            s1.AverageReactionTimesDiscretizedSpace[s2.GetType()] = Array.CreateInstance(typeof(Dictionary<int, (int, (int, double, double))>), s1.GetRelationalDimensions(s2.GetType(), NumberOfTimeBins)[..^1]);
 
                             foreach (int[] binCombi in Util.GetIndicesForDimentions(s1.GetRelationalDimensions(s2.GetType(), NumberOfTimeBins)[..^1]))
                             {
-                                s1.ReactionTimes[s2.GetType()].SetValue(new Dictionary<int, (int, (int, double, double))>(), binCombi);
+                                s1.AverageReactionTimesDiscretizedSpace[s2.GetType()].SetValue(new Dictionary<int, (int, (int, double, double))>(), binCombi);
                             }
                         }
                     }
@@ -577,37 +580,72 @@ public class BehaviorMeasurement
 
         foreach (ITask t in SupervisorAgent.Tasks.Where(x => x.GetType() == task.GetType()))
         {
-            if (t.StateInformation.PerformedActions != null)
+            if (t.StateInformation.AveragePerformedActionsDiscretizedSpace != null)
             {
-                task.StateInformation.PerformedActions = t.StateInformation.PerformedActions;
+                task.StateInformation.AveragePerformedActionsDiscretizedSpace = t.StateInformation.AveragePerformedActionsDiscretizedSpace;
 
                 return;
             }
         }
 
-        (Array, int, int) resultBehavioural = LoadBehaviouralMetaDataFromJSON<(Vector3, Vector3)>(path, task.StateInformation.BehaviorDimensions);
+        Type actionType = GetListType(task.StateInformation.PerformedActions);
+        (Array, int, int) resultBehavioural = LoadBehaviouralMetaDataFromJSON<List<(dynamic, dynamic)>>(path, CreateListTupleType(actionType) ,task.StateInformation.BehaviorDimensions);
 
-        task.StateInformation.PerformedActions = resultBehavioural.Item1;
+        task.StateInformation.AveragePerformedActionsDiscretizedSpace = resultBehavioural.Item1;
         _uniqueActionsCount = resultBehavioural.Item2;
         ActionCount = resultBehavioural.Item3;
+    }
+
+    public static Type GetListType(List<dynamic> list)
+    {
+        if (list == null)
+        {
+            throw new ArgumentNullException("list");
+        }
+
+        if (list.Count != 0)
+        {
+            return list[0].GetType();
+        }
+
+        return list.GetType().GetGenericArguments()[0];
+    }
+
+    public static Type CreateListTupleType(Type tType)
+    {
+        // Step 1: Get the type definitions for List and ValueTuple
+        Type listType = typeof(List<>);
+        Type tuple2Type = typeof(ValueTuple<,>);
+
+        // Step 2: Create the (T, T) tuple using MakeGenericType
+        Type tupleTTType = tuple2Type.MakeGenericType(tType, tType);
+
+        // Step 4: Create the List<(T, T)> type
+        Type finalListType = listType.MakeGenericType(tupleTTType);
+
+        // Step 3: Create the (int, List<(T, T)>) tuple
+        Type tupleIntListType = tuple2Type.MakeGenericType(typeof(int), finalListType);
+
+        // Return the constructed List type
+        return tupleIntListType;
     }
 
     private void InitExitstingReactionTimes(Func<string, SupervisorSettings, Hyperparameters, string, int[], string> getPath, ITask task)
     {
         foreach (ITask t in SupervisorAgent.Tasks)
         {
-            task.StateInformation.ReactionTimes ??= new Dictionary<Type, Array>();
+            task.StateInformation.AverageReactionTimesDiscretizedSpace ??= new Dictionary<Type, Array>();
 
-            if (t.StateInformation.ReactionTimes != null && t.StateInformation.ReactionTimes.ContainsKey(task.StateInformation.GetType()))
+            if (t.StateInformation.AverageReactionTimesDiscretizedSpace != null && t.StateInformation.AverageReactionTimesDiscretizedSpace.ContainsKey(task.StateInformation.GetType()))
             {
-                task.StateInformation.ReactionTimes[t.StateInformation.GetType()] = t.StateInformation.ReactionTimes[task.StateInformation.GetType()];
+                task.StateInformation.AverageReactionTimesDiscretizedSpace[t.StateInformation.GetType()] = t.StateInformation.AverageReactionTimesDiscretizedSpace[task.StateInformation.GetType()];
             }
             else
             {
                 string path = getPath(FileNameForBehavioralData, _supervisorSettings, _hyperparameters, MeasurementUtil.GetMeasurementName(t.StateInformation.GetType(), task.StateInformation.GetType()), task.StateInformation.GetRelationalDimensions(t.StateInformation.GetType(), NumberOfTimeBins));
 
                 (Array, int, int) resultReactionTimes = LoadBehaviouralMetaDataFromJSON<(int, double, double)>(path, task.StateInformation.GetRelationalDimensions(t.StateInformation.GetType(), NumberOfTimeBins));
-                task.StateInformation.ReactionTimes[t.StateInformation.GetType()] = resultReactionTimes.Item1;
+                task.StateInformation.AverageReactionTimesDiscretizedSpace[t.StateInformation.GetType()] = resultReactionTimes.Item1;
                 _distanceBinCount = resultReactionTimes.Item2;
             }
         }
@@ -640,42 +678,31 @@ public class BehaviorMeasurement
 
     private (Array, int, int) LoadBehaviouralMetaDataFromJSON<T>(string path, params int[] lengths)
     {
+        Type tuple2Type = typeof(ValueTuple<,>);
+        Type tupleTTType = tuple2Type.MakeGenericType(typeof(int), typeof(T));
+
+        return LoadBehaviouralMetaDataFromJSON<T>(path, tupleTTType, lengths);
+    }
+
+    private (Array, int, int) LoadBehaviouralMetaDataFromJSON<T>(string path, Type type, params int[] lengths)
+    {
         string json = File.ReadAllText(path);
 
         JArray entry = JArray.Parse(json);
 
-        return GetBehaviouralMetaData<T>(JArrayConverter.ConvertToSystemArray(entry, typeof(Dictionary<int, (int, T)>), lengths[..^1]));
+        return GetBehaviouralMetaData<T>(JArrayConverter.ConvertToSystemArray<T>(entry, CreateDictionaryType(type), lengths[..^1]));
     }
 
-    private Array ConvertJArrayToArray(JArray jArray, Type elementType, params int[] lengths)
+    private static Type CreateDictionaryType(Type tType)
     {
-        Array array = Array.CreateInstance(elementType, lengths);
+        // Step 1: Get the type definitions for Dictionary
+        Type dictionaryType = typeof(Dictionary<,>);
 
-        if (jArray.Count != lengths[0])
-        {
-            throw new ArgumentException("Mismatch in array dimensions.");
-        }
+        // Step 2: Create the Dictionary<int, T> type
+        Type finalDictionaryType = dictionaryType.MakeGenericType(typeof(int), tType);
 
-        if (lengths.Length == 1)
-        {
-            for (int i = 0; i < lengths[0]; i++)
-            {
-                array.SetValue(((JValue)jArray[i]).Value, i);
-            }
-        }
-        else
-        {
-            int[] innerLengths = lengths.Skip(1).ToArray();
-            Type innerElementType = elementType.GetElementType();
-
-            for (int i = 0; i < lengths[0]; i++)
-            {
-                JArray innerJArray = (JArray)jArray[i];
-                array.SetValue(ConvertJArrayToArray(innerJArray, innerElementType, innerLengths), i);
-            }
-        }
-
-        return array;
+        // Return the constructed Dictionary type
+        return finalDictionaryType;
     }
 
     private (Array, int, int) GetBehaviouralMetaData<T>(Array array)
@@ -692,9 +719,24 @@ public class BehaviorMeasurement
 
         foreach (int[] binCombi in Util.GetIndicesForDimentions(dimension))
         {
-            Dictionary<int, (int, T)> dict = (Dictionary<int, (int, T)>)array.GetValue(binCombi);
 
-            if(dict != null)
+            Dictionary<int, (int, T)> dict = new();
+
+            try 
+            {
+                dict = (Dictionary<int, (int, T)>)array.GetValue(binCombi);
+            }
+            catch (InvalidCastException e)
+            {
+                var v = array.GetValue(binCombi);
+                Type tt = array.GetValue(binCombi).GetType();
+                Type t = typeof(T);
+                Debug.LogError(e.Message);
+            }
+            
+            
+
+            if (dict != null)
             {
                 foreach (var item in dict)
                 {
@@ -707,16 +749,23 @@ public class BehaviorMeasurement
         return (array, uniqueCount, totalCount);
     }
 
-    private void CollectRawData(ActionBuffers actionBuffers, ITask task, double timeSinceLastSwitch)
+    private bool IsList(object o)
     {
+        if (o == null) return false;
+        return o is IList &&
+               o.GetType().IsGenericType &&
+               o.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>));
+    }
+
+    private void CollectRawData(List<dynamic> performedActions, ITask task, double timeSinceLastSwitch)
+    {
+        List<IStateInformation> stateInformations = SupervisorAgent.Tasks.Select(x => x.StateInformation.GetCopyOfCurrentState()).ToList();
+
         BehavioralData behaviouralData = new BehavioralData
         {
-            ActionZ = actionBuffers.ContinuousActions[0],
-            ActionX = actionBuffers.ContinuousActions[1],
             SourceTaskId = SupervisorAgent.GetPreviousActiveTaskNumber(),
             TargetTaskId = SupervisorAgent.GetActiveTaskNumber(),
-            SourceState = _previousActiveAgent.StateInformation.GetCopyOfCurrentState(),
-            TargetState = _activeAgent.StateInformation.GetCopyOfCurrentState(),
+            StateInformations = stateInformations,
             TimeSinceLastSwitch = timeSinceLastSwitch,
             TimeBetweenSwitches = _timeBetweenSwitches
         };
@@ -733,16 +782,16 @@ public class BehaviorMeasurement
     ///data. Therefore, reaction times can only be measured if already enough behavioral data was collected. Example: task switch at t1,
     ///action set at t2 is not in the same range as usual, no action set data for t3 --> reaction time for task switch cannot be measured.
     /// </summary>
-    private void CollectResponseTimeAtSwitch(ActionBuffers actionBuffers, ITask task, double timeSinceLastSwitch)
+    private void CollectResponseTimeAtSwitch(List<dynamic> performedActions, ITask task, double timeSinceLastSwitch)
     {
         if (_isReactionTimeMeasurementActive)
         {
             int[] bins = task.StateInformation.GetDiscretizedStateInformation();
 
-            Dictionary<int, (int, (Vector3, Vector3))> performedActions = (Dictionary<int, (int, (Vector3, Vector3))>)task.StateInformation.PerformedActions.GetValue(bins[..^1]);
+            Dictionary<int, (int, List<(dynamic, dynamic)>)> averagePerformedActionsDiscretizedSpace = (Dictionary<int, (int, List<(dynamic, dynamic)>)>)task.StateInformation.AveragePerformedActionsDiscretizedSpace.GetValue(bins[..^1]);
 
             //no behavioral data available --> discard measurement
-            if (!performedActions.ContainsKey(bins[^1]))
+            if (!averagePerformedActionsDiscretizedSpace.ContainsKey(bins[^1]))
             {
                 Debug.Log("Discard reaction time measurement (no behavioral data available)!");
                 _isReactionTimeMeasurementActive = false;
@@ -750,9 +799,9 @@ public class BehaviorMeasurement
             }
             else
             {
-                Vector3 currentAverageActionBehavioralData = performedActions[bins[^1]].Item2.Item1 / performedActions[bins[^1]].Item1;
+                List<dynamic> averagePerformedActions = CalculateAveragePerfomedActions(averagePerformedActionsDiscretizedSpace[bins[^1]]);
 
-                if (ActionIsInUsualRange(currentAverageActionBehavioralData, actionBuffers, task.StateInformation) && (actionBuffers.ContinuousActions[0] != _lastCallsContinuousActions[0] || actionBuffers.ContinuousActions[1] != _lastCallsContinuousActions[1]))
+                if (task.StateInformation.ActionIsInUsualRange(averagePerformedActions, performedActions) && !ArePerformedActionsEqual(_lastCallsPerformedActions, performedActions))
                 {
                     UpdateReactionTime(task, timeSinceLastSwitch);
                     _reactionTimeMeasurementCount += 1;
@@ -772,10 +821,39 @@ public class BehaviorMeasurement
                     _suspendedReactionTimeCount += 1;
                 }
             }
-            
-            _lastCallsContinuousActions[0] = actionBuffers.ContinuousActions[0];
-            _lastCallsContinuousActions[1] = actionBuffers.ContinuousActions[1];
+
+            _lastCallsPerformedActions = performedActions;
         }
+    }
+
+    private List<dynamic> CalculateAveragePerfomedActions((int, List<(dynamic, dynamic)>) actionsPerformedSoFar)
+    {
+        List<dynamic> averagePerformedActions = new List<dynamic>();
+
+        foreach ((dynamic, dynamic) performedAction in actionsPerformedSoFar.Item2) 
+        {
+            averagePerformedActions.Add(performedAction.Item1 / actionsPerformedSoFar.Item1);
+        }
+
+        return averagePerformedActions;
+    }
+
+    private bool ArePerformedActionsEqual(List<dynamic> a1, List<dynamic> a2)
+    {
+        if (a1 == null || a2 == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < a1.Count; i++)
+        {
+            if (a1[i] != a2[i])
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void UpdateReactionTime(ITask task, double timeSinceLastSwitch)
@@ -785,7 +863,7 @@ public class BehaviorMeasurement
         int timeBin = PositionConverter.ContinuousValueToBin((float)_timeBetweenSwitches, _minTime, _maxTime, NumberOfTimeBins);
         int[] bins = task.StateInformation.GetDiscretizedRelationalStateInformation(_previousActiveAgent.StateInformation, timeBin);
 
-        Dictionary<int, (int, (int, double, double))> reactionTimes = (Dictionary<int, (int, (int, double, double))>)task.StateInformation.ReactionTimes[_previousActiveAgent.StateInformation.GetType()].GetValue(bins[..^1]);
+        Dictionary<int, (int, (int, double, double))> reactionTimes = (Dictionary<int, (int, (int, double, double))>)task.StateInformation.AverageReactionTimesDiscretizedSpace[_previousActiveAgent.StateInformation.GetType()].GetValue(bins[..^1]);
 
         if (reactionTimes.ContainsKey(bins[^1]))
         {
@@ -826,56 +904,66 @@ public class BehaviorMeasurement
         }
     }
 
-    private bool ActionIsInUsualRange(Vector3 currentAverageActionBehavioralData, ActionBuffers actionBuffers, IStateInformation stateInformation)
-    {
-        Vector3 actionRangeVector = new Vector3(Math.Abs(stateInformation.ActionRangeMax.x - stateInformation.ActionRangeMin.x),
-                          Math.Abs(stateInformation.ActionRangeMax.y - stateInformation.ActionRangeMin.y),
-                          Math.Abs(stateInformation.ActionRangeMax.z - stateInformation.ActionRangeMin.z));
-
-        int averageActionBinBehavioralData = PositionConverter.RangeVectorToBin(currentAverageActionBehavioralData, actionRangeVector, stateInformation.NumberOfActionBinsPerAxis, stateInformation.ActionRangeMin);
-        int currentActionBinBehavioralData = PositionConverter.RangeVectorToBin(new Vector3(actionBuffers.ContinuousActions[1], 0, actionBuffers.ContinuousActions[0]), actionRangeVector, stateInformation.NumberOfActionBinsPerAxis, stateInformation.ActionRangeMin);
-
-        return averageActionBinBehavioralData == currentActionBinBehavioralData;
-    }
-
     /// <summary>
     /// Collects behavioral data if _actionReceived == true and saves the data to _actionSetPerBinBehavioralData.
     /// </summary>
     /// <param name="actionBuffers"></param>
     /// <param name="task"></param>
     /// <param name="collectData"></param>
-    private void CollectBehavioralData(ActionBuffers actionBuffers, ITask task)
+    private void CollectBehavioralData(List<dynamic> performedActions, ITask task)
     {
         int[] bins =  task.StateInformation.GetDiscretizedStateInformation();
 
         if (!_isReactionTimeMeasurementActive)
         {
-            Dictionary<int, (int, (Vector3, Vector3))> performedActions = (Dictionary<int, (int, (Vector3, Vector3))>)task.StateInformation.PerformedActions.GetValue(bins[..^1]);
+            Dictionary<int, (int, List<(dynamic, dynamic)>)> averagePerformedActionsDiscretizedSpace = (Dictionary<int, (int, List<(dynamic, dynamic)>)>)task.StateInformation.AveragePerformedActionsDiscretizedSpace.GetValue(bins[..^1]);
 
-            if (performedActions.ContainsKey(bins[^1]))
+            if (averagePerformedActionsDiscretizedSpace.ContainsKey(bins[^1]))
             {
-                try
+                averagePerformedActionsDiscretizedSpace[bins[^1]] = (averagePerformedActionsDiscretizedSpace[bins[^1]].Item1 + 1, averagePerformedActionsDiscretizedSpace[bins[^1]].Item2);
+                ActionCount++;
+
+                for (int i = 0; i < performedActions.Count; i++)
                 {
-                    checked
+                    try
                     {
-                        performedActions[bins[^1]] = (performedActions[bins[^1]].Item1 + 1,
-                                          (performedActions[bins[^1]].Item2.Item1 + new Vector3(actionBuffers.ContinuousActions[1], 0, actionBuffers.ContinuousActions[0]),
-                                           performedActions[bins[^1]].Item2.Item2 + new Vector3((float)Math.Pow(actionBuffers.ContinuousActions[1], 2), 0, (float)Math.Pow(actionBuffers.ContinuousActions[0], 2))));
-                        ActionCount++;
+                        checked
+                        {
+                            List<(dynamic, dynamic)> updatedList = averagePerformedActionsDiscretizedSpace[bins[^1]].Item2;
+                            updatedList[i] = (Add(updatedList[i].Item1, performedActions[i]), Add(updatedList[i].Item2, Multiply(performedActions[i], performedActions[i])));
+
+                            averagePerformedActionsDiscretizedSpace[bins[^1]] = (averagePerformedActionsDiscretizedSpace[bins[^1]].Item1, updatedList);
+                            
+                        }
                     }
-                }
-                catch (OverflowException e)
-                {
-                    Debug.LogError(e.Message);
+                    catch (OverflowException e)
+                    {
+                        Debug.LogError(e.Message);
+                    }
                 }
             }
             else
             {
-                performedActions[bins[^1]] = (1,
-                                  (new Vector3(actionBuffers.ContinuousActions[1], 0, actionBuffers.ContinuousActions[0]),
-                                   new Vector3((float)Math.Pow(actionBuffers.ContinuousActions[1], 2), 0, (float)Math.Pow(actionBuffers.ContinuousActions[0], 2))));
-                _uniqueActionsCount += 1;
+                List<(dynamic, dynamic)> newList = new List<(dynamic, dynamic)>(new (dynamic, dynamic)[performedActions.Count]);
+
+                for (int i = 0; i < performedActions.Count; i++)
+                {
+                    try
+                    {
+                        checked
+                        {
+                            newList[i] = (performedActions[i], Multiply(performedActions[i], performedActions[i]));
+                        }
+                    }
+                    catch (OverflowException e)
+                    {
+                        Debug.LogError(e.Message);
+                    }
+                }
+
+                averagePerformedActionsDiscretizedSpace[bins[^1]] = (1, newList);
                 ActionCount++;
+                _uniqueActionsCount += 1;
 
                 if (!IsSimulation) UpdateBehaviouralDataText();
             }
@@ -885,6 +973,49 @@ public class BehaviorMeasurement
         {
             Debug.Log("Max number of actions reached. Quit Application...");
             Core.Exit();
+        }
+    }
+
+    private dynamic Add(dynamic v1, dynamic v2)
+    {
+        if (v1.GetType() == typeof(Vector2))
+        {
+            Vector2 ve1 = (Vector2)v1;
+            Vector2 ve2 = (Vector2)v2;
+
+            return new Vector3(v1.x, 0, v1.y) + new Vector3(v2.x, 0, v2.y);
+        }else if (v1.GetType() == typeof(Vector3))
+        {
+            Vector3 ve1 = (Vector3)v1;
+            Vector3 ve2 = (Vector3)v2;
+
+            return ve1 + ve2;
+        }
+        else
+        {
+            return v1 + v2;
+        }
+    }
+
+    private dynamic Multiply(dynamic v1, dynamic v2)
+    {
+        if (v1.GetType() == typeof(Vector2))
+        {
+            Vector2 ve1 = (Vector2)v1;
+            Vector2 ve2 = (Vector2)v2;
+
+            return new Vector3(ve1.x * ve2.x, 0, ve1.y * ve2.y);
+        }
+        else if (v1.GetType() == typeof(Vector3))
+        {
+            Vector3 ve1 = (Vector3)v1;
+            Vector3 ve2 = (Vector3)v2;
+
+            return new Vector3(ve1.x * ve2.x, ve1.y * ve2.y, ve1.z * ve2.z);
+        }
+        else
+        {
+            return v1 * v2;
         }
     }
 
@@ -928,33 +1059,24 @@ public class ReactionTime
 
 public class BehavioralData
 {
-    public BehavioralData(float actionZ, float actionX, int sourceTaskId, int targetTaskId, IStateInformation sourceState, IStateInformation targetState, double timeSinceLastSwitch, double timeBetweenSwitches)
+    public BehavioralData(int sourceTaskId, int targetTaskId, List<IStateInformation> stateInformations, double timeSinceLastSwitch, double timeBetweenSwitches)
     {
-        ActionZ = actionZ;
-        ActionX = actionX;
         SourceTaskId = sourceTaskId;
         TargetTaskId = targetTaskId;
-        SourceState = sourceState;
-        TargetState = targetState;
+        StateInformations = stateInformations;
         TimeSinceLastSwitch = timeSinceLastSwitch;
         TimeBetweenSwitches = timeBetweenSwitches;
     }
 
     public BehavioralData() { }
 
-    public float ActionZ { get; set; }
-
-    public float ActionX { get; set; }
-
-    public int SourceTaskId { get; set; }
-    
-    public int TargetTaskId { get; set; }
-
     public double TimeSinceLastSwitch { get; set; }
 
     public double TimeBetweenSwitches { get; set; }
 
-    public IStateInformation SourceState { get; set; }
+    public int SourceTaskId { get; set; }
 
-    public IStateInformation TargetState { get; set; }
+    public int TargetTaskId { get; set; }
+
+    public List<IStateInformation> StateInformations { get; set; }
 }

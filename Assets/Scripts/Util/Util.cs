@@ -12,6 +12,7 @@ using UnityEditor;
 using System.ComponentModel;
 using UnityEngine.Profiling;
 using CsvHelper.Configuration;
+using System.Collections;
 
 public static class Util
 {
@@ -635,6 +636,16 @@ public static class Util
                         break;
                 }
             }
+            else if (IsList(thisVar.GetUnderlyingType()))
+            {
+                List<T> records = data.Where(x => thisVar.GetValue(x) != null).ToList();
+                List<dynamic> values = records.Select(x => thisVar.GetValue(x)).ToList();
+
+                for(int i = 0; i < values[0].Count; i++)
+                {
+                    WriteHeaderToCSV(csv, new List<dynamic>() {values[0][i]}, string.Format("{0}[{1}]", thisVar.Name, i));
+                }
+            }
             else if (!HasCSVHelperBuiltInConverter(thisVar.GetUnderlyingType()))
             {
                 try
@@ -663,6 +674,13 @@ public static class Util
                 }
             }
         }
+    }
+
+    private static bool IsList(Type t)
+    {
+        if (t == null) return false;
+        return t.IsGenericType &&
+               t.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>));
     }
 
     private static void WriteDictionaryToHeader<T1, T2>(CsvWriter csv, MemberInfo thisVar, List<T1> data)
@@ -699,6 +717,16 @@ public static class Util
                 {
                     object instance = Activator.CreateInstance(local_structure.First());
                     WriteRecordToCSV(csv, instance, local_structure);
+                }
+            }
+            else if (IsList(thisVar.GetUnderlyingType()))
+            {
+                List<dynamic> values = ((IEnumerable<dynamic>)thisVar.GetValue(record)).ToList();
+
+                foreach (dynamic val in values)
+                {
+                    local_structure.Add(val.GetType());
+                    WriteRecordToCSV(csv, val, local_structure);
                 }
             }
             else

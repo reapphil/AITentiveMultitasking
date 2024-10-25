@@ -73,7 +73,7 @@ public static class SettingsLoader
             object value2 = memberInfo.GetValue(settings2);
             object value1 = memberInfo.GetValue(settings1);
 
-            if (value2 != null && !value2.Equals(Util.GetDefault(value2.GetType())))
+            if (value1 == null || (value2 != null && !value2.Equals(Util.GetDefault(value2.GetType()))))
             {
                 //Overwrite the value only if the value of settings1 is null or the default value if the type would not be nullable. So for instance,
                 //if one value is true and the other is false, the value will be true since the default value of bool is false.

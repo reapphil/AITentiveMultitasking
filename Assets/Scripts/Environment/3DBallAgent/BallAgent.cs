@@ -67,6 +67,8 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
         {
             _ballStateInformation ??= new BallStateInformation();
 
+            _ballStateInformation.ContinuousActionsX = _lastActionPerformed.x;
+            _ballStateInformation.ContinuousActionsY = _lastActionPerformed.y;
             _ballStateInformation.DragValue = GetBallDrag();
             _ballStateInformation.PlatformAngleX = GetPlatformAngle().x;
             _ballStateInformation.PlatformAngleY = GetPlatformAngle().y;
@@ -120,6 +122,7 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
 
     private Vector2 _currentInput;
 
+    private Vector2 _lastActionPerformed;
 
     public delegate void OnCollectObservations(VectorSensor sensor, BallAgent ballAgent);
     public static event OnCollectObservations OnCollectObservationsAction;
@@ -167,7 +170,13 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
     //must be called in inherited classes. Actual functionality must be implemented in inherited classes.
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        ITask.InvokeOnAction(actionBuffers, this);
+        List<dynamic> actions = new();
+        var continuousActionsOut = actionBuffers.ContinuousActions;
+        _lastActionPerformed = new Vector2(continuousActionsOut[0], continuousActionsOut[1]);
+
+        actions.Add(_lastActionPerformed);
+
+        ITask.InvokeOnAction(actions, this);
         //Debug.Log(string.Format("actionBuffers.ContinuousActions[0]: {0}\t actionBuffers.ContinuousActions[1]: {1}", actionBuffers.ContinuousActions[0], actionBuffers.ContinuousActions[1]));
     }
 
@@ -271,7 +280,7 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
 
     public Vector3 GetBallDistanceToCenterVector3()
     {
-        return Ball.transform.position - gameObject.transform.position;
+        return gameObject.transform.position - Ball.transform.position;
     }
 
     public float GetAngularDrag()
@@ -306,11 +315,11 @@ public abstract class BallAgent : Agent, IComparable<BallAgent>, IBallAgent, ITa
 
     public void AddTrueObservationsToSensor(VectorSensor sensor)
     {
-        sensor.AddObservation(GetPlatformAngle().z);
-        sensor.AddObservation(GetPlatformAngle().x);
+        sensor.AddObservation(gameObject.transform.rotation.z);
+        sensor.AddObservation(gameObject.transform.rotation.x);
         sensor.AddObservation(GetBallDistanceToCenterVector3());
         sensor.AddObservation(GetBallVelocity());
-        sensor.AddObservation(_ballRb.drag);
+        //sensor.AddObservation(_ballRb.drag);
     }
 
     public virtual void AddBeliefObservationsToSensor(VectorSensor sensor)

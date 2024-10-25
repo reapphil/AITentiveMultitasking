@@ -161,3 +161,9 @@ venv.bak/
 # ELFI
 config/pools/*
 config/logs/*
+
+# models trained on another machine
+Assets/Models/extern/*
+
+# model log files
+run_logs/

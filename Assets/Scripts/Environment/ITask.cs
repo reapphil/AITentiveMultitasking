@@ -66,9 +66,9 @@ public interface ITask
     /// <summary>
     /// Must be invoked on action received. This information is used to analyze the switching behavior of the user/agent.
     /// </summary>
-    delegate void OnActionReceivedAction(ActionBuffers actionBuffers, ITask task, double timeSinceLastSwitch = -1);
+    delegate void OnActionReceivedAction(List<dynamic> performedActions, ITask task, double timeSinceLastSwitch = -1);
     static event OnActionReceivedAction OnAction;
-    static void InvokeOnAction(ActionBuffers actionBuffers, ITask task, double timeSinceLastSwitch = -1) => OnAction?.Invoke(actionBuffers, task, timeSinceLastSwitch);
+    static void InvokeOnAction(List<dynamic> performedActions, ITask task, double timeSinceLastSwitch = -1) => OnAction?.Invoke(performedActions, task, timeSinceLastSwitch);
 
     /// <summary>
     /// Adds true state information to the sensor of the supervisor agent. Therefore, the sum over all states of the tasks will be the state space 

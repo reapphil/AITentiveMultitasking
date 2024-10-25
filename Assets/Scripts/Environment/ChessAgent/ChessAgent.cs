@@ -128,7 +128,13 @@ public class ChessAgent : Agent, ITask
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        ITask.InvokeOnAction(actionBuffers, this);
+        List<dynamic> actions = new();
+        var discreteActionsOut = actionBuffers.DiscreteActions;
+
+        actions.Add(discreteActionsOut[0]);
+        actions.Add(discreteActionsOut[1]);
+
+        ITask.InvokeOnAction(actions, this);
 
         int targetX = actionBuffers.DiscreteActions[0];
         int targetY = actionBuffers.DiscreteActions[1];

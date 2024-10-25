@@ -103,7 +103,13 @@ public class DrivingAgent : Agent, ITask
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        ITask.InvokeOnAction(actionBuffers, this);
+        List<dynamic> actions = new();
+        var continuousActionsOut = actionBuffers.ContinuousActions;
+
+        actions.Add(continuousActionsOut[0]);
+        actions.Add(continuousActionsOut[1]);
+
+        ITask.InvokeOnAction(actions, this);
 
         CarSpeed = CarController.speed;
         TargetPosition = GameManager.GetClosestPointOnLineSegment(transform.position);

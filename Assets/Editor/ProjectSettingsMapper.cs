@@ -1,14 +1,11 @@
-using Castle.Components.DictionaryAdapter.Xml;
 using Supervisor;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using static UnityEditor.MaterialProperty;
-using static UnityEngine.GraphicsBuffer;
 using Component = UnityEngine.Component;
 
 public static class ProjectSettingsMapper
@@ -24,7 +21,7 @@ public static class ProjectSettingsMapper
             if (memberInfo != null)
             {
                 var converter = TypeDescriptor.GetConverter(memberInfo.GetUnderlyingType());
-                var result = converter.ConvertFrom(member.Value);
+                var result = converter.ConvertFrom(null, CultureInfo.InvariantCulture, member.Value);
 
                 foreach(Component managedComponent in managedComponents)
                 {

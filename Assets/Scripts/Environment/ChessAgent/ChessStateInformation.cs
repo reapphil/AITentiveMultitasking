@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class ChessStateInformation : IStateInformation
 {
-    public Array PerformedActions { get; set; }
-    public Dictionary<Type, Array> ReactionTimes { get; set; }
+    public Array AveragePerformedActionsDiscretizedSpace { get; set; }
+    public Dictionary<Type, Array> AverageReactionTimesDiscretizedSpace { get; set; }
 
     public Vector3 ActionRangeMax => throw new NotImplementedException();
 
@@ -15,6 +15,8 @@ public class ChessStateInformation : IStateInformation
     public int NumberOfActionBinsPerAxis => throw new NotImplementedException();
 
     public int[] BehaviorDimensions => throw new NotImplementedException();
+
+    public List<dynamic> PerformedActions => throw new NotImplementedException();
 
     //TODO: Add properties for chess state information
     public int[] GetDiscretizedRelationalStateInformation(IStateInformation sourceTaskState, int timeBin = 0)
@@ -48,5 +50,10 @@ public class ChessStateInformation : IStateInformation
         copy.UpdateStateInformation(this);
 
         return copy;
+    }
+
+    public bool ActionIsInUsualRange(List<dynamic> actionsPerformedSoFar, List<dynamic> performedAction)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -77,6 +77,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
     [field: SerializeField, Tooltip("The user controls the task if true, otherwise the task-agent.") ]
     public bool GameMode { get; set; }
 
+    /**
     [field: Header("Generate Bin Data with Raw Data"),
     SerializeField, Tooltip("Path to raw data which should be used for the generation of bin data based on the bin settings.")]
     public string RawData { get; set; }
@@ -86,6 +87,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
 
     [InspectorButton("OnGenerateBinDataButtonClicked")]
     public bool GenerateBinData;
+    **/
 
     [field: SerializeField, Tooltip("List of models used in the experiment. The AITentiveModel allows to automatically assign the correct model to " +
         "a specific agent. Usually this list contains a supervisor model. In case of the training of the supervisor, also task agent models are " +
@@ -501,6 +503,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
         return subs[1];
     }
 
+    /**
     private void OnSearchRawDataOnDiskButtonClicked()
     {
         string rawDataOld = RawData;
@@ -545,6 +548,7 @@ public class ProjectSettings : MonoBehaviour, IProjectSettings
 
         GUIUtility.ExitGUI();
     }
+    **/
 #endif
 
     private void UpdateSupervisorAgent()

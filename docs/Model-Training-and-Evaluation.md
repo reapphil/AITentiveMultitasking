@@ -141,11 +141,11 @@ The evaluation returns the behavior measurement of the specified agent configura
   "behavioralDataCollectionSettings": {
 	"collectDataForComparison": true,
 	"maxNumberOfActions": 300000,
-    "numberOfAreaBins_BehavioralData": 196,
-    "numberOfBallVelocityBinsPerAxis_BehavioralData": 5,
+    	"numberOfAreaBins_BehavioralData": 196,
+    	"numberOfBallVelocityBinsPerAxis_BehavioralData": 5,
 	"numberOfAngleBinsPerAxis": 4,
-    "numberOfDistanceBins": 12,
-    "numberOfDistanceBins_velocity": 12,
+    	"numberOfDistanceBins": 12,
+    	"numberOfDistanceBins_velocity": 12,
 	"numberOfActionBinsPerAxis": 5,
 	"numberOfTimeBins": 5
     } 
